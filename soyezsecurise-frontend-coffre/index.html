@@ -1,0 +1,505 @@
+<!DOCTYPE HTML>
+<html lang="en">
+	<head>
+		<title>Soyez Sécurisé | Private Password Vault</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<meta name="description" content="A privacy-first, zero-knowledge password manager by Soyez Sécurisé." />
+		<meta name="theme-color" content="#ecefe7" />
+		<script src="assets/js/theme.js?v=sage-theme-20260815c"></script>
+		<link rel="stylesheet" href="assets/css/main.css?v=solid-type-20260814" />
+		<link rel="stylesheet" href="assets/css/theme.css?v=sage-theme-20260815c" />
+		<link rel="stylesheet" href="assets/css/mobile.css?v=mobile-rebuild-20260815a" />
+		<noscript><link rel="stylesheet" href="assets/css/noscript.css?v=solid-type-20260814" /></noscript>
+		<link rel="icon" type="image/svg+xml" href="favicon.svg">
+	</head>
+	<body class="is-preload">
+
+		<div class="app-brand" aria-label="Soyez Sécurisé home">
+			<a href="#">
+				<span class="brand-mark" aria-hidden="true"><img src="favicon.svg" alt="" /></span>
+				<span class="brand-copy">
+					<strong>SoyezSécurisé<span>.</span> <span class="version-badge">Public Beta</span></strong>
+					<small>Private password vault</small>
+				</span>
+			</a>
+		</div>
+
+		<button class="theme-toggle" type="button" aria-label="Switch to dark theme" title="Change theme">
+			<svg class="sun-icon" viewBox="0 0 24 24" aria-hidden="true">
+				<circle cx="12" cy="12" r="3.5"></circle>
+				<path d="M12 2v2M12 20v2M4.93 4.93l1.42 1.42M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.42-1.42M17.66 6.34l1.41-1.41"></path>
+			</svg>
+			<svg class="moon-icon" viewBox="0 0 24 24" aria-hidden="true">
+				<path d="M20.5 14.3A8.5 8.5 0 0 1 9.7 3.5 8.5 8.5 0 1 0 20.5 14.3Z"></path>
+			</svg>
+		</button>
+
+		<div id="user-button">
+							<button id="menu-btn" type="button" aria-label="Open account menu">
+								<span class="icon fa-user"></span>
+							</button>
+										<div id="menu">
+											<div id="logged-in">
+											<a id="profilerequest" href="#profile">Profile</a>
+											<a id="logoutrequest" href="#">Logout</a>
+											</div>
+											<div id="logged-out">
+											<a id="signinfrequest" href="#signin">Sign-In</a>
+											<a id="loginrequest" href="#login">Login</a>
+											</div>
+										</div>
+												
+						</div>
+
+		<div id="home-auth-prompt" class="home-auth-prompt" aria-live="polite" hidden>
+			<button id="home-auth-prompt-close" class="home-auth-prompt-close" type="button" aria-label="Close signup prompt">
+				<span class="icon fa-times"></span>
+			</button>
+			<span class="home-auth-prompt-icon"><span class="icon fa-user-plus"></span></span>
+			<div class="home-auth-prompt-copy">
+				<strong>New user?</strong>
+				<span>Create your secure vault in a few steps.</span>
+			</div>
+			<div class="home-auth-prompt-actions">
+				<a href="#signin" class="button primary small">Sign in</a>
+				<a href="#login" class="button small">Login</a>
+			</div>
+		</div>
+
+			<div id="wrapper">
+				
+				
+					<header id="header">
+
+						<div class="content">
+							<div class="inner">
+								<span class="hero-badge"><span class="status-pulse"></span> Coffre</span>
+								<h1>Soyez <span>Sécurisé.</span></h1>
+								<p id="quote">Encrypted credential storage with local key derivation, signed vault operations, and two-factor account protection.</p>
+								<div class="preauth-actions" aria-label="Account access">
+									<a href="#login" class="button primary">Login</a>
+									<a href="#signin" class="button">Sign in</a>
+								</div>
+							</div>
+						</div>
+						<section id="vault-dashboard" class="vault-dashboard" aria-live="polite">
+							<div class="vault-dashboard-hero">
+								<div>
+									<span class="hero-badge"><span class="status-pulse"></span> Coffre</span>
+									<h1>SoyezSécurisé<span>.</span></h1>
+									<p>Welcome back.</p>
+								</div>
+								<a id="dashboard-storepassword" href="#store-password" class="button primary">Store Password</a>
+							</div>
+
+							<div class="vault-dashboard-section">
+								<div class="vault-dashboard-heading">
+									<h2>Your Vault</h2>
+									<span id="dashboard-vault-count">Loading</span>
+								</div>
+								<ul id="dashboardPasswordList" class="dashboard-password-list"></ul>
+								<p id="dashboard-vault-status" class="dashboard-empty-state"></p>
+							</div>
+
+							<div class="vault-dashboard-section danger-zone">
+								<div>
+									<h2>Danger Zone</h2>
+									<p>Remove a saved credential from your encrypted vault.</p>
+								</div>
+								<a id="dashboard-deletepassword" href="#Deletepassword" class="button danger-action">Delete Credential</a>
+							</div>
+
+							<div class="vault-dashboard-footer" aria-label="Security features">
+								<span>AES-256-GCM</span>
+								<span>Argon2id</span>
+								<span>Public Beta</span>
+							</div>
+						</section>
+						<nav>
+							<ul class="action-hub" aria-label="Vault actions">
+								<li><a id="storepassword" class="primary-vault-action" href="#store-password" title="Add a website, username, and password. Your password is encrypted on your device before being stored."><i class="icon fa-database"></i><span>Store</span><small>Add encrypted credential</small></a></li>
+								<li><a id="getpassword" class="primary-vault-action" href="#Getpassword" title="View a saved password. It's decrypted on your device and can be copied when needed."><i class="icon fa-unlock-alt"></i><span>Retrieve</span><small>Decrypt when needed</small></a></li>
+								<li><a id="hintpassword" href="#Hintpassword" title="View the saved hint. A password without revealing the password itself."><i class="icon fa-lightbulb"></i><span>Hint</span><small>Show recovery clue</small></a></li>
+								<li><a id="deletepassword" href="#Deletepassword" title="Permanently delete a saved password. This action can't be undone."><i class="icon fa-trash-alt"></i><span>Delete</span><small>Remove vault item</small></a></li>
+							</ul>
+						</nav>
+						<div class="trust-row" aria-label="Security features">
+							<span><i class="icon fa-lock"></i> Client-side Encryption</span>
+							<span><i class="icon fa-key"></i> Argon2id</span>
+							<span><i class="icon fa-mobile-alt"></i> TOTP Ready</span>
+						</div>
+					</header>
+					
+				
+					<div id="main">
+						
+						 <article id="signin">
+								<a class="auth-brand" href="#" aria-label="Soyez Sécurisé home">
+					<span class="auth-brand-mark" aria-hidden="true"><img src="favicon.svg" alt="" /></span>
+									<span>SoyezSécurisé<strong>.</strong></span>
+								</a>
+								<span class="article-eyebrow">Create your vault</span>
+								<h2 class="major">Sign up</h2>
+								<p>Choose credentials that will protect your encrypted vault.</p>
+								<form id="Sign-in">
+									<div class="fields">
+										<div class="field half">
+											<label for="username">Username</label>
+											<input type="text" name="username" id="username" autocomplete="username" />
+										</div>
+                                        <div class="field">
+											<label for="email">Email <span class="optional"></span></label>
+                                            <input type="email" name="email" id="email" autocomplete="email" />
+										</div>
+										<div class="field" id="signup-password-field" style="display:none;">
+											<label for="password">Master password</label>
+                                            <div class="password-wrapper">
+    											<input type="password" name="password" id="password" autocomplete="new-password" />
+    											<button type="button" class="password-toggle" data-target="password">
+       												<i class="fas fa-eye"></i>
+    											</button>
+											</div>
+											<div class="password-strength" id="signup-password-strength" aria-live="polite" hidden>
+												<div class="password-strength-header">
+													<span id="signup-password-strength-label">Password strength</span>
+													<strong id="signup-password-strength-value">Start typing</strong>
+												</div>
+												<div class="password-strength-meter" aria-hidden="true">
+													<span id="signup-password-strength-bar"></span>
+												</div>
+												<ul class="password-strength-rules" id="signup-password-strength-rules">
+													<li data-rule="length">At least 12 characters</li>
+													<li data-rule="lowercase">Lowercase letter</li>
+													<li data-rule="uppercase">Uppercase letter</li>
+													<li data-rule="number">Number</li>
+													<li data-rule="symbol">Symbol</li>
+												</ul>
+											</div>
+										</div>
+										<div class="field" id="signup-confirm-password-field" style="display:none;">
+											<label for="confirm-password">Confirm master password</label>
+                                            <input type="password" name="confirm-password" id="confirm-password" autocomplete="new-password" />
+										</div>
+										<div class="field half otp-step-field" id="signup-otp-field" style="display:none;">
+											<label for="signup-otp">OTP code</label>
+                                            <input type="text" name="otp" id="signup-otp" maxlength="6" placeholder="ABC123" inputmode="text" autocomplete="one-time-code"/>
+										</div>
+									</div>
+									<div class="login-step-panel" id="signup-step-panel">
+										<span class="active">1. Username + email</span>
+										<span>2. Password + OTP</span>
+									</div>
+									<div class="feild"><p id="status-signin"></p></div>
+									<ul class="actions">
+										<li><input id="signinbtn" type="submit" value="Continue" class="primary" /></li>
+										<li><input type="reset" value="Reset" class="primary"/></li>
+									</ul>
+								</form>
+								<p>Your master password acts as the foundation of your encrypted vault architecture and should be created carefully and kept private.</p>
+							</article>
+
+							<article id="login">
+								<a class="auth-brand" href="#" aria-label="Soyez Sécurisé home">
+					<span class="auth-brand-mark" aria-hidden="true"><img src="favicon.svg" alt="" /></span>
+									<span>SoyezSécurisé<strong>.</strong></span>
+								</a>
+								<span class="article-eyebrow">Welcome back</span>
+								<h2 class="major">Login</h2>
+								<p>Unlock your vault with your master credentials.</p>
+								<form id="Login">
+									<div class="fields">
+										<div class="field half">
+											<label for="login-username">Username</label>
+											<input type="text" name="username" id="login-username" autocomplete="username" />
+										</div>
+                                        <div class="field" id="login-password-field" style="display:none;">
+											<label for="login-password">Master password</label>
+                                            <div class="password-wrapper">
+    											<input type="password" name="Password" id="login-password" autocomplete="current-password" />
+    											<button type="button" class="password-toggle" data-target="login-password">
+        											<i class="fas fa-eye"></i>
+    											</button>
+											</div>
+										</div>
+										<div class="field half otp-step-field" id="login-otp-field" style="display:none;">
+											<label for="otp">OTP code</label>
+                                            <input type="text" name="otp" id="otp" maxlength="6" placeholder="ABC123" inputmode="text" autocomplete="one-time-code" autocapitalize="characters"/>
+										</div>
+									</div>
+									<div class="login-step-panel" id="login-step-panel">
+										<span class="active">1. Username</span>
+										<span>2. Password + OTP</span>
+									</div>
+									<div class="feild"><p id="status-login"></p></div>
+									<ul class="actions">
+										<li><input id="loginbtn" type="submit" value="Continue" class="primary" /></li>
+										<li><input type="reset" value="Reset" /></li>
+									</ul>
+								</form>
+							</article>
+							<article id="store-password">
+								<span class="article-eyebrow">Add a credential</span>
+								<h2 class="major">Store Password</h2>
+								<p>Encrypt and add a new login to your private vault.</p>
+								<form id="StorePassword">
+									<div class="fields">
+										<div class="field half">
+											<label for="usernametobestored">Username to be stored</label>
+											<input type="text" name="username" id="usernametobestored" />
+										</div>
+										<div class="field half">
+											<label for="store-service-name">Service name to be stored</label>
+											<input type="text" name="password-name" id="store-service-name" />
+										</div>
+										<div class="field">
+											<label for="store-password-input">Password to be stored</label>
+                                            <input type="password" name="password" id="store-password-input" />
+										</div>
+										<div class="field">
+											<label for="store-hint-input">Password hint (optional)</label>
+											<input type="text" name="hint" id="store-hint-input" />
+										</div>
+									</div>
+									<div class="feild"><p id="status-store"></p></div>
+									<ul class="actions">
+										<li><input type="submit" value="Store" class="primary" /></li>
+										<li><input type="reset" value="Reset" /></li>
+									</ul>
+								</form>
+								<div class="security-note"><span class="icon fa-lock"></span><p>Secrets are encrypted in the browser before storage. Keep your master password private; the server cannot decrypt vault entries for you.</p></div>
+							</article>
+
+							<article id="Getpassword">
+								<span class="article-eyebrow">Secure retrieval</span>
+								<h2 class="major">Get Password</h2>
+								<form id="get-password" method="post" action="#">
+									<div class="fields">
+										<div class="field">
+											<label for="getp-username">Your username</label>
+											<input type="text" name="username" id="getp-username" />
+										</div>
+										<div class="field">
+											<label for="getp-usernameS">Stored username</label>
+											<input type="text" name="usernameS" id="getp-usernameS" />
+										</div>
+										<div class="field">
+											<label for="Servicename_G">Service name</label>
+											<input type="text" name="password-name" id="Servicename_G" />
+										</div>
+										
+									</div>
+									<div class="feild"><p id="status-get"></p></div>
+									<ul class="actions">
+										<li><input type="submit" value="Retrieve" class="primary" /></li>
+										<li><input type="reset" value="Reset" /></li>
+									</ul>
+								</form>
+
+									<h5 id="username_A"></h5>
+								
+									<div class="password-wrapper" id="gotpassword" style="display:none;">
+
+										<input
+											type="password"
+											id="retrievedPassword"
+											value=""
+											readonly
+										/>
+
+										<button
+											type="button"
+											class="copy-btn"
+											onclick="copypass()"
+										>
+											Copy
+										</button>
+										
+									</div>
+								<div class="security-note"><span class="icon fa-shield-alt"></span><p>Retrieval uses the existing nonce and HMAC verification flow. The encrypted blob is decrypted locally with the in-memory vault key.</p></div>
+							</article>
+
+							<article id="Hintpassword">
+								<span class="article-eyebrow">Recovery clue</span>
+								<h2 class="major">Password Hint</h2>
+								<p>Request a stored hint without exposing the password value.</p>
+								<form id="hint-password">
+									<div class="fields">
+										<div class="field">
+											<label for="hint-username">Your username</label>
+											<input type="text" name="username" id="hint-username" autocomplete="username" />
+										</div>
+										<div class="field">
+											<label for="hint-service-name">Service name</label>
+											<input type="text" name="service-name" id="hint-service-name" />
+										</div>
+										<div class="field">
+											<label for="hint-stored-username">Stored Username</label>
+											<input type="text" name="service-name" id="hint-stored-username" />
+										</div>
+									</div>
+									<div class="feild"><p id="status-hint"></p></div>
+									<ul class="actions">
+										<li><input type="submit" value="Show hint" class="primary" /></li>
+										<li><input type="reset" value="Reset" /></li>
+									</ul>
+								</form>
+								<div id="hint-result" class="result-panel" style="display:none;">
+									<span class="article-eyebrow">Stored hint</span>
+									<p id="hint-output"></p>
+								</div>
+							</article>
+
+						
+							<article id="Deletepassword">
+								<span class="article-eyebrow danger">Permanent action</span>
+								<h2 class="major">Delete Passwords stored</h2>
+								<form id="delete-password">
+									<div class="fields">
+										<div class="field half">
+											<label for="usernameD">Your username</label>
+											<input type="text" name="name" id="usernameD" />
+										</div>
+										<div class="field half">
+											<label for="user-nameSD">Stored username</label>
+											<input type="text" name="password-name" id="user-nameSD" />
+										</div>
+										<div class="field">
+											<label for="password-nameD">Service name</label>
+											<input type="text" name="password-name" id="password-nameD" />
+										</div>
+									</div>
+									<div class="feild"><p id="status-del"></p></div>
+									<ul class="actions">
+										<li><input type="submit" value="Delete" class="primary danger-action" /></li>
+										<li><input type="reset" value="Reset" /></li>
+									</ul>
+								</form>
+							</article>
+							<article id="profile">
+								<span class="article-eyebrow">Account overview</span>
+								<h2 class="major">User Profile</h2>
+								<div id="profile-not-logged-in" style="display:none;">
+									<p>You are not logged in. Please <a href="#login">login</a> to view your profile.</p>
+								</div>
+								<div id="profile-logged-in" style="display:none;">
+									<h3>Account Information</h3>
+									<div class="stats-container account-grid">
+										<p><strong>Username</strong><span id="usernameP"></span></p>
+										<p><strong>Email</strong><span id="profile-email">Loading</span></p>
+										<p><strong>2FA</strong><span id="2fa-status">Enabled after setup</span></p>
+									</div>
+									<p id="profile-status-msg"></p>
+
+									
+									<h3>Vault Statistics</h3>
+									<div class="stats-container">
+										<p><strong>Stored Passwords</strong><span id="profile-password-count">0</span></p>
+										<p><strong>Session</strong><span id="profile-last-modified">Checking</span></p>
+									</div>
+
+									
+									<h3>Security Settings</h3>
+
+									
+									<h3>Master Password Security</h3>
+									<p>Your master password is the foundation of your vault security. It should be:</p>
+									<ul>
+										<li>Unique and strong (12+ characters recommended)</li>
+										<li>Always kept private and never shared</li>
+										<li>Never written down or stored openly</li>
+										<li>Changed periodically for enhanced security</li>
+									</ul>
+
+									
+									<h3>Encryption Information</h3>
+									<p>Your vault uses modern encryption standards:</p>
+									<ul>
+										<li><strong>Master Password:</strong> Argon2id key derivation</li>
+										<li><strong>Stored Credentials:</strong> AES-256-GCM encryption</li>
+										<li><strong>Authentication:</strong> HMAC-SHA256 verification</li>
+										<li><strong>All operations:</strong> Zero-knowledge architecture</li>
+									</ul>
+
+									
+									<h3>Quick Actions</h3>
+									<ul class="actions">
+										<li><a href="#store-password" class="button primary small">Store Password</a></li>
+										<li><a href="#Getpassword" class="button primary small">Get Password</a></li>
+									</ul>
+
+									
+									<h3 class="danger-heading">Account Management</h3>
+									<div class="danger-section">
+										<p><strong>Logout from this device</strong></p>
+										<p>Your session data will be cleared, and you'll need to login again.</p>
+										<ul class="actions">
+											<li><input type="button" id="profile-logout-btn" value="Logout" class="button danger-action" /></li>
+										</ul>
+									</div>
+									<div class="danger-section account-delete-section">
+										<p><strong>Delete account permanently</strong></p>
+										<p>This removes your account, email, OTP setup, vault entries, and hints. This cannot be undone.</p>
+										<form id="delete-account-form">
+											<div class="fields">
+												<div class="field">
+													<input type="checkbox" id="delete-account-understand" />
+													<label for="delete-account-understand">I understand this permanently deletes my account and vault.</label>
+												</div>
+												<div class="field half">
+													<label for="delete-account-username">Type your username</label>
+													<input type="text" id="delete-account-username" autocomplete="off" />
+												</div>
+												<div class="field half">
+													<label for="delete-account-phrase">Type "DELETE MY ACCOUNT"</label>
+													<input type="text" id="delete-account-phrase" autocomplete="off" />
+												</div>
+											</div>
+											<div class="feild"><p id="status-delete-account"></p></div>
+											<ul class="actions">
+												<li><input type="submit" id="delete-account-btn" value="Delete account permanently" class="button danger-action" disabled /></li>
+											</ul>
+										</form>
+									</div>
+								</div>
+							</article>
+					</div>
+				
+				
+
+						
+				
+					<footer id="footer">
+						<p class="copyright">© 2026 <a href="https://soyezsecurise.com">SoyezSécurisé</a></p>
+					</footer>
+
+			</div>
+
+		
+			<div id="bg"></div>
+
+		
+			<script src="https://cdn.jsdelivr.net/npm/argon2-browser/dist/argon2-bundled.min.js"></script>
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/browser.min.js"></script>
+			<script src="assets/js/breakpoints.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<script src="assets/js/api.js"></script>
+			<script src="assets/js/progress.js"></script>
+			<script src="assets/js/home_prompt.js"></script>
+			<script src="assets/js/main.js?v=mobile-ux-v6-signup-visibility"></script>
+			<script src="assets/js/quote.js"></script>
+			<script src="assets/js/store.js"></script>
+			<script src="assets/js/menu.js"></script>
+			<script src="assets/js/signup.js"></script>
+			<script src="assets/js/login.js"></script>
+			<script src="assets/js/get.js"></script>
+			<script src="assets/js/hint.js"></script>
+			<script src="assets/js/list.js?v=vault-shimmer-20260704a"></script>
+			<script src="assets/js/delete.js"></script>
+			<script src="assets/js/profile.js"></script>
+			<script src="assets/js/mobile_nav.js"></script>
+			<script src="assets/js/tooltips.js"></script>
+				
+	</body>
+</html>

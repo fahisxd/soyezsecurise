@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Ayano is a CVE analysis CLI and vulnerability research tool by fahisxd.">
+    <meta name="theme-color" content="#ecefe7">
+    <title>Ayano — SoyezSecurise</title>
+    <link rel="icon" href="../favicon.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="../styles.css">
+    <script src="../script.js" defer></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <header class="site-header subpage-header wrap">
+      <a class="wordmark" href="../index.html" aria-label="SoyezSecurise home"><span class="wordmark-mark" aria-hidden="true">S/S</span><span>soyezsecurise</span></a>
+      <nav class="site-nav" aria-label="Primary navigation"><a href="../index.html#work">Work</a><a href="../index.html#notes">Notes</a><a href="../index.html#about">About</a><a href="../coming-soon.html">Soon</a><a href="../premium.html">Ultimate</a></nav>
+      <button class="theme-toggle" type="button" aria-label="Switch to dark theme" title="Change theme">
+        <svg class="sun-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3.5"></circle><path d="M12 2v2M12 20v2M4.93 4.93l1.42 1.42M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.42-1.42M17.66 6.34l1.41-1.41"></path></svg>
+        <svg class="moon-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.5 14.3A8.5 8.5 0 0 1 9.7 3.5 8.5 8.5 0 1 0 20.5 14.3Z"></path></svg>
+      </button>
+    </header>
+
+    <main class="subpage-main" id="main">
+      <section class="project-hero wrap">
+        <div>
+          <a class="back-link" href="../index.html#work">← back to work</a>
+          <p class="kicker"><span class="kicker-line" aria-hidden="true"></span> project 03 / vulnerability research</p>
+          <h1>Ayano<span class="accent">.</span></h1>
+          <p class="project-deck">A CVE-analysis CLI that gathers the context I need before a vulnerability ID becomes useful research.</p>
+          <div class="hero-links">
+            <a class="text-link" href="https://github.com/fahisxd/ayano-CVE.git" target="_blank" rel="noopener">View source on GitHub <span aria-hidden="true">↗</span></a>
+          </div>
+        </div>
+        <dl class="hero-facts">
+          <div><dt>Status</dt><dd>Research tool</dd></div>
+          <div><dt>Interface</dt><dd>Command line</dd></div>
+          <div><dt>Sources</dt><dd>NVD / GitHub</dd></div>
+          <div><dt>Built with</dt><dd>Python</dd></div>
+        </dl>
+      </section>
+
+      <div class="project-body wrap">
+        <aside class="project-toc" aria-label="On this page">
+          <p class="mono-label">On this page</p>
+          <ol><li><a href="#what">What it is</a></li><li><a href="#why">Why I built it</a></li><li><a href="#works">How it works</a></li><li><a href="#learned">Direction</a></li></ol>
+        </aside>
+
+        <div class="prose">
+          <section class="prose-section" id="what">
+            <p class="section-index">01 / what it is</p>
+            <h2>From an identifier to a research trail.</h2>
+            <p>Ayano accepts a CVE and collects the pieces that normally end up spread across browser tabs: vulnerability details, severity and affected-product context, public proof-of-concept searches, and useful research references.</p>
+            <p>It is described as AI-powered because analysis and summarization can be part of the workflow. The foundation, however, is practical aggregation: retrieve good source material before trying to explain it.</p>
+          </section>
+
+          <section class="prose-section" id="why">
+            <p class="section-index">02 / why I built it</p>
+            <h2>A CVE number is the beginning, not the answer.</h2>
+            <p>A database entry can tell me that a vulnerability exists without making the bug easy to understand. I still need to find the vulnerable component, the conditions that make exploitation possible, patches, public research, and any code that demonstrates the behavior.</p>
+            <blockquote class="pullquote">Ayano is meant to remove the repetitive searching so I can spend more time understanding the vulnerability.</blockquote>
+          </section>
+
+          <section class="prose-section" id="works">
+            <p class="section-index">03 / how it works</p>
+            <h2>Collect first. Explain second.</h2>
+            <div class="architecture-flow" aria-label="Ayano research flow">
+              <div><span>01 / query</span><strong>Enter CVE</strong><small>Start with a known identifier</small></div>
+              <div><span>02 / sources</span><strong>Collect records</strong><small>NVD and vulnerability context</small></div>
+              <div><span>03 / research</span><strong>Find PoCs</strong><small>Search public GitHub material</small></div>
+              <div><span>04 / output</span><strong>Build brief</strong><small>A structured starting point</small></div>
+            </div>
+            <p>The useful output should keep source and inference separate. A published severity score, a repository claiming to be a PoC, and an AI-generated explanation do not carry the same confidence; the interface should not make them look identical.</p>
+          </section>
+
+          <section class="prose-section" id="learned">
+            <p class="section-index">04 / current direction</p>
+            <h2>Make provenance visible.</h2>
+            <p>The strongest version of Ayano is not one that sounds certain. It is one that makes it quick to trace a statement back to NVD, a vendor advisory, a commit, or public research—and labels generated interpretation as interpretation.</p>
+            <p>Future work is less about adding more text and more about ranking evidence, detecting weak or suspicious PoC repositories, and turning the result into a reproducible research checklist.</p>
+          </section>
+
+          <a class="next-project" href="coffre.html"><div><span>Back to first project</span><strong>Coffre</strong></div><span aria-hidden="true">↗</span></a>
+        </div>
+      </div>
+    </main>
+
+    <footer class="site-footer wrap">
+      <p>Good vulnerability research leaves a trail you can check.</p>
+      <div><a href="https://github.com/fahisxd" target="_blank" rel="me noopener">GitHub ↗</a><a href="https://instagram.com/fahisxd" target="_blank" rel="me noopener">Instagram ↗</a><a href="#main">Back to top ↑</a></div>
+      <p class="footer-copy">© <span data-year>2026</span> SoyezSecurise</p>
+    </footer>
+  </body>
+</html>

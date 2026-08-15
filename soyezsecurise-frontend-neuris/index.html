@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="Neuris Ultemate classifies input as XSS, SQL injection, path traversal, command injection, or safe."
+    />
+    <meta name="theme-color" content="#ecefe7" />
+    <title>Neuris Ultemate</title>
+    <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="styles.css" />
+    <script src="app.js" defer></script>
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="wordmark" href="#" aria-label="Neuris Ultemate home">
+        <span class="brand-logo" aria-hidden="true"></span>
+        <span class="brand-copy">
+          <strong>NEURIS<span class="accent">/</span>ULTEMATE</strong>
+          <small>UNDER SOYEZSÉCURISÉ</small>
+        </span>
+      </a>
+      <div class="header-actions">
+        <div class="header-meta">
+          <span class="api-route">GET /neuris</span>
+          <span class="client-state"><i aria-hidden="true"></i> CLIENT READY</span>
+        </div>
+        <button class="theme-toggle" type="button" aria-label="Switch to dark theme" title="Change theme">
+          <svg class="sun-icon" viewBox="0 0 24 24" aria-hidden="true">
+            <circle cx="12" cy="12" r="3.5"></circle>
+            <path d="M12 2v2M12 20v2M4.93 4.93l1.42 1.42M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.42-1.42M17.66 6.34l1.41-1.41"></path>
+          </svg>
+          <svg class="moon-icon" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M20.5 14.3A8.5 8.5 0 0 1 9.7 3.5 8.5 8.5 0 1 0 20.5 14.3Z"></path>
+          </svg>
+        </button>
+      </div>
+    </header>
+
+    <main class="workspace" id="scanner">
+      <div class="output-area" id="output-area">
+        <section class="empty-state" id="empty-state" aria-labelledby="page-title">
+          <span class="terminal-glyph" aria-hidden="true">›_</span>
+          <h1 id="page-title">What should Neuris inspect?</h1>
+          <p>Classify an input as safe, XSS, SQL injection, path traversal, or command injection.</p>
+        </section>
+
+        <section class="result-panel" aria-labelledby="result-title" aria-live="polite" aria-busy="false" hidden>
+          <div class="result-topline">
+            <p id="result-title"><span aria-hidden="true">›_</span> ANALYSIS</p>
+            <span class="result-status" id="result-status">AWAITING INPUT</span>
+          </div>
+
+          <div class="verdict-block">
+            <div>
+              <span class="data-label">PREDICTED CLASS</span>
+              <strong class="verdict" id="verdict">—</strong>
+            </div>
+            <div class="confidence-box">
+              <span class="data-label">CONFIDENCE</span>
+              <strong id="confidence">00.00<span>%</span></strong>
+            </div>
+          </div>
+
+          <div class="probabilities" id="probabilities">
+            <div class="probability" data-class="SAFE">
+              <div><span>SAFE</span><output>0.000000</output></div><span class="bar"><i></i></span>
+            </div>
+            <div class="probability" data-class="XSS">
+              <div><span>XSS</span><output>0.000000</output></div><span class="bar"><i></i></span>
+            </div>
+            <div class="probability" data-class="SQLI">
+              <div><span>SQL INJECTION</span><output>0.000000</output></div><span class="bar"><i></i></span>
+            </div>
+            <div class="probability" data-class="PATH_TRAVERSAL">
+              <div><span>PATH TRAVERSAL</span><output>0.000000</output></div><span class="bar"><i></i></span>
+            </div>
+            <div class="probability" data-class="COMMAND_INJECTION">
+              <div><span>COMMAND INJECTION</span><output>0.000000</output></div><span class="bar"><i></i></span>
+            </div>
+          </div>
+
+          <p class="result-message" id="result-message">Submit an input to receive a model verdict.</p>
+          <a
+            class="report-link"
+            id="report-link"
+            href="https://mail.google.com/"
+            aria-label="Report this prediction as incorrect using Gmail"
+            hidden
+          >
+            PREDICTION WRONG? REPORT IT <span aria-hidden="true">↗</span>
+          </a>
+        </section>
+      </div>
+
+      <div class="composer-wrap">
+        <form class="composer" id="scan-form">
+          <label class="sr-only" for="payload-input">Input to classify</label>
+          <textarea
+            id="payload-input"
+            name="payload"
+            rows="1"
+            maxlength="4096"
+            spellcheck="false"
+            autocomplete="off"
+            placeholder="Enter an input to classify"
+            required
+          ></textarea>
+          <button class="scan-button" id="scan-button" type="submit" aria-label="Run classification">
+            <span>RUN</span><i aria-hidden="true">↑</i>
+          </button>
+          <div class="composer-meta">
+            <div class="examples" aria-label="Example inputs">
+              <span>TRY:</span>
+              <button type="button" data-sample="Hello, have a nice day.">SAFE</button>
+              <button type="button" data-sample="&lt;script&gt;alert(document.cookie)&lt;/script&gt;">XSS</button>
+              <button type="button" data-sample="' OR 1=1 --">SQLI</button>
+              <button type="button" data-sample="../../etc/passwd">PATH</button>
+              <button type="button" data-sample="; cat /etc/passwd">COMMAND</button>
+            </div>
+            <span id="character-count">0000 / 4096</span>
+          </div>
+        </form>
+
+        <p class="disclaimer">
+          Neuris can make mistakes. Never use this prediction as your only security control.
+          <span>Built by <a href="https://github.com/fahisxd" rel="noreferrer">fahisxd</a> · Built from scratch, then transitioned to NumPy with help from an AI agent · <a href="DELTA/delta_font_by_maryia_hilep_licence.txt">Delta font by Maryia Hilep</a> · Have a nice day :)</span>
+        </p>
+        <span id="request-timer" class="request-timer" aria-live="polite">IDLE</span>
+      </div>
+    </main>
+  </body>
+</html>

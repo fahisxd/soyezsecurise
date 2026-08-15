@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="A field note on starting Coffre and using a password manager project to learn security boundaries.">
+    <meta name="theme-color" content="#ecefe7">
+    <title>Starting a password manager to learn what it actually trusts — SoyezSecurise</title>
+    <link rel="icon" href="../favicon.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="../styles.css">
+    <script src="../script.js" defer></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <header class="site-header subpage-header wrap">
+      <a class="wordmark" href="../index.html" aria-label="SoyezSecurise home"><span class="wordmark-mark" aria-hidden="true">S/S</span><span>soyezsecurise</span></a>
+      <nav class="site-nav" aria-label="Primary navigation"><a href="../index.html#work">Work</a><a href="index.html">Notes</a><a href="../index.html#about">About</a><a href="../coming-soon.html">Soon</a><a href="../premium.html">Ultimate</a></nav>
+      <button class="theme-toggle" type="button" aria-label="Switch to dark theme" title="Change theme"><svg class="sun-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3.5"></circle><path d="M12 2v2M12 20v2M4.93 4.93l1.42 1.42M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.42-1.42M17.66 6.34l1.41-1.41"></path></svg><svg class="moon-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.5 14.3A8.5 8.5 0 0 1 9.7 3.5 8.5 8.5 0 1 0 20.5 14.3Z"></path></svg></button>
+    </header>
+
+    <main class="article-page wrap" id="main">
+      <article>
+        <header class="article-header">
+          <a class="back-link" href="index.html">← all notes</a>
+          <p class="article-meta"><time datetime="2026-05-08">08 May 2026</time> · Process / field note · 3 min</p>
+          <h1>Starting a password manager to learn what it actually trusts</h1>
+          <p class="article-deck">The first build could store a password. That was exactly when the real questions started.</p>
+        </header>
+
+        <div class="article-body">
+          <p>Coffre began as a small Bash version. The goal was not to compete with mature password managers. I wanted a problem that would force me to connect cryptography, authentication, backend design, and browser behavior.</p>
+
+          <p>“Store a password securely” sounds like one requirement. It immediately expands:</p>
+          <ul>
+            <li>Where is the encryption key created?</li>
+            <li>Does the server ever see material that can decrypt the vault?</li>
+            <li>How is a wrong password distinguished from corrupted data?</li>
+            <li>What does a session prove, and for how long?</li>
+            <li>How is a second factor enrolled without leaving its secret exposed?</li>
+            <li>What happens to a copied password after it reaches the clipboard?</li>
+          </ul>
+
+          <h2>The interface was not the architecture</h2>
+          <p>I moved from Bash to HTML, then a template-based version, then the current web UI. Each interface felt like progress, but the important changes were invisible: deriving separate keys with HKDF instead of reusing one key, retrieving one password separately from listing entry names, and making nonces expire and become unusable after one request.</p>
+
+          <blockquote>The UI could look finished while the trust model was still unfinished.</blockquote>
+
+          <h2>Building created the syllabus</h2>
+          <p>I did not begin with a complete list of everything needed for a password manager. The project generated that list as it failed: Argon2id, authenticated encryption, OTP enrollment, rate limiting, temporary state, database design, email verification, browser crypto, deployment constraints, logging, and XSS review.</p>
+          <p>That is the development loop I want SoyezSecurise to keep: understand the problem, build the system, attack the assumptions, then refine the architecture. The result takes longer than a portfolio mockup. It also teaches more than one.</p>
+
+          <p class="article-end"><a class="text-link" href="../projects/coffre.html">Read the Coffre project page <span aria-hidden="true">↗</span></a></p>
+        </div>
+      </article>
+    </main>
+
+    <footer class="site-footer wrap">
+      <p>The project is unfinished. That is why it is still teaching me things.</p>
+      <div><a href="https://github.com/fahisxd" target="_blank" rel="me noopener">GitHub ↗</a><a href="https://instagram.com/fahisxd" target="_blank" rel="me noopener">Instagram ↗</a><a href="#main">Back to top ↑</a></div>
+      <p class="footer-copy">© <span data-year>2026</span> SoyezSecurise</p>
+    </footer>
+  </body>
+</html>

@@ -1,0 +1,801 @@
+/* Sage theme shared with the SoyezSecurise public frontend. */
+:root {
+	color-scheme: light;
+	--paper: #ecefe7;
+	--paper-raised: #f4f5f0;
+	--ink: #1b211c;
+	--ink-soft: #4f5851;
+	--muted: #747d75;
+	--line: #cbd1c8;
+	--line-strong: #aab5aa;
+	--sage: #607d68;
+	--sage-dark: #3f5d47;
+	--sage-pale: #dce5da;
+	--sage-solid: #55705d;
+	--sage-solid-hover: #3f5d47;
+	--selection: #c7d7c5;
+	--field: #f8f9f5;
+	--field-focus: #ffffff;
+	--surface-soft: #e7ebe3;
+	--shadow: rgba(27, 33, 28, 0.12);
+	--shadow-strong: rgba(27, 33, 28, 0.2);
+	--accent-soft: rgba(96, 125, 104, 0.1);
+	--accent-line: rgba(96, 125, 104, 0.3);
+	--danger: #a44646;
+	--danger-soft: rgba(164, 70, 70, 0.1);
+	--danger-line: rgba(164, 70, 70, 0.32);
+	--sans: "Helvetica Neue", Helvetica, Arial, ui-sans-serif, system-ui, sans-serif;
+	--mono: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+	--ss-black: var(--paper);
+	--ss-panel: var(--paper-raised);
+	--ss-panel-soft: var(--sage-pale);
+	--ss-border: var(--line);
+	--ss-aqua: var(--sage);
+	--ss-mint: var(--ink);
+	--ss-muted: var(--muted);
+	--ss-white: var(--ink);
+	--ss-danger: var(--danger);
+}
+
+[data-theme="dark"] {
+	color-scheme: dark;
+	--paper: #151a16;
+	--paper-raised: #1b211c;
+	--ink: #e9ede6;
+	--ink-soft: #b7c0b7;
+	--muted: #899289;
+	--line: #313b33;
+	--line-strong: #536158;
+	--sage: #93ae96;
+	--sage-dark: #b6cbb7;
+	--sage-pale: #263329;
+	--sage-solid: #93ae96;
+	--sage-solid-hover: #b6cbb7;
+	--selection: #3c5741;
+	--field: #202721;
+	--field-focus: #252e27;
+	--surface-soft: #202821;
+	--shadow: rgba(0, 0, 0, 0.26);
+	--shadow-strong: rgba(0, 0, 0, 0.42);
+	--accent-soft: rgba(147, 174, 150, 0.1);
+	--accent-line: rgba(147, 174, 150, 0.3);
+	--danger: #ef8b8b;
+	--danger-soft: rgba(239, 139, 139, 0.1);
+	--danger-line: rgba(239, 139, 139, 0.3);
+}
+
+html,
+body,
+#bg {
+	background: var(--paper) !important;
+}
+
+html,
+body,
+#bg,
+#main article,
+.vault-dashboard-section,
+.theme-toggle,
+input,
+select,
+textarea,
+button,
+.button {
+	transition: background-color 180ms ease, border-color 180ms ease, color 180ms ease, box-shadow 180ms ease;
+}
+
+body,
+input,
+select,
+textarea,
+button {
+	color: var(--ink);
+	font-family: var(--sans);
+}
+
+body {
+	color: var(--ink-soft);
+}
+
+body::before,
+#bg::before,
+#bg::after {
+	background: transparent !important;
+	background-image: none !important;
+}
+
+::selection {
+	color: var(--ink);
+	background: var(--selection);
+}
+
+:focus-visible {
+	outline: 2px solid var(--sage);
+	outline-offset: 3px;
+}
+
+strong,
+b,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+	color: var(--ink);
+}
+
+a:hover {
+	color: var(--sage-dark);
+}
+
+.app-brand a,
+.auth-brand,
+.brand-copy strong,
+.auth-brand:hover,
+.auth-brand:focus {
+	color: var(--ink);
+}
+
+.brand-mark,
+.auth-brand-mark {
+	background: var(--paper-raised);
+	border-color: var(--line-strong);
+	border-radius: 0.45rem;
+	box-shadow: none;
+}
+
+.brand-mark img,
+.auth-brand-mark img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+
+.brand-copy small {
+	color: var(--ink-soft);
+}
+
+.version-badge {
+	color: var(--paper);
+	background: var(--sage-solid);
+}
+
+.hero-badge,
+.article-eyebrow,
+.version-badge,
+label,
+input[type="submit"],
+input[type="reset"],
+input[type="button"],
+button,
+.button,
+.login-step-panel,
+.setup-steps,
+.trust-row,
+.vault-dashboard-footer {
+	font-family: var(--mono);
+}
+
+.theme-toggle {
+	position: fixed;
+	top: 1.9rem;
+	right: 5.7rem;
+	z-index: 22000;
+	display: grid;
+	width: 2.8rem;
+	height: 2.8rem;
+	min-width: 2.8rem;
+	min-height: 2.8rem;
+	padding: 0;
+	place-items: center;
+	color: var(--ink-soft);
+	background: var(--paper-raised);
+	border: 1px solid var(--line-strong);
+	border-radius: 0.45rem;
+	box-shadow: 0 10px 28px var(--shadow);
+	cursor: pointer;
+	line-height: 1;
+}
+
+.theme-toggle:hover {
+	color: var(--sage-dark);
+	background: var(--sage-pale);
+	border-color: var(--sage);
+	transform: none;
+}
+
+.theme-toggle svg {
+	display: block;
+	width: 1rem;
+	height: 1rem;
+	fill: none;
+	stroke: currentColor;
+	stroke-width: 1.5;
+	stroke-linecap: round;
+	stroke-linejoin: round;
+}
+
+.theme-toggle .moon-icon,
+[data-theme="dark"] .theme-toggle .sun-icon {
+	display: none;
+}
+
+[data-theme="dark"] .theme-toggle .moon-icon {
+	display: block;
+}
+
+.hero-badge {
+	color: var(--sage-dark);
+	background: var(--accent-soft);
+	border-color: var(--accent-line);
+}
+
+.status-pulse {
+	background: var(--sage);
+	box-shadow: 0 0 0 5px var(--accent-soft);
+}
+
+#header .content h1,
+.vault-dashboard-hero h1,
+#main article h2.major,
+#main article h3,
+#main article h4,
+.vault-dashboard-heading h2,
+.danger-zone h2 {
+	color: var(--ink);
+}
+
+#header .content h1 span,
+.vault-dashboard-hero h1 span,
+.article-eyebrow,
+.trust-row i,
+.security-note .icon,
+.selected-method,
+#footer a,
+.password-wrapper .password-toggle {
+	color: var(--sage) !important;
+}
+
+#quote,
+#answerforotpq,
+.vault-dashboard-hero p,
+.danger-zone p,
+#main article,
+#main article p,
+.method-hint,
+.dashboard-empty-state {
+	color: var(--ink-soft);
+}
+
+body:not(.dashboard-authenticated) #quote {
+	display: block;
+}
+
+@media screen and (min-width: 737px) {
+	body:not(.dashboard-authenticated) .content #quote {
+		max-width: 690px;
+		margin-right: auto;
+		margin-left: auto;
+		font-size: 1.02rem;
+		font-style: normal;
+		letter-spacing: 0;
+		line-height: 1.7;
+		text-transform: none;
+	}
+}
+
+.vault-dashboard-heading span,
+.vault-item-meta span,
+#footer .copyright {
+	color: var(--muted);
+}
+
+.trust-row span,
+.vault-dashboard-footer span {
+	color: var(--ink-soft);
+	background: var(--surface-soft);
+	border-color: var(--line);
+}
+
+#header nav ul,
+.mobile-tabbar {
+	background: var(--paper-raised);
+	border-color: var(--line);
+	box-shadow: 0 18px 50px var(--shadow);
+	backdrop-filter: none;
+}
+
+#header nav ul li a {
+	color: var(--muted);
+}
+
+#header nav ul li a .icon {
+	color: var(--sage);
+	background: var(--accent-soft);
+	border-color: var(--accent-line);
+}
+
+#header nav ul li a.primary-vault-action .icon,
+#header nav ul li a:hover,
+.login-step-panel span.active,
+.login-step-panel.otp-active span:last-child,
+.setup-steps span.active {
+	color: var(--paper);
+	background: var(--sage-solid);
+	border-color: var(--sage-solid);
+}
+
+#header nav ul li a.primary-vault-action span {
+	color: var(--ink);
+}
+
+#header nav ul li a small,
+#header nav ul li a:hover small {
+	color: var(--muted);
+}
+
+#header nav ul li a:hover .icon {
+	color: var(--paper);
+	background: color-mix(in srgb, var(--paper) 14%, transparent);
+	border-color: color-mix(in srgb, var(--paper) 24%, transparent);
+}
+
+#header nav ul li a.primary-vault-action:hover .icon {
+	color: var(--sage);
+	background: var(--paper);
+	border-color: var(--line-strong);
+}
+
+.vault-dashboard-section,
+#main article,
+.stats-container,
+.danger-section,
+.result-panel,
+.security-note,
+.password-strength,
+.login-step-panel span,
+.setup-steps span {
+	background: var(--paper-raised);
+	border-color: var(--line) !important;
+	box-shadow: 0 18px 50px var(--shadow);
+	backdrop-filter: none;
+}
+
+.vault-dashboard-section,
+#main article {
+	border-radius: 0.65rem;
+}
+
+.vault-dashboard-heading {
+	border-bottom-color: var(--line);
+}
+
+.dashboard-password-list li.vault-item,
+#passwordList li.vault-item,
+#passwordList li {
+	color: var(--ink);
+	background: var(--surface-soft);
+	border-color: var(--line);
+}
+
+.dashboard-password-list li.vault-item:hover,
+#passwordList li.vault-item:hover {
+	background: var(--sage-pale);
+	border-color: var(--sage);
+	box-shadow: 0 12px 28px var(--shadow);
+}
+
+.vault-skeleton-line,
+.vault-skeleton-button {
+	background: var(--sage-pale);
+	border-color: var(--line);
+}
+
+.dashboard-empty-state {
+	background: var(--surface-soft);
+	border-color: var(--line-strong);
+}
+
+.danger-zone,
+.account-delete-section {
+	border-color: var(--danger-line) !important;
+}
+
+#menu-btn {
+	color: var(--ink);
+	background: var(--paper-raised);
+	border-color: var(--line-strong);
+	box-shadow: 0 10px 28px var(--shadow);
+	backdrop-filter: none;
+}
+
+#menu-btn:hover {
+	color: var(--paper);
+	background: var(--sage-solid);
+	border-color: var(--sage-solid);
+}
+
+#menu {
+	background: var(--paper-raised);
+	border-color: var(--line);
+	box-shadow: 0 18px 50px var(--shadow-strong);
+	backdrop-filter: none;
+}
+
+#menu a {
+	color: var(--ink-soft);
+}
+
+#menu a:hover {
+	color: var(--ink);
+	background: var(--sage-pale);
+}
+
+#main article .close::before {
+	background-color: var(--surface-soft);
+	border-color: var(--line);
+}
+
+[data-theme="light"] #main article .close::before {
+	filter: none;
+	background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20'%3E%3Cstyle%3Eline%7Bstroke:%231b211c;stroke-width:1.25%7D%3C/style%3E%3Cline x1='2' y1='2' x2='18' y2='18'/%3E%3Cline x1='18' y1='2' x2='2' y2='18'/%3E%3C/svg%3E");
+}
+
+.article-eyebrow.danger,
+.danger-heading,
+#logoutrequest {
+	color: var(--danger) !important;
+}
+
+label,
+.password-strength-header,
+.password-strength-rules,
+.login-step-panel span,
+.setup-steps span {
+	color: var(--muted);
+}
+
+#main article input[type="text"],
+#main article input[type="password"],
+#main article input[type="email"],
+#main article input[type="tel"],
+#main article select,
+#main article textarea {
+	color: var(--ink) !important;
+	-webkit-text-fill-color: var(--ink) !important;
+	caret-color: var(--sage) !important;
+	background: var(--field) !important;
+	background-color: var(--field) !important;
+	border-color: var(--line-strong) !important;
+	box-shadow: none !important;
+}
+
+#main article input[type="text"]:focus,
+#main article input[type="password"]:focus,
+#main article input[type="email"]:focus,
+#main article input[type="tel"]:focus,
+#main article select:focus,
+#main article textarea:focus {
+	color: var(--ink) !important;
+	-webkit-text-fill-color: var(--ink) !important;
+	background: var(--field-focus) !important;
+	background-color: var(--field-focus) !important;
+	border-color: var(--sage) !important;
+	box-shadow: 0 0 0 3px var(--accent-soft) !important;
+	outline-color: var(--sage) !important;
+}
+
+#main article input::placeholder,
+#main article textarea::placeholder {
+	color: var(--muted) !important;
+	-webkit-text-fill-color: var(--muted) !important;
+	opacity: 0.72 !important;
+}
+
+#main article input:-webkit-autofill,
+#main article input:-webkit-autofill:hover,
+#main article input:-webkit-autofill:focus,
+#main article textarea:-webkit-autofill,
+#main article textarea:-webkit-autofill:hover,
+#main article textarea:-webkit-autofill:focus,
+#main article select:-webkit-autofill,
+#main article select:-webkit-autofill:hover,
+#main article select:-webkit-autofill:focus {
+	-webkit-text-fill-color: var(--ink) !important;
+	caret-color: var(--sage) !important;
+	box-shadow: 0 0 0 1000px var(--field) inset !important;
+	border-color: var(--line-strong) !important;
+}
+
+.method-select::before,
+.copy-btn,
+.password-strength-rules li.met::before,
+.password-strength[data-strength="strong"] .password-strength-meter span,
+.password-strength[data-strength="excellent"] .password-strength-meter span,
+.progress-fill,
+.progress-shell.is-success .progress-fill {
+	background: var(--sage);
+	border-color: var(--sage);
+	box-shadow: none;
+}
+
+.method-select::after {
+	border-color: var(--paper);
+}
+
+.password-strength-header strong,
+.password-strength[data-strength="strong"] .password-strength-header strong,
+.password-strength[data-strength="excellent"] .password-strength-header strong,
+.password-strength-rules li.met {
+	color: var(--sage-dark);
+}
+
+.password-strength-meter {
+	background: var(--line);
+}
+
+input[type="submit"],
+input[type="reset"],
+input[type="button"],
+button,
+.button {
+	color: var(--ink) !important;
+	background: transparent;
+	border-color: var(--line-strong);
+	box-shadow: none;
+}
+
+input[type="submit"]:hover,
+input[type="reset"]:hover,
+input[type="button"]:hover,
+button:hover,
+.button:hover {
+	color: var(--sage-dark) !important;
+	background: var(--sage-pale);
+	border-color: var(--sage);
+}
+
+input[type="submit"].primary,
+input[type="reset"].primary,
+input[type="button"].primary,
+button.primary,
+.button.primary,
+.copy-btn {
+	color: var(--paper) !important;
+	background: var(--sage-solid);
+	border-color: var(--sage-solid);
+	box-shadow: none;
+}
+
+input[type="submit"].primary:hover,
+input[type="reset"].primary:hover,
+input[type="button"].primary:hover,
+button.primary:hover,
+.button.primary:hover,
+.copy-btn:hover {
+	color: var(--paper) !important;
+	background: var(--sage-solid-hover);
+	border-color: var(--sage-solid-hover);
+}
+
+.danger-action {
+	color: var(--danger) !important;
+	background: var(--danger-soft) !important;
+	border-color: var(--danger-line) !important;
+}
+
+.danger-action:hover {
+	color: var(--danger) !important;
+	background: var(--danger-soft) !important;
+}
+
+.feild p[id^="status-"],
+#profile-status-msg {
+	color: var(--muted);
+	background: var(--accent-soft);
+	border-left-color: var(--sage);
+}
+
+.one-time-notice {
+	color: var(--ink-soft);
+	background: var(--paper-raised);
+	border-color: var(--line);
+}
+
+.qr-box img {
+	border-color: var(--line-strong);
+	box-shadow: 0 14px 36px var(--shadow);
+}
+
+.home-auth-prompt {
+	color: var(--ink-soft);
+	background: var(--paper-raised);
+	border-color: var(--line-strong);
+	box-shadow: 0 18px 50px var(--shadow-strong);
+	backdrop-filter: none;
+}
+
+.home-auth-prompt-copy strong {
+	color: var(--ink);
+}
+
+.home-auth-prompt-copy span {
+	color: var(--ink-soft);
+}
+
+.home-auth-prompt-icon {
+	color: var(--paper);
+	background: var(--sage-solid);
+	box-shadow: none;
+}
+
+.home-auth-prompt-close {
+	color: var(--ink-soft) !important;
+	background: var(--surface-soft);
+	border-color: var(--line);
+}
+
+body.deployment-page::before {
+	background: var(--paper) !important;
+}
+
+.deployment-page .glow {
+	display: none;
+}
+
+.deployment-page .brand,
+.deployment-page h1 {
+	color: var(--ink);
+}
+
+.deployment-page .status {
+	color: var(--sage-dark);
+	background: var(--sage-pale);
+	border-color: var(--line-strong);
+}
+
+.deployment-page .pulse {
+	background: var(--sage);
+}
+
+.deployment-page .lead {
+	color: var(--ink-soft);
+}
+
+.deployment-page .notice {
+	color: var(--ink-soft);
+	background: var(--paper-raised);
+	border-color: var(--line);
+}
+
+.deployment-page footer {
+	color: var(--muted);
+}
+
+@media screen and (max-width: 736px) {
+	html,
+	body {
+		background: var(--paper) !important;
+	}
+
+	.theme-toggle {
+		position: fixed !important;
+		top: max(0.78rem, env(safe-area-inset-top)) !important;
+		right: max(4rem, calc(3.8rem + env(safe-area-inset-right))) !important;
+		left: auto !important;
+		width: 2.45rem !important;
+		height: 2.45rem !important;
+		min-width: 2.45rem !important;
+		min-height: 2.45rem !important;
+		padding: 0 !important;
+		border-radius: 0.4rem !important;
+		line-height: 1 !important;
+	}
+
+	#menu-btn {
+		color: var(--paper) !important;
+		background: var(--sage-solid) !important;
+		border-color: var(--sage-solid) !important;
+		border-radius: 0.4rem !important;
+	}
+
+	#header nav ul li a,
+	.mobile-tabbar,
+	body.is-article-visible #main article {
+		background: var(--paper-raised) !important;
+		border-color: var(--line) !important;
+	}
+
+	#header nav ul li a::after,
+	.mobile-tabbar a .icon {
+		color: var(--sage);
+	}
+
+	#header nav ul li a small,
+	.mobile-tabbar a {
+		color: var(--muted);
+	}
+
+	.mobile-tabbar a.active,
+	.mobile-tabbar a[aria-current="page"] {
+		color: var(--sage-dark);
+		background: var(--sage-pale);
+		box-shadow: inset 0 0 0 1px var(--line-strong);
+	}
+
+	body.is-article-visible #main article input[type="text"],
+	body.is-article-visible #main article input[type="password"],
+	body.is-article-visible #main article input[type="email"],
+	body.is-article-visible #main article input[type="tel"],
+	body.is-article-visible #main article textarea,
+	body.is-article-visible #main article select,
+	body.is-article-visible #signin input,
+	body.is-article-visible #signin textarea,
+	body.is-article-visible #signin select {
+		color: var(--ink) !important;
+		-webkit-text-fill-color: var(--ink) !important;
+		caret-color: var(--sage) !important;
+		font-family: "Helvetica Neue", Helvetica, Arial, ui-sans-serif, system-ui, sans-serif !important;
+		background: var(--field) !important;
+		background-color: var(--field) !important;
+		border-color: var(--line-strong) !important;
+	}
+
+	body.is-article-visible #main article input[type="text"]:focus,
+	body.is-article-visible #main article input[type="password"]:focus,
+	body.is-article-visible #main article input[type="email"]:focus,
+	body.is-article-visible #main article input[type="tel"]:focus,
+	body.is-article-visible #main article textarea:focus,
+	body.is-article-visible #main article select:focus,
+	body.is-article-visible #signin input:focus,
+	body.is-article-visible #signin textarea:focus,
+	body.is-article-visible #signin select:focus {
+		color: var(--ink) !important;
+		-webkit-text-fill-color: var(--ink) !important;
+		background: var(--field-focus) !important;
+		background-color: var(--field-focus) !important;
+		border-color: var(--sage) !important;
+		outline-color: var(--sage) !important;
+	}
+
+	body.is-article-visible #main article input::placeholder,
+	body.is-article-visible #main article textarea::placeholder {
+		color: var(--muted) !important;
+		-webkit-text-fill-color: var(--muted) !important;
+	}
+
+	body.is-article-visible #main article input:-webkit-autofill,
+	body.is-article-visible #main article textarea:-webkit-autofill,
+	body.is-article-visible #signin input:-webkit-autofill {
+		-webkit-text-fill-color: var(--ink) !important;
+		caret-color: var(--sage) !important;
+		box-shadow: 0 0 0 1000px var(--field) inset !important;
+	}
+
+	.password-wrapper .password-toggle,
+	.password-wrapper .password-toggle:hover {
+		color: var(--sage) !important;
+		background: transparent !important;
+	}
+
+	.deployment-page .theme-toggle {
+		right: max(0.8rem, env(safe-area-inset-right)) !important;
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	html,
+	body,
+	#bg,
+	#main article,
+	.vault-dashboard-section,
+	.theme-toggle,
+	input,
+	select,
+	textarea,
+	button,
+	.button {
+		transition: none !important;
+	}
+}

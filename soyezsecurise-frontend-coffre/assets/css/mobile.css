@@ -1,0 +1,737 @@
+/* Authoritative mobile layout. Loaded after the legacy and theme stylesheets. */
+@media screen and (max-width: 736px) {
+	:root {
+		--mobile-edge: clamp(1rem, 4.6vw, 1.35rem);
+		--mobile-topbar: 4.5rem;
+		--mobile-control: 2.625rem;
+	}
+
+	html,
+	body {
+		width: 100%;
+		min-width: 0;
+		min-height: 100%;
+		overflow-x: hidden;
+		background: var(--paper) !important;
+	}
+
+	body {
+		font-size: 16px;
+		line-height: 1.55;
+	}
+
+	#bg,
+	.mobile-tabbar {
+		display: none !important;
+	}
+
+	/* App chrome */
+	.app-brand {
+		position: fixed !important;
+		top: max(0.8rem, env(safe-area-inset-top)) !important;
+		left: max(var(--mobile-edge), env(safe-area-inset-left)) !important;
+		z-index: 21000 !important;
+		max-width: calc(100vw - 8rem) !important;
+	}
+
+	.app-brand a {
+		gap: 0.65rem;
+	}
+
+	.brand-mark {
+		width: var(--mobile-control);
+		height: var(--mobile-control);
+		flex: 0 0 var(--mobile-control);
+		border-radius: 0.5rem;
+	}
+
+	.brand-copy {
+		display: flex !important;
+		min-width: 0;
+	}
+
+	.brand-copy strong {
+		max-width: 10.5rem;
+		font-size: 0.8rem;
+		line-height: 1.15;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+	}
+
+	.brand-copy small,
+	.version-badge {
+		display: none;
+	}
+
+	.theme-toggle,
+	#menu-btn {
+		box-sizing: border-box !important;
+		width: var(--mobile-control) !important;
+		height: var(--mobile-control) !important;
+		min-width: var(--mobile-control) !important;
+		min-height: var(--mobile-control) !important;
+		padding: 0 !important;
+		border-radius: 0.5rem !important;
+		line-height: 1 !important;
+	}
+
+	.theme-toggle {
+		position: fixed !important;
+		top: max(0.8rem, env(safe-area-inset-top)) !important;
+		right: calc(max(var(--mobile-edge), env(safe-area-inset-right)) + var(--mobile-control) + 0.55rem) !important;
+		left: auto !important;
+		z-index: 23000 !important;
+	}
+
+	body:not(.is-article-visible):not(.user-authenticated) .theme-toggle,
+	body.otp-page:not(.is-article-visible) .theme-toggle {
+		right: max(var(--mobile-edge), env(safe-area-inset-right)) !important;
+	}
+
+	#user-button {
+		position: fixed !important;
+		top: max(0.8rem, env(safe-area-inset-top)) !important;
+		right: max(var(--mobile-edge), env(safe-area-inset-right)) !important;
+		left: auto !important;
+		width: var(--mobile-control) !important;
+		height: var(--mobile-control) !important;
+		margin: 0 !important;
+		padding: 0 !important;
+		z-index: 22000 !important;
+	}
+
+	#menu-btn {
+		position: static !important;
+		display: grid !important;
+		place-items: center;
+		color: var(--paper) !important;
+		background: var(--sage-solid) !important;
+		border: 1px solid var(--sage-solid) !important;
+		box-shadow: none !important;
+	}
+
+	#menu {
+		position: fixed !important;
+		top: calc(max(0.8rem, env(safe-area-inset-top)) + var(--mobile-control) + 0.55rem) !important;
+		right: max(var(--mobile-edge), env(safe-area-inset-right)) !important;
+		left: auto !important;
+		width: min(13.5rem, calc(100vw - (2 * var(--mobile-edge)))) !important;
+		padding: 0.5rem;
+		border-radius: 0.65rem;
+	}
+
+	#menu a {
+		min-height: 2.75rem;
+		display: flex;
+		align-items: center;
+		padding: 0.7rem 0.8rem;
+		font-size: 0.82rem;
+	}
+
+	/* Public landing */
+	#wrapper,
+	body:not(.dashboard-authenticated) #wrapper,
+	body.dashboard-authenticated #wrapper {
+		width: 100% !important;
+		min-height: 100svh;
+		margin: 0 !important;
+		padding: calc(var(--mobile-topbar) + env(safe-area-inset-top)) var(--mobile-edge) calc(1.25rem + env(safe-area-inset-bottom)) !important;
+		gap: 0;
+		justify-content: flex-start;
+	}
+
+	body:not(.is-article-visible) #header {
+		display: flex !important;
+		width: 100% !important;
+		min-height: 0;
+		flex: 1 0 auto;
+		margin: 0 !important;
+		padding: 0 !important;
+		align-items: center;
+		justify-content: flex-start;
+	}
+
+	body:not(.is-article-visible) #footer {
+		display: block !important;
+		flex: 0 0 auto;
+		margin-top: auto;
+		padding-top: 1.25rem;
+	}
+
+	body:not(.dashboard-authenticated):not(.is-article-visible) #header,
+	body:not(.dashboard-authenticated):not(.is-article-visible) #header .content {
+		width: 100% !important;
+		max-width: 100% !important;
+	}
+
+	body:not(.dashboard-authenticated):not(.is-article-visible) #header .content .inner,
+	body.is-preload:not(.dashboard-authenticated):not(.is-article-visible) #header .content .inner {
+		width: 100% !important;
+		max-width: 24rem !important;
+		margin: 0 auto;
+		padding: clamp(2.75rem, 10svh, 5.5rem) 0 2rem !important;
+		text-align: left;
+	}
+
+	.hero-badge {
+		margin: 0 0 1.1rem;
+		padding: 0.42rem 0.7rem;
+		border-radius: 999px;
+		font-size: 0.62rem;
+		letter-spacing: 0.09em;
+	}
+
+	#header .content h1,
+	body:not(.dashboard-authenticated) #header .content h1 {
+		max-width: none;
+		margin: 0 0 1rem;
+		font-size: clamp(2.75rem, 13.5vw, 4rem);
+		font-weight: 750;
+		line-height: 0.98;
+		letter-spacing: -0.065em;
+		text-align: left;
+	}
+
+	body:not(.dashboard-authenticated) #quote {
+		display: block !important;
+		width: 100%;
+		max-width: 22rem;
+		margin: 0;
+		color: var(--muted);
+		font-size: 0.93rem;
+		font-weight: 400;
+		line-height: 1.65;
+		letter-spacing: 0;
+		text-align: left;
+		text-transform: none;
+	}
+
+	.preauth-actions {
+		display: grid;
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+		width: 100%;
+		max-width: 22rem;
+		margin: 1.75rem 0 0;
+		gap: 0.65rem;
+	}
+
+	.preauth-actions .button {
+		width: 100%;
+		min-width: 0;
+		min-height: 3rem;
+		padding: 0 0.75rem;
+		line-height: 2.9rem;
+		text-align: center;
+	}
+
+	/* Signed-in dashboard */
+	body.dashboard-authenticated:not(.is-article-visible) #header {
+		display: block !important;
+		min-height: 0;
+	}
+
+	body.dashboard-authenticated .vault-dashboard {
+		width: 100%;
+		max-width: 34rem;
+		margin: 0 auto;
+		gap: 0.85rem;
+	}
+
+	.vault-dashboard-hero {
+		display: grid;
+		gap: 0.9rem;
+		padding: 1.5rem 0 0.35rem;
+	}
+
+	.vault-dashboard-hero .hero-badge {
+		margin-bottom: 0.7rem;
+	}
+
+	.vault-dashboard-hero h1 {
+		font-size: clamp(2rem, 10vw, 3rem);
+		line-height: 1;
+		letter-spacing: -0.055em;
+	}
+
+	.vault-dashboard-hero p {
+		margin-top: 0.45rem;
+		font-size: 0.92rem;
+	}
+
+	.vault-dashboard-hero .button,
+	.danger-zone .button {
+		width: 100%;
+		min-height: 3rem;
+		line-height: 2.9rem;
+		text-align: center;
+	}
+
+	.vault-dashboard-section {
+		padding: 1rem;
+		border-radius: 0.7rem;
+		box-shadow: none;
+	}
+
+	.vault-dashboard-heading {
+		flex-direction: row;
+		align-items: center;
+		gap: 0.75rem;
+		margin-bottom: 0.8rem;
+		padding-bottom: 0.8rem;
+	}
+
+	.vault-dashboard-heading h2,
+	.danger-zone h2 {
+		font-size: 1rem;
+	}
+
+	.dashboard-password-list {
+		gap: 0.6rem;
+	}
+
+	.dashboard-password-list li.vault-item,
+	#passwordList li.vault-item {
+		display: grid;
+		gap: 0.75rem;
+		padding: 0.85rem;
+		border-radius: 0.6rem;
+	}
+
+	.dashboard-password-list .vault-item-actions,
+	#passwordList .vault-item-actions,
+	.vault-skeleton-actions {
+		display: grid;
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+		width: 100%;
+		gap: 0.5rem;
+	}
+
+	.dashboard-password-list .vault-item-actions .button,
+	#passwordList .vault-item-actions .button,
+	.vault-skeleton-button {
+		width: 100% !important;
+		min-height: 2.65rem;
+		line-height: 2.55rem;
+		text-align: center;
+	}
+
+	.danger-zone {
+		display: grid;
+		gap: 0.9rem;
+	}
+
+	.vault-dashboard-footer {
+		justify-content: flex-start;
+		gap: 0.45rem;
+	}
+
+	.vault-dashboard-footer span {
+		padding: 0.4rem 0.6rem;
+		font-size: 0.62rem;
+	}
+
+	/* Full-screen route panels */
+	body.is-article-visible {
+		position: fixed;
+		inset: 0;
+		width: 100%;
+		height: 100%;
+		overflow: hidden;
+	}
+
+	body.is-article-visible #user-button,
+	body.is-article-visible #header,
+	body.is-article-visible #footer {
+		display: none !important;
+	}
+
+	body.is-article-visible .app-brand {
+		display: block !important;
+	}
+
+	body.is-article-visible .auth-brand {
+		display: none !important;
+	}
+
+	body.is-article-visible #wrapper,
+	body.is-article-visible #main {
+		position: static !important;
+		display: block !important;
+		width: 100% !important;
+		max-width: 100% !important;
+		min-height: 100svh !important;
+		margin: 0 !important;
+		padding: 0 !important;
+		overflow: visible !important;
+	}
+
+	body.is-article-visible #main article:not(.active) {
+		display: none !important;
+		visibility: hidden !important;
+		pointer-events: none !important;
+	}
+
+	body.is-article-visible #main article.active {
+		position: fixed !important;
+		inset: 0 !important;
+		display: block !important;
+		visibility: visible !important;
+		width: 100% !important;
+		max-width: 100% !important;
+		height: 100dvh !important;
+		min-height: 100svh !important;
+		margin: 0 !important;
+		padding: calc(5.9rem + env(safe-area-inset-top)) var(--mobile-edge) calc(1.4rem + env(safe-area-inset-bottom)) !important;
+		color: var(--muted);
+		background: var(--paper) !important;
+		border: 0 !important;
+		border-radius: 0 !important;
+		box-shadow: none !important;
+		overflow-x: hidden;
+		overflow-y: auto;
+		overscroll-behavior: contain;
+		-webkit-overflow-scrolling: touch;
+		transform: none !important;
+	}
+
+	body.is-article-visible #main article.active > :not(.close),
+	body.is-article-visible #main article.active form,
+	body.is-article-visible #main article.active .fields,
+	body.is-article-visible #main article.active .field,
+	body.is-article-visible #main article.active .login-step-panel,
+	body.is-article-visible #main article.active .feild,
+	body.is-article-visible #main article.active ul.actions,
+	body.is-article-visible #main article.active .stats-container,
+	body.is-article-visible #main article.active .danger-section,
+	body.is-article-visible #main article.active .security-note,
+	body.is-article-visible #main article.active .result-panel {
+		width: 100% !important;
+		max-width: 32rem !important;
+		min-width: 0 !important;
+		margin-right: auto !important;
+		margin-left: auto !important;
+	}
+
+	body.is-article-visible #signin.active > :not(.close),
+	body.is-article-visible #signin.active form,
+	body.is-article-visible #login.active > :not(.close),
+	body.is-article-visible #login.active form {
+		max-width: 28rem !important;
+	}
+
+	body.is-article-visible #main article .close {
+		position: fixed !important;
+		top: max(0.8rem, env(safe-area-inset-top)) !important;
+		right: max(var(--mobile-edge), env(safe-area-inset-right)) !important;
+		left: auto !important;
+		width: var(--mobile-control) !important;
+		height: var(--mobile-control) !important;
+		margin: 0 !important;
+		padding: 0 !important;
+		border-radius: 0.5rem !important;
+		z-index: 24000 !important;
+	}
+
+	body.is-article-visible #main article .close::before {
+		inset: 0 !important;
+		width: 100% !important;
+		height: 100% !important;
+		line-height: var(--mobile-control) !important;
+		border-radius: 0.5rem !important;
+		background-size: 0.9rem 0.9rem;
+	}
+
+	.auth-brand {
+		position: fixed;
+		top: max(0.8rem, env(safe-area-inset-top));
+		left: max(var(--mobile-edge), env(safe-area-inset-left));
+		z-index: 22000;
+		display: flex;
+		width: auto !important;
+		max-width: calc(100vw - 8rem) !important;
+		margin: 0 !important;
+		gap: 0.6rem;
+		font-size: 0.78rem;
+	}
+
+	.auth-brand-mark {
+		width: var(--mobile-control);
+		height: var(--mobile-control);
+		flex: 0 0 var(--mobile-control);
+		border-radius: 0.5rem;
+	}
+
+	.auth-brand > span:last-child {
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+	}
+
+	.article-eyebrow {
+		margin: 0 0 0.45rem !important;
+		font-size: 0.62rem;
+		line-height: 1.4;
+		letter-spacing: 0.12em;
+	}
+
+	body.is-article-visible #main article h2.major {
+		width: 100% !important;
+		margin: 0 0 0.65rem !important;
+		padding: 0;
+		font-size: clamp(2rem, 10vw, 2.65rem) !important;
+		font-weight: 750;
+		line-height: 1.05;
+		letter-spacing: -0.055em;
+	}
+
+	body.is-article-visible #main article h3 {
+		margin: 1.5rem 0 0.65rem;
+		font-size: 1rem;
+		line-height: 1.3;
+	}
+
+	body.is-article-visible #main article > p {
+		margin: 0 0 1.35rem !important;
+		font-size: 0.93rem;
+		line-height: 1.58;
+	}
+
+	body.is-article-visible #signin > p:last-of-type {
+		display: none;
+	}
+
+	/* Forms */
+	body.is-article-visible #signin form,
+	body.is-article-visible #login form {
+		display: flex !important;
+		flex-direction: column;
+	}
+
+	body.is-article-visible #signin .login-step-panel,
+	body.is-article-visible #login .login-step-panel {
+		order: -1;
+	}
+
+	body.is-article-visible #main article form,
+	body.is-article-visible #main article form > .fields {
+		margin-top: 0 !important;
+		margin-bottom: 1rem !important;
+	}
+
+	body.is-article-visible #main article form > .fields {
+		display: grid;
+		gap: 0.85rem !important;
+	}
+
+	body.is-article-visible #main article form > .fields > .field,
+	body.is-article-visible #main article form > .fields > .field.half,
+	body.is-article-visible #main article form > .fields > .field.third,
+	body.is-article-visible #main article form > .fields > .field.quarter {
+		width: 100% !important;
+		padding: 0 !important;
+	}
+
+	body.is-article-visible label {
+		margin: 0 0 0.42rem !important;
+		font-size: 0.66rem;
+		font-weight: 750;
+		line-height: 1.3;
+		letter-spacing: 0.09em;
+	}
+
+	body.is-article-visible #main article input[type="text"],
+	body.is-article-visible #main article input[type="password"],
+	body.is-article-visible #main article input[type="email"],
+	body.is-article-visible #main article input[type="tel"],
+	body.is-article-visible #main article select,
+	body.is-article-visible #main article textarea {
+		box-sizing: border-box !important;
+		width: 100% !important;
+		height: 3.25rem !important;
+		min-height: 3.25rem !important;
+		padding: 0 0.95rem !important;
+		font-size: 16px !important;
+		font-weight: 550 !important;
+		line-height: 1.25 !important;
+		border-radius: 0.55rem !important;
+	}
+
+	body.is-article-visible #main article textarea {
+		height: auto !important;
+		min-height: 6rem !important;
+		padding-top: 0.85rem !important;
+		padding-bottom: 0.85rem !important;
+	}
+
+	body.is-article-visible .login-step-panel {
+		display: grid !important;
+		grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+		gap: 0.45rem !important;
+		margin: 0 0 1rem !important;
+	}
+
+	body.is-article-visible .login-step-panel span {
+		display: flex;
+		min-height: 2.35rem !important;
+		padding: 0.45rem 0.35rem !important;
+		align-items: center;
+		justify-content: center;
+		border-radius: 0.5rem;
+		font-size: 0.58rem !important;
+		line-height: 1.25 !important;
+		white-space: normal !important;
+	}
+
+	.feild p[id^="status-"]:empty,
+	#profile-status-msg:empty {
+		display: none !important;
+		min-height: 0 !important;
+		margin: 0 !important;
+		padding: 0 !important;
+		border: 0 !important;
+	}
+
+	body.is-article-visible .feild p[id^="status-"]:not(:empty),
+	body.is-article-visible #profile-status-msg:not(:empty) {
+		margin: 0 0 0.85rem !important;
+		padding: 0.7rem 0.8rem;
+		font-size: 0.78rem;
+		line-height: 1.45;
+	}
+
+	body.is-article-visible ul.actions {
+		display: grid !important;
+		grid-template-columns: 1fr !important;
+		gap: 0.6rem !important;
+		margin: 0 !important;
+		padding: 0 !important;
+	}
+
+	body.is-article-visible ul.actions li {
+		width: 100%;
+		margin: 0 !important;
+		padding: 0 !important;
+	}
+
+	body.is-article-visible ul.actions li > *,
+	body.is-article-visible input[type="submit"],
+	body.is-article-visible input[type="reset"],
+	body.is-article-visible input[type="button"],
+	body.is-article-visible .button {
+		box-sizing: border-box;
+		width: 100% !important;
+		min-height: 3.1rem !important;
+		padding: 0 1rem !important;
+		border-radius: 0.55rem !important;
+		font-size: 0.72rem;
+		line-height: 3rem !important;
+		text-align: center;
+	}
+
+	/* The legacy signup visibility patch targets every input, including buttons. */
+	body.is-article-visible #signin input[type="submit"].primary {
+		color: var(--paper) !important;
+		-webkit-text-fill-color: var(--paper) !important;
+		background: var(--sage-solid) !important;
+		background-color: var(--sage-solid) !important;
+		border-color: var(--sage-solid) !important;
+	}
+
+	body.is-article-visible #signin input[type="reset"] {
+		color: var(--ink) !important;
+		-webkit-text-fill-color: var(--ink) !important;
+		background: transparent !important;
+		background-color: transparent !important;
+		border-color: var(--line-strong) !important;
+	}
+
+	.password-wrapper .password-toggle {
+		top: 0 !important;
+		right: 0.35rem !important;
+		width: 2.6rem !important;
+		height: 3.25rem !important;
+		min-width: 2.6rem !important;
+		min-height: 3.25rem !important;
+		padding: 0 !important;
+		line-height: 1 !important;
+	}
+
+	.password-strength,
+	.stats-container,
+	.danger-section,
+	.result-panel,
+	.security-note {
+		padding: 1rem !important;
+		border-radius: 0.65rem !important;
+		box-shadow: none;
+	}
+
+	.password-strength-rules,
+	.account-grid,
+	.stats-container {
+		grid-template-columns: 1fr;
+	}
+
+	.security-note {
+		display: flex;
+		margin-top: 1rem;
+		font-size: 0.82rem;
+	}
+
+	.qr-box img {
+		width: min(13.5rem, 100%);
+	}
+
+	.one-time-notice {
+		width: 100%;
+		max-width: 32rem;
+		margin: 0 auto 1rem;
+		padding: 0.75rem 0.85rem;
+		font-size: 0.72rem;
+		line-height: 1.45;
+		text-align: left;
+	}
+
+	.home-auth-prompt {
+		right: var(--mobile-edge);
+		bottom: calc(var(--mobile-edge) + env(safe-area-inset-bottom)) !important;
+		left: var(--mobile-edge);
+		width: auto;
+		max-width: none;
+		padding: 0.85rem;
+		border-radius: 0.65rem;
+	}
+}
+
+@media screen and (max-width: 350px) {
+	.brand-copy {
+		display: none !important;
+	}
+
+	.preauth-actions {
+		grid-template-columns: 1fr;
+	}
+
+	body.is-article-visible #main article.active {
+		padding-right: 0.85rem !important;
+		padding-left: 0.85rem !important;
+	}
+}
+
+@media screen and (min-width: 520px) and (max-width: 736px) {
+	body.is-article-visible #main article.active {
+		padding-right: 1.5rem !important;
+		padding-left: 1.5rem !important;
+	}
+
+	body.is-article-visible ul.actions {
+		grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+	}
+}
+
+@media screen and (max-width: 736px) and (prefers-reduced-motion: reduce) {
+	body.is-article-visible #main article.active {
+		scroll-behavior: auto;
+	}
+}

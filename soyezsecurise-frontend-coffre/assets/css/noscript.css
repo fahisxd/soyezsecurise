@@ -1,0 +1,175 @@
+/* No-JS fallback + mobile UX fixes for Coffre */
+
+body.is-preload #bg:before {
+	background-color: transparent;
+}
+
+body.is-preload #header {
+	-moz-filter: none;
+	-webkit-filter: none;
+	-ms-filter: none;
+	filter: none;
+}
+
+body.is-preload #header > * {
+	opacity: 1;
+}
+
+body.is-preload #header .content .inner {
+	max-height: none;
+	padding: 3rem 2rem;
+	opacity: 1;
+}
+
+#main article {
+	opacity: 1;
+	margin: 4rem 0 0 0;
+}
+
+/* Keep forms readable even when JS is disabled or mobile emulation applies noscript rules. */
+#main article input[type="text"],
+#main article input[type="password"],
+#main article input[type="email"],
+#main article input[type="tel"],
+#main article select,
+#main article textarea {
+	color: #f7ffff !important;
+	-webkit-text-fill-color: #f7ffff !important;
+	caret-color: #8ddbe0 !important;
+	background-color: rgba(141, 219, 224, 0.075) !important;
+	opacity: 1 !important;
+}
+
+#main article input::placeholder,
+#main article textarea::placeholder {
+	color: rgba(247, 255, 255, 0.55) !important;
+	-webkit-text-fill-color: rgba(247, 255, 255, 0.55) !important;
+}
+
+#main article input:-webkit-autofill,
+#main article input:-webkit-autofill:hover,
+#main article input:-webkit-autofill:focus,
+#main article textarea:-webkit-autofill,
+#main article textarea:-webkit-autofill:hover,
+#main article textarea:-webkit-autofill:focus {
+	-webkit-text-fill-color: #ffffff !important;
+	box-shadow: 0 0 0 1000px #102020 inset !important;
+	caret-color: #8ddbe0 !important;
+}
+
+@media screen and (max-width: 736px) {
+	body {
+		padding-bottom: 5.75rem;
+	}
+
+	body.is-preload #header .content .inner {
+		padding: 2rem 1rem;
+	}
+
+	#main article {
+		width: calc(100vw - 1.5rem);
+		max-width: 28rem;
+		margin: 1rem auto 0 auto;
+		padding: 1rem;
+	}
+
+	#main article h2.major {
+		font-size: 1.55rem;
+		letter-spacing: 0.08rem;
+		margin-bottom: 1rem;
+	}
+
+	#main article p {
+		margin-bottom: 1rem;
+	}
+
+	form > .fields {
+		width: 100%;
+		margin: 0 0 1rem 0;
+		display: block;
+	}
+
+	form > .fields > .field,
+	form > .fields > .field.half,
+	form > .fields > .field.third,
+	form > .fields > .field.quarter {
+		width: 100%;
+		padding: 0;
+		margin: 0 0 0.85rem 0;
+	}
+
+	label {
+		margin-bottom: 0.45rem;
+		letter-spacing: 0.1rem;
+	}
+
+	#main article input[type="text"],
+	#main article input[type="password"],
+	#main article input[type="email"],
+	#main article input[type="tel"],
+	#main article select {
+		min-height: 3rem;
+		font-size: 16px !important;
+		line-height: 3rem;
+	}
+
+	ul.actions {
+		width: 100% !important;
+		margin-left: 0;
+		flex-direction: column;
+	}
+
+	ul.actions li {
+		width: 100%;
+		padding: 0.75rem 0 0 0;
+	}
+
+	ul.actions li:first-child {
+		padding-top: 0;
+	}
+
+	ul.actions li > *,
+	ul.actions li input[type="submit"],
+	ul.actions li input[type="reset"],
+	ul.actions li input[type="button"],
+	ul.actions li button,
+	ul.actions li .button {
+		width: 100%;
+	}
+}
+
+
+/* === No-JS signup/login form visibility fix v5 ===
+   The signup/login second-step fields are hidden inline in index.html for JS flow.
+   When noscript.css is active, force those fields to appear so signup is usable. */
+#signup-password-field,
+#signup-confirm-password-field,
+#signup-otp-field,
+#login-password-field,
+#login-otp-field {
+	display: block !important;
+	visibility: visible !important;
+	opacity: 1 !important;
+}
+
+#signup-password-strength {
+	display: block !important;
+	visibility: visible !important;
+	opacity: 1 !important;
+}
+
+#signin input[type="text"],
+#signin input[type="password"],
+#signin input[type="email"],
+#signin input[type="tel"],
+#signin textarea,
+#login input[type="text"],
+#login input[type="password"],
+#login input[type="email"],
+#login input[type="tel"],
+#login textarea {
+	color: #f7ffff !important;
+	-webkit-text-fill-color: #f7ffff !important;
+	caret-color: #8ddbe0 !important;
+	background-color: rgba(141, 219, 224, 0.075) !important;
+}

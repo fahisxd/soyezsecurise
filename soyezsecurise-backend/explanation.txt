@@ -1,0 +1,14 @@
+The code starts from importing many imortant python libraries which are esential for encryption, database management, etc.
+This starting  point includes importing of hmac for signature generation, hashlib which's algorithm will be used for hmac's signature generation, count for keeping track of count,
+os for os interactions, FastAPI - The legend, redis for temporary srorage like nonce, base64 for transport encoding, pydantic  validation and schema enforcement, 
+annotated adds constraints/metadata validation, pyotp for 2 Factor authentication using google authenticator, ChaCha20_poly1305 for encrypting server-stored secrets,
+HKDF multiple key generation from one source key securely, hash library from cryptography used by HKDF, psycopg2 for connectin postgresql to main,
+Request from FastAPI to capture rquest metadata mainly ip, uuid for id generation for unique identification, two functions from check_block program for blocking ip and checking whether this ip is blocked or not,
+and importing logging functions
+
+the next section is setup, it mainly include connecting temprory and permanent databases to main code, the postgreSQL is conneced through psycopg2 and interface for commands provided by cursor, also different 
+temprory redis databases for storing nonce, ratelimiting, blocked usernames, and also include creating a backend application instance
+
+this section have two parts, one for creating custon datatype through annotated
+
+
