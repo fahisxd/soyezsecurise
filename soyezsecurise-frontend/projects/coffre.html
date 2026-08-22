@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Coffre is a live password manager by fahisxd, focused on cryptographic and authentication design.">
+    <meta name="theme-color" content="#ecefe7">
+    <title>Coffre — SoyezSecurise</title>
+    <link rel="icon" href="../favicon.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="../styles.css">
+    <script src="../script.js" defer></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <header class="site-header subpage-header wrap">
+      <a class="wordmark" href="../index.html" aria-label="SoyezSecurise home">
+        <span class="wordmark-mark" aria-hidden="true">S/S</span><span>soyezsecurise</span>
+      </a>
+      <nav class="site-nav" aria-label="Primary navigation">
+        <a href="../index.html#work">Work</a><a href="../index.html#notes">Notes</a><a href="../index.html#about">About</a><a href="../freelance.html">Freelance</a><a href="../coming-soon.html">Roadmap</a><a href="../premium.html">Ultimate</a>
+      </nav>
+      <button class="theme-toggle" type="button" aria-label="Switch to dark theme" title="Change theme">
+        <svg class="sun-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3.5"></circle><path d="M12 2v2M12 20v2M4.93 4.93l1.42 1.42M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.42-1.42M17.66 6.34l1.41-1.41"></path></svg>
+        <svg class="moon-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.5 14.3A8.5 8.5 0 0 1 9.7 3.5 8.5 8.5 0 1 0 20.5 14.3Z"></path></svg>
+      </button>
+    </header>
+
+    <main class="subpage-main" id="main">
+      <section class="project-hero wrap">
+        <div>
+          <a class="back-link" href="../index.html#work">← back to work</a>
+          <p class="kicker"><span class="kicker-line" aria-hidden="true"></span> project 01 / password security</p>
+          <h1>Coffre<span class="accent">.</span></h1>
+          <p class="project-deck">A password manager built to understand how authentication, key derivation, sessions, OTP, and encrypted data behave as one system.</p>
+          <div class="hero-links">
+            <a class="text-link" href="https://coffre.soyezsecurise.com/" target="_blank" rel="noopener">Open live app <span aria-hidden="true">↗</span></a>
+          </div>
+        </div>
+        <dl class="hero-facts">
+          <div><dt>Status</dt><dd><span class="status"><span aria-hidden="true"></span> Live</span></dd></div>
+          <div><dt>Started</dt><dd>08 May 2026</dd></div>
+          <div><dt>Stack</dt><dd>FastAPI / JS / PostgreSQL</dd></div>
+          <div><dt>Type</dt><dd>Password manager</dd></div>
+        </dl>
+      </section>
+
+      <div class="project-body wrap">
+        <aside class="project-toc" aria-label="On this page">
+          <p class="mono-label">On this page</p>
+          <ol>
+            <li><a href="#what">What it is</a></li>
+            <li><a href="#why">Why I built it</a></li>
+            <li><a href="#works">How it works</a></li>
+            <li><a href="#wrong">What went wrong</a></li>
+            <li><a href="#learned">What I learned</a></li>
+            <li><a href="#teams">Coffre Teams</a></li>
+          </ol>
+        </aside>
+
+        <div class="prose">
+          <section class="prose-section" id="what">
+            <p class="section-index">01 / what it is</p>
+            <h2>A vault where the security model is the project.</h2>
+            <p>Coffre—French for a safe or vault—is a web password manager. It stores encrypted credentials, supports authenticator and email-based second factors, and separates listing an entry from retrieving its password.</p>
+            <p>The interface is only one part of it. Most of the work lives underneath: deciding which side derives keys, what the API should never receive, how a session expires, and how to make a captured request useless after a short window.</p>
+          </section>
+
+          <section class="prose-section" id="why">
+            <p class="section-index">02 / why I built it</p>
+            <h2>I did not want “encrypted” to be a checkbox.</h2>
+            <p>Coffre started as a Bash prototype, moved through a plain HTML version and a template-based build, then became the current web interface. Each version exposed a different assumption I had made too casually.</p>
+            <blockquote class="pullquote">I wanted to understand what a password manager should actually trust—not just reproduce what one looks like.</blockquote>
+            <p>That question pulled the project into cryptography, authentication, rate limiting, email delivery, replay protection, deployment, and security logging. The growing scope was not accidental; it was the lesson.</p>
+          </section>
+
+          <section class="prose-section" id="works">
+            <p class="section-index">03 / how it works</p>
+            <h2>Separate responsibilities, short-lived trust.</h2>
+            <p>The current design uses browser cryptography for vault operations and a FastAPI backend for authenticated storage and security controls. PostgreSQL holds durable state, while Redis handles temporary state such as short-lived challenges.</p>
+
+            <div class="architecture-flow" aria-label="Coffre architecture flow">
+              <div><span>01 / browser</span><strong>Derive + encrypt</strong><small>Web Crypto and local key material</small></div>
+              <div><span>02 / API</span><strong>Validate request</strong><small>FastAPI, nonce, session, rate limits</small></div>
+              <div><span>03 / state</span><strong>Store ciphertext</strong><small>PostgreSQL and temporary Redis state</small></div>
+              <div><span>04 / retrieve</span><strong>Decrypt locally</strong><small>Fetch one selected entry</small></div>
+            </div>
+
+            <h3>Cryptographic direction</h3>
+            <div class="spec-grid">
+              <div><span>Key derivation</span><strong>Argon2id → HKDF-SHA256</strong><p>Expensive derivation, then separate key material for separate jobs.</p></div>
+              <div><span>Vault encryption</span><strong>AES-GCM</strong><p>Authenticated encryption for stored password data.</p></div>
+              <div><span>Request validation</span><strong>HMAC-SHA256 + nonce</strong><p>Five-minute nonces are invalidated after use.</p></div>
+              <div><span>TOTP secrets</span><strong>ChaCha20-Poly1305</strong><p>Authenticator secrets are not intended to sit in plaintext.</p></div>
+            </div>
+
+            <h3>Authentication path</h3>
+            <p><code>signup → email verification → OTP setup → login → OTP → session</code></p>
+            <p>Sessions last roughly one hour. Email OTP codes use uppercase letters and digits with a five-minute lifetime; authenticator-based TOTP is also supported. Passwords copied from the vault are cleared from the clipboard after roughly ten seconds.</p>
+          </section>
+
+          <section class="prose-section" id="wrong">
+            <p class="section-index">04 / what went wrong</p>
+            <h2>The useful bugs were architectural.</h2>
+            <p>The first versions made some boundaries too optimistic. Testing replay scenarios pushed the request flow toward expiring nonces and one-time use. User-controlled fields raised XSS questions. Mobile testing found signup text that could become hard to see, while the API documentation once rendered blank.</p>
+
+            <div class="failure-grid">
+              <div><span>Trust</span><strong>The frontend held too much assumed state</strong><p>Replay testing forced a clearer challenge and session model.</p></div>
+              <div><span>Input</span><strong>Names are still attacker-controlled</strong><p>User labels need the same output handling as any other untrusted field.</p></div>
+              <div><span>Interface</span><strong>Mobile exposed invisible input text</strong><p>A small visual bug can make an otherwise correct signup flow unusable.</p></div>
+              <div><span>Infrastructure</span><strong>Free tiers shape architecture</strong><p>Limits and expiry are part of the system even when they are outside the code.</p></div>
+            </div>
+          </section>
+
+          <section class="prose-section" id="learned">
+            <p class="section-index">05 / what I learned</p>
+            <h2>Security is mostly about boundaries and expiry.</h2>
+            <p>Key separation is not an abstract recommendation once several features depend on the same root secret. A nonce matters only if its lifetime and reuse rules are checked. An encrypted database still needs careful session handling, input validation, monitoring, and recovery paths.</p>
+            <p>Coffre is now live as a public beta and remains under active development. The next useful milestone is not more features—it is tighter auditing, better mobile behavior, and more hostile testing of the flows already there.</p>
+          </section>
+
+          <section class="prose-section" id="teams">
+            <p class="section-index">06 / Coffre Teams</p>
+            <h2>Coffre for teams</h2>
+            <p>Share passwords and API keys with your team while keeping control over who can access them. Built for startups and small teams.</p>
+
+            <div class="spec-grid">
+              <div><span>Shared vault</span><strong>Passwords and API keys, with controlled access</strong><p>Password visibility is set per member; API keys use an explicit user allow-list.</p></div>
+              <div><span>People</span><strong>Invitations + Owner / Admin / Member roles</strong><p>Invite people into the workspace and keep management permissions separate from everyday access.</p></div>
+              <div><span>Verification</span><strong>More checks for sensitive actions</strong><p>Passwords can require 2FA, API keys always do, and protected team actions use a fresh verification step.</p></div>
+              <div><span>Security controls</span><strong>Client-side encryption and short team sessions</strong><p>Secrets stay encrypted on the device, while signed actions and security logging cover team activity.</p></div>
+            </div>
+
+            <div class="hero-links">
+              <a class="text-link" href="https://coffre.soyezsecurise.com/team.html" target="_blank" rel="noopener">Open Coffre Teams <span aria-hidden="true">↗</span></a>
+            </div>
+          </section>
+
+          <a class="next-project" href="neuris.html">
+            <div><span>Next project</span><strong>Neuris / v0id</strong></div><span aria-hidden="true">↗</span>
+          </a>
+        </div>
+      </div>
+    </main>
+
+    <footer class="site-footer wrap">
+      <p>Built in public, including the parts that broke.</p>
+      <div><a href="https://github.com/fahisxd" target="_blank" rel="me noopener">GitHub ↗</a><a href="https://instagram.com/fahisxd" target="_blank" rel="me noopener">Instagram ↗</a><a href="#main">Back to top ↑</a></div>
+      <p class="footer-copy">© <span data-year>2026</span> SoyezSecurise</p>
+    </footer>
+  </body>
+</html>

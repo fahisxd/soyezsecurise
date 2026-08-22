@@ -1,0 +1,42 @@
+
+
+
+
+
+
+
+
+	
+		@-ms-viewport {
+			width: device-width;
+		}
+
+	
+		@include breakpoint('<=xsmall') {
+			html, body {
+				min-width: 320px;
+			}
+		}
+
+	
+	
+		html {
+			box-sizing: border-box;
+		}
+
+		*, *:before, *:after {
+			box-sizing: inherit;
+		}
+
+	body {
+		background: _palette(bg);
+
+		
+			&.is-preload {
+				*, *:before, *:after {
+					@include vendor('animation', 'none !important');
+					@include vendor('transition', 'none !important');
+				}
+			}
+
+	}

@@ -1,0 +1,60 @@
+# Environment variables and local secrets
+.env
+.env.*
+!.env.example
+
+# Python bytecode and caches
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.pytype/
+.tox/
+.nox/
+
+# Python virtual environments
+.venv/
+venv/
+env/
+ENV/
+
+# Packaging and coverage output
+build/
+dist/
+*.egg-info/
+.eggs/
+.coverage
+.coverage.*
+coverage.xml
+htmlcov/
+
+# Runtime data and generated logs
+*.log
+logs/
+*.db
+*.db-journal
+*.sqlite
+*.sqlite3
+grouped_logs.json
+
+# Frontend dependencies and generated assets
+node_modules/
+.sass-cache/
+*.css.map
+*.js.map
+
+# Editor and operating-system files
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+
+# Temporary files
+*.tmp
+*.temp
+*.bak

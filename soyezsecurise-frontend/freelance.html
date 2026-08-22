@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Freelance development by Fahis Shehandi: building, debugging, integrating, securing, and deploying small technical projects.">
+    <meta name="theme-color" content="#ecefe7">
+    <title>Freelance — SoyezSecurise</title>
+    <link rel="icon" href="favicon.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="styles.css">
+    <script src="script.js" defer></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <header class="site-header subpage-header wrap">
+      <a class="wordmark" href="index.html" aria-label="SoyezSecurise home"><span class="wordmark-mark" aria-hidden="true">S/S</span><span>soyezsecurise</span></a>
+      <nav class="site-nav" aria-label="Primary navigation"><a href="index.html#work">Work</a><a href="index.html#notes">Notes</a><a href="index.html#about">About</a><a href="freelance.html" aria-current="page">Freelance</a><a href="coming-soon.html">Roadmap</a><a href="premium.html">Ultimate</a></nav>
+      <button class="theme-toggle" type="button" aria-label="Switch to dark theme" title="Change theme">
+        <svg class="sun-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3.5"></circle><path d="M12 2v2M12 20v2M4.93 4.93l1.42 1.42M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.42-1.42M17.66 6.34l1.41-1.41"></path></svg>
+        <svg class="moon-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.5 14.3A8.5 8.5 0 0 1 9.7 3.5 8.5 8.5 0 1 0 20.5 14.3Z"></path></svg>
+      </button>
+    </header>
+
+    <main class="subpage-main" id="main">
+      <section class="writing-hero wrap">
+        <div>
+          <a class="back-link" href="index.html">← home</a>
+          <p class="kicker"><span class="kicker-line" aria-hidden="true"></span> freelance / practical technical work</p>
+          <h1>Build. Fix. Deploy<span class="accent">.</span></h1>
+          <p class="writing-deck">I build, fix, and deploy projects that need technical problem-solving.</p>
+          <div class="hero-links">
+            <a class="text-link" href="#contact">Need something built or fixed? <span aria-hidden="true">↘</span></a>
+          </div>
+        </div>
+        <dl class="hero-facts">
+          <div><dt>Work</dt><dd>Build / debug / deploy</dd></div>
+          <div><dt>Scope</dt><dd>Small, focused projects</dd></div>
+          <div><dt>Approach</dt><dd>Understand before adding code</dd></div>
+          <div><dt>Small asks</dt><dd>Welcome</dd></div>
+        </dl>
+      </section>
+
+      <section class="roadmap-page freelance-services wrap" aria-labelledby="services-title">
+        <header class="roadmap-intro">
+          <div>
+            <p class="section-index">01 / what I can help with</p>
+            <h2 id="services-title">Technical work with a clear problem to solve.</h2>
+          </div>
+          <p>I am most useful when something needs to be built, connected, repaired, secured, or made to work outside localhost.</p>
+        </header>
+
+        <ol class="benefit-list">
+          <li><span>01</span><strong>Backends and APIs that do the required job</strong><small>Designing endpoints, data flows, authentication, and the server-side logic behind a small product or feature.</small></li>
+          <li><span>02</span><strong>Frontends that actually reach the backend</strong><small>Connecting forms, sessions, APIs, errors, and state when the two halves currently disagree.</small></li>
+          <li><span>03</span><strong>Existing projects brought back to life</strong><small>Tracing bugs, finishing partially working builds, and making sense of code generated with AI but never fully integrated.</small></li>
+          <li><span>04</span><strong>Deployments that work beyond one laptop</strong><small>Finding environment, configuration, domain, HTTPS, database, and production-only failures.</small></li>
+          <li><span>05</span><strong>Small tools that remove repetitive work</strong><small>Scripts, command-line utilities, data helpers, and focused automation built around a real workflow.</small></li>
+          <li><span>06</span><strong>Security-minded custom development</strong><small>Authentication, input handling, secret storage, access control, and small technical projects where trust boundaries matter.</small></li>
+        </ol>
+
+        <aside class="freelance-note">
+          <p class="mono-label">Small requests are still requests</p>
+          <p>Not every useful fix needs to become a formal freelance project. Send the tiny problem too; if it is genuinely quick, I may just help without turning it into an invoice.</p>
+        </aside>
+      </section>
+
+      <div class="rule wrap" aria-hidden="true"><span>02</span></div>
+
+      <section class="section freelance-proof wrap" aria-labelledby="proof-title">
+        <header class="section-head">
+          <div>
+            <p class="section-index">02 / work as proof</p>
+            <h2 id="proof-title">Things I have already had to make work.</h2>
+          </div>
+          <p>These are real projects with real tradeoffs—not a list of technologies I once opened.</p>
+        </header>
+
+        <div class="spec-grid freelance-proof-grid">
+          <div><span>Coffre</span><strong>Encrypted personal and team vaults</strong><p>Built browser-side encryption, authentication and OTP flows, API storage, sessions, controlled team access, and deployment.</p><a class="text-link" href="projects/coffre.html">Read project notes <span aria-hidden="true">↗</span></a></div>
+          <div><span>Neuris / v0id</span><strong>A security classifier exposed honestly</strong><p>Connected a custom input-classification model to a public interface while keeping its weak classes and evaluation limits visible.</p><a class="text-link" href="projects/neuris.html">Read project notes <span aria-hidden="true">↗</span></a></div>
+          <div><span>SoyezSecurise</span><strong>A small site designed, built, and shipped</strong><p>Created this responsive project workspace, its theme system, case-study structure, and the deployment around it.</p><a class="text-link" href="index.html#work">See the site <span aria-hidden="true">↗</span></a></div>
+          <div><span>Ayano</span><strong>Research steps turned into a CLI</strong><p>Built a tool that gathers CVE context and public research material so the repetitive searching happens in one workflow.</p><a class="text-link" href="projects/ayano.html">Read project notes <span aria-hidden="true">↗</span></a></div>
+        </div>
+      </section>
+
+      <div class="rule wrap" aria-hidden="true"><span>03</span></div>
+
+      <section class="section about-section freelance-contact wrap" id="contact" aria-labelledby="contact-title">
+        <div class="about-heading">
+          <p class="section-index">03 / contact</p>
+          <h2 id="contact-title">Need something built, fixed, or debugged? Get in touch.</h2>
+        </div>
+        <div class="about-copy">
+          <p>Email is best when you already know what is broken or what you want to build. A short description, any useful links, and what “working” should look like are enough to start.</p>
+          <p>Instagram and Discord are fine for a quick first message. No pitch deck required.</p>
+
+          <div class="social-block contact-links">
+            <p class="mono-label">Contact</p>
+            <div class="social-links">
+              <a class="email-contact" href="mailto:soyezsecurise@gmail.com"><span>Email</span><strong>soyezsecurise@gmail.com</strong><span aria-hidden="true">↗</span></a>
+              <a href="https://instagram.com/fahisxd" target="_blank" rel="me noopener"><span>Instagram</span><strong>@fahisxd</strong><span aria-hidden="true">↗</span></a>
+              <button type="button" data-copy="fahisxd" aria-label="Copy Discord username fahisxd"><span>Discord</span><strong>fahisxd</strong><span data-copy-state>copy</span></button>
+              <a href="https://www.linkedin.com/in/fahis-shehandi-50a680371/" target="_blank" rel="me noopener"><span>LinkedIn</span><strong>Fahis Shehandi</strong><span aria-hidden="true">↗</span></a>
+            </div>
+            <p class="copy-feedback" aria-live="polite"></p>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer wrap">
+      <p>Small project. Strange bug. Half-working prototype. All valid messages.</p>
+      <div><a href="index.html">Home</a><a href="mailto:soyezsecurise@gmail.com">Email ↗</a><a href="#main">Back to top ↑</a></div>
+      <p class="footer-copy">© <span data-year>2026</span> SoyezSecurise</p>
+    </footer>
+  </body>
+</html>

@@ -1,0 +1,202 @@
+<!doctype html>
+<html lang="en" data-team-page="access">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Create or access a Coffre team workspace.">
+    <meta name="theme-color" content="#ecefe7">
+    <title>Team | Coffre</title>
+    <script src="assets/js/platform_access.js?v=android-team-20260822"></script>
+    <script src="assets/js/theme.js?v=sage-theme-20260815c"></script>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="stylesheet" href="assets/css/team-dashboard.css?v=20260820c">
+</head>
+<body class="team-login-page">
+    <header class="team-topbar">
+        <a class="team-brand" href="index.html" aria-label="Soyez Securise home">
+            <span class="team-brand-mark" aria-hidden="true"><img src="favicon.svg" alt=""></span>
+            <span class="team-brand-copy"><strong>SoyezSecurise<span>.</span></strong><small>Coffre / Team</small></span>
+        </a>
+        <div class="team-topbar-actions">
+            <button class="theme-toggle team-theme-toggle" type="button" aria-label="Switch to dark theme" title="Change theme">
+                <svg class="sun-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3.5"></circle><path d="M12 2v2M12 20v2M4.93 4.93l1.42 1.42M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.42-1.42M17.66 6.34l1.41-1.41"></path></svg>
+                <svg class="moon-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.5 14.3A8.5 8.5 0 0 1 9.7 3.5 8.5 8.5 0 1 0 20.5 14.3Z"></path></svg>
+            </button>
+            <a class="back-to-vault" id="team-personal-vault" href="index.html"><span aria-hidden="true">←</span> Personal vault</a>
+            <button class="team-signout" id="team-signout" type="button" hidden><span aria-hidden="true">↗</span>End team session</button>
+        </div>
+    </header>
+
+    <main class="login-shell">
+        <section class="login-context" aria-label="Coffre Teams">
+            <div class="team-kicker"><span class="live-dot"></span> Coffre Teams</div>
+            <h1>One vault.<br><span>Your team.</span></h1>
+            <p>Keep shared access organized without mixing team controls into your personal Coffre session.</p>
+            <div class="login-security-list"><span><span aria-hidden="true">◇</span> Separate team credentials</span><span><span aria-hidden="true">◇</span> Email OTP verification</span><span><span aria-hidden="true">◇</span> 30-minute team sessions</span></div>
+        </section>
+
+        <section class="team-choice-card" id="team-choice" aria-labelledby="team-choice-title">
+            <span class="section-index">Coffre / Team</span>
+            <h2 id="team-choice-title">Team access</h2>
+            <p>Choose how you want to continue.</p>
+            <div class="team-choice-list">
+                <button class="team-choice-option" type="button" data-team-mode="login"><span class="choice-number">01</span><span><strong>Team login</strong><small>Open an existing team workspace</small></span><span aria-hidden="true">→</span></button>
+                <button class="team-choice-option" type="button" data-team-mode="create"><span class="choice-number">02</span><span><strong>Create a team</strong><small>Set up a protected team workspace</small></span><span aria-hidden="true">→</span></button>
+                <button class="team-choice-option" type="button" data-team-mode="accept"><span class="choice-number">03</span><span><strong>Accept an invitation</strong><small>Join as a member or admin</small></span><span aria-hidden="true">→</span></button>
+            </div>
+        </section>
+
+        <section class="login-card" id="team-login-card" aria-labelledby="team-login-title" hidden>
+            <button class="flow-back" type="button" data-team-mode="choice">← Team</button>
+            <span class="section-index">Team authentication</span>
+            <h2 id="team-login-title">Team login</h2>
+            <p>Use the credentials created for this team workspace.</p>
+            <div class="login-steps" id="team-login-steps" aria-label="Login progress"><span class="active"><b>01</b> Username + team</span><span><b>02</b> Password + OTP</span></div>
+            <form id="team-login-form" novalidate>
+                <div class="login-fields">
+                    <div class="invite-field"><label for="team-login-username">Username</label><input id="team-login-username" type="text" maxlength="32" autocomplete="username" placeholder="Your Coffre username" required></div>
+                    <div class="invite-field"><label for="team-login-name">Team name</label><input id="team-login-name" type="text" maxlength="32" autocomplete="organization" placeholder="Your team workspace" required></div>
+                    <div class="secret-login-fields" id="secret-login-fields" hidden>
+                        <div class="invite-field"><label for="team-login-password">Team password</label><div class="password-input-wrap"><input id="team-login-password" type="password" autocomplete="current-password" placeholder="Enter team password"><button class="password-text-toggle" data-password-target="team-login-password" type="button" aria-label="Show team password">Show</button></div></div>
+                        <div class="invite-field"><label for="team-login-otp">OTP code</label><input class="otp-input" id="team-login-otp" type="text" maxlength="6" inputmode="text" autocomplete="one-time-code" autocapitalize="characters" placeholder="ABC123"><p class="field-hint">Check the email linked to your Coffre account.</p></div>
+                    </div>
+                </div>
+                <p class="form-status" id="team-login-status" role="status" aria-live="polite"></p>
+                <div class="login-actions"><button class="primary-action" id="team-login-submit" type="submit"><span>Continue</span><span aria-hidden="true">→</span></button><button class="secondary-action" type="reset">Reset</button></div>
+            </form>
+        </section>
+
+        <section class="login-card" id="team-create-card" aria-labelledby="team-create-title" hidden>
+            <button class="flow-back" type="button" data-team-mode="choice">← Team</button>
+            <span class="section-index">New workspace</span>
+            <h2 id="team-create-title">Create a team</h2>
+            <p>Create separate credentials for your shared Coffre workspace.</p>
+            <div class="login-steps" id="team-create-steps" aria-label="Creation progress"><span class="active"><b>01</b> Username + team</span><span><b>02</b> Password + OTP</span></div>
+            <form id="team-create-form" novalidate>
+                <div class="login-fields">
+                    <div class="invite-field"><label for="team-create-username">Coffre username</label><input id="team-create-username" type="text" maxlength="32" autocomplete="username" placeholder="Your existing username" required></div>
+                    <div class="invite-field"><label for="team-create-name">Team name</label><input id="team-create-name" type="text" maxlength="32" autocomplete="organization" placeholder="Choose a workspace name" required></div>
+                    <div class="secret-login-fields" id="team-create-secret-fields" hidden>
+                        <div class="invite-field"><label for="team-create-password">Team password</label><div class="password-input-wrap"><input id="team-create-password" type="password" autocomplete="new-password" placeholder="Create a strong team password"><button class="password-text-toggle" data-password-target="team-create-password" type="button" aria-label="Show team password">Show</button></div></div>
+                        <div class="password-strength" id="team-password-strength" data-strength="empty"><div class="password-strength-header"><span>Password strength</span><strong id="team-strength-label">Start typing</strong></div><div class="password-strength-meter" aria-hidden="true"><span id="team-strength-bar"></span></div><ul class="password-strength-rules" id="team-strength-rules"><li data-rule="length">12+ characters</li><li data-rule="uppercase">Uppercase</li><li data-rule="lowercase">Lowercase</li><li data-rule="number">Number</li><li data-rule="symbol">Symbol</li></ul></div>
+                        <div class="invite-field"><label for="team-create-confirm">Confirm team password</label><input id="team-create-confirm" type="password" autocomplete="new-password" placeholder="Repeat team password"></div>
+                        <div class="invite-field"><label for="team-create-otp">OTP code</label><input class="otp-input" id="team-create-otp" type="text" maxlength="6" inputmode="text" autocomplete="one-time-code" autocapitalize="characters" placeholder="ABC123"><p class="field-hint">We send this code after step one. Each code allows one verification attempt.</p></div>
+                    </div>
+                </div>
+                <p class="form-status" id="team-create-status" role="status" aria-live="polite"></p>
+                <div class="login-actions"><button class="primary-action" id="team-create-submit" type="submit"><span>Continue</span><span aria-hidden="true">→</span></button><button class="secondary-action" type="reset">Reset</button></div>
+            </form>
+        </section>
+
+        <section class="login-card" id="team-accept-card" aria-labelledby="team-accept-title" hidden>
+            <button class="flow-back" type="button" data-team-mode="choice">← Team</button>
+            <span class="section-index">Team invitation</span>
+            <h2 id="team-accept-title">Accept an invitation</h2>
+            <p>Use your active personal Coffre session to join a team.</p>
+            <form id="team-accept-form" novalidate>
+                <div class="login-fields">
+                    <div class="invite-field"><label for="team-accept-username">Coffre username</label><input id="team-accept-username" type="text" maxlength="32" autocomplete="username" placeholder="Your Coffre username" required></div>
+                    <div class="invite-field"><label for="team-accept-name">Team name</label><input id="team-accept-name" type="text" maxlength="32" autocomplete="organization" placeholder="Inviting team" required></div>
+                    <div class="invite-field"><label for="team-accept-role">Invitation type</label><select id="team-accept-role"><option value="member">Member invitation</option><option value="admin">Admin invitation</option></select></div>
+                    <div class="invite-field" id="team-admin-code-field" hidden><label for="team-accept-code">Admin invite code</label><input id="team-accept-code" type="password" maxlength="64" autocomplete="off" placeholder="Code shared by the owner"></div>
+                </div>
+                <p class="form-status" id="team-accept-status" role="status" aria-live="polite"></p>
+                <div class="login-actions"><button class="primary-action" id="team-accept-submit" type="submit"><span>Accept invitation</span><span aria-hidden="true">→</span></button><button class="secondary-action" type="reset">Reset</button></div>
+            </form>
+        </section>
+    </main>
+
+    <main class="team-shell" id="team-dashboard-view" hidden>
+        <section class="team-hero" aria-labelledby="team-title">
+            <div><div class="team-kicker"><span class="live-dot"></span> Team workspace</div><h1 id="team-title">Team workspace</h1><p>Shared credentials, protected with the same Coffre security model.</p></div>
+            <div class="owner-identity" aria-label="Current team identity"><span class="owner-avatar" id="owner-avatar" aria-hidden="true">--</span><span><small>Signed in as</small><strong id="owner-name">Unknown user</strong></span><span class="role-tag" id="current-role">Role</span></div>
+        </section>
+        <div class="dashboard-alert" id="dashboard-alert" role="status" aria-live="polite" hidden></div>
+
+        <div class="vault-sections">
+            <section class="team-panel secret-panel" aria-labelledby="passwords-title">
+                <div class="panel-heading compact-heading"><div><span class="section-index">01 / Passwords</span><h2 id="passwords-title">Passwords</h2><p>Reveal a password only when you need it.</p></div><div class="heading-actions"><span class="roster-count" id="password-count">Loading</span><button class="section-refresh" type="button" data-refresh-section aria-label="Refresh passwords"><span aria-hidden="true">↻</span> Refresh</button></div></div>
+                <div class="secret-list" id="password-list" aria-live="polite"><div class="secret-empty">Loading protected entries…</div></div>
+            </section>
+
+            <section class="team-panel secret-panel" aria-labelledby="apis-title">
+                <div class="panel-heading compact-heading"><div><span class="section-index">02 / API keys</span><h2 id="apis-title">API keys</h2><p>Every API value requires 2FA before retrieval.</p></div><div class="heading-actions"><span class="security-pill">2FA required</span><button class="section-refresh" type="button" data-refresh-section aria-label="Refresh API keys"><span aria-hidden="true">↻</span> Refresh</button></div></div>
+                <div class="secret-list" id="api-list" aria-live="polite"><div class="secret-empty">Loading protected entries…</div></div>
+            </section>
+        </div>
+
+        <section class="team-panel store-panel" id="store-panel" aria-labelledby="store-title" data-owner-admin hidden>
+            <div class="panel-heading"><div><span class="section-index">03 / Store</span><h2 id="store-title">Store a team secret</h2><p>The value is encrypted on this device before it is sent.</p></div><div class="heading-actions"><span class="security-pill">◇ Local encryption</span><button class="section-refresh" type="button" data-refresh-section aria-label="Refresh team participants"><span aria-hidden="true">↻</span> Refresh</button></div></div>
+            <form id="store-secret-form" novalidate>
+                <div class="store-mode" role="group" aria-label="Secret type"><button class="is-active" type="button" data-secret-category="PASSWORD">Password</button><button type="button" data-secret-category="API">API key</button></div>
+                <div class="store-grid">
+                    <div class="invite-field"><label for="team-secret-name">Secret name</label><input id="team-secret-name" type="text" maxlength="64" pattern="[A-Za-z0-9.@_]+" autocomplete="off" placeholder="e.g. ProductionLogin" required></div>
+                    <div class="invite-field" id="service-name-field"><label for="team-service-name">Service name</label><input id="team-service-name" type="text" maxlength="64" pattern="[A-Za-z0-9.@_]+" autocomplete="off" placeholder="e.g. example.com"></div>
+                    <div class="invite-field store-value-field"><label for="team-secret-value">Secret value</label><div class="password-input-wrap"><input id="team-secret-value" type="password" maxlength="4096" autocomplete="new-password" placeholder="Encrypted before upload" required><button class="password-text-toggle" data-password-target="team-secret-value" type="button" aria-label="Show secret value">Show</button></div></div>
+                </div>
+                <div class="secret-options" id="password-options"><label class="check-option"><input id="member-can-view" type="checkbox"><span><strong>Members may view</strong><small>Admins and the owner can always retrieve passwords.</small></span></label><label class="check-option"><input id="password-require-2fa" type="checkbox"><span><strong>Require 2FA to retrieve</strong><small>Add an OTP challenge before revealing this password.</small></span></label></div>
+                <div class="api-user-picker" id="store-api-users" hidden><div class="picker-heading"><strong>Initial API access</strong><span>Choose current team participants</span></div><div class="member-check-grid" id="store-api-user-list"></div></div>
+                <div class="invite-footer"><div class="security-caption"><span aria-hidden="true">◇</span><span id="store-security-copy">Passwords can optionally require 2FA.</span></div><button class="primary-action" id="store-secret-submit" type="submit"><span>Encrypt and store</span><span aria-hidden="true">→</span></button></div>
+                <p class="form-status" id="store-secret-status" role="status" aria-live="polite"></p>
+            </form>
+        </section>
+
+        <section class="team-panel roster-panel" aria-labelledby="roster-title">
+            <div class="panel-heading"><div><span class="section-index">04 / Roster</span><h2 id="roster-title">Team access</h2><p>Roles and available controls reflect the server response.</p></div><div class="heading-actions"><span class="roster-count" id="roster-count">Loading</span><button class="section-refresh" type="button" data-refresh-section aria-label="Refresh team roster"><span aria-hidden="true">↻</span> Refresh</button></div></div>
+            <div class="roster-table-wrap"><table class="roster-table"><thead><tr><th scope="col">User</th><th scope="col">Role</th><th scope="col">Access</th></tr></thead><tbody id="roster-body" aria-live="polite"><tr class="roster-loading"><td colspan="3"><span></span><span></span></td></tr><tr class="roster-loading"><td colspan="3"><span></span><span></span></td></tr><tr class="roster-loading"><td colspan="3"><span></span><span></span></td></tr></tbody></table></div>
+        </section>
+
+        <section class="team-panel invite-panel" id="invite-panel" aria-labelledby="invite-title" data-role-owner hidden>
+            <div class="panel-heading"><div><span class="section-index">05 / Invite</span><h2 id="invite-title">Invite people</h2><p>Send up to three invitations. Admin access requires existing team membership.</p></div><div class="heading-actions"><span class="invite-limit"><span id="invite-filled-count">0</span> / 3 ready</span><button class="section-refresh" type="button" data-refresh-section aria-label="Refresh invitation eligibility"><span aria-hidden="true">↻</span> Refresh</button></div></div>
+            <form id="invite-form" novalidate>
+                <div class="invite-list" id="invite-list">
+                    <div class="invite-row" data-invite-row><div class="invite-number" aria-hidden="true">01</div><div class="invite-field"><label for="invite-username-1">Username</label><input id="invite-username-1" name="invite-username-1" type="text" maxlength="32" pattern="[A-Za-z0-9@._]+" autocomplete="off" placeholder="e.g. alex.secure" data-invite-username><p class="row-error" data-row-error aria-live="polite"></p></div><div class="invite-field role-field"><label for="invite-role-1">Role</label><select id="invite-role-1" name="invite-role-1" data-invite-role><option value="member">Member</option><option value="admin">Admin</option></select></div></div>
+                    <div class="invite-row" data-invite-row><div class="invite-number" aria-hidden="true">02</div><div class="invite-field"><label for="invite-username-2">Username</label><input id="invite-username-2" name="invite-username-2" type="text" maxlength="32" pattern="[A-Za-z0-9@._]+" autocomplete="off" placeholder="Optional" data-invite-username><p class="row-error" data-row-error aria-live="polite"></p></div><div class="invite-field role-field"><label for="invite-role-2">Role</label><select id="invite-role-2" name="invite-role-2" data-invite-role><option value="member">Member</option><option value="admin">Admin</option></select></div></div>
+                    <div class="invite-row" data-invite-row><div class="invite-number" aria-hidden="true">03</div><div class="invite-field"><label for="invite-username-3">Username</label><input id="invite-username-3" name="invite-username-3" type="text" maxlength="32" pattern="[A-Za-z0-9@._]+" autocomplete="off" placeholder="Optional" data-invite-username><p class="row-error" data-row-error aria-live="polite"></p></div><div class="invite-field role-field"><label for="invite-role-3">Role</label><select id="invite-role-3" name="invite-role-3" data-invite-role><option value="member">Member</option><option value="admin">Admin</option></select></div></div>
+                </div>
+                <div class="invite-footer"><div class="security-caption"><span aria-hidden="true">◇</span><span>Invitations expire after 48 hours. Admin codes should be shared separately.</span></div><button class="primary-action" id="invite-submit" type="submit"><span>Send invitations</span><span aria-hidden="true">→</span></button></div>
+                <p class="form-status" id="invite-status" role="status" aria-live="polite"></p>
+            </form>
+        </section>
+
+        <section class="team-panel permissions-panel" id="permissions-panel" aria-labelledby="permissions-title" data-role-owner hidden>
+            <div class="panel-heading"><div><span class="section-index">06 / Admin controls</span><h2 id="permissions-title">Destructive permissions</h2><p>Set the complete permission state for an admin. Every change requires a signed OTP challenge.</p></div><button class="section-refresh" type="button" data-refresh-section aria-label="Refresh admin permissions"><span aria-hidden="true">↻</span> Refresh</button></div>
+            <div class="permission-list" id="permission-list"></div>
+            <p class="form-status" id="permissions-status" role="status" aria-live="polite"></p>
+        </section>
+
+        <section class="team-panel danger-panel" aria-labelledby="team-actions-title">
+            <div class="panel-heading"><div><span class="section-index">07 / Session &amp; team</span><h2 id="team-actions-title">Team actions</h2><p>Leaving or deleting clears team credentials and decrypted values from this page.</p></div><button class="section-refresh" type="button" data-refresh-section aria-label="Refresh team actions"><span aria-hidden="true">↻</span> Refresh</button></div>
+            <div class="danger-actions"><div id="leave-team-wrap"><span><strong>Leave this team</strong><small>Available to members and admins.</small></span><button class="secondary-action" id="leave-team" type="button">Leave team</button></div><div id="delete-team-wrap" hidden><span><strong>Delete this team</strong><small>Permanently removes the team and all shared secrets.</small></span><button class="danger-action" id="delete-team" type="button">Delete team</button></div></div>
+            <p class="form-status" id="team-actions-status" role="status" aria-live="polite"></p>
+        </section>
+        <footer class="team-footer"><span><span aria-hidden="true">▣</span> Team session protected</span><span><a href="index.html#privacy">Privacy</a> · <a href="index.html#terms">Terms</a></span></footer>
+    </main>
+
+    <div class="code-modal" id="admin-code-modal" role="dialog" aria-modal="true" aria-labelledby="admin-code-title" aria-describedby="admin-code-message" hidden>
+        <div class="code-modal-backdrop"></div><div class="code-card" role="document"><div class="code-icon" aria-hidden="true">#</div><span class="section-index">One-time reveal</span><h2 id="admin-code-title">Admin invite code</h2><p id="admin-code-message"></p><div class="invite-code-wrap"><code id="admin-invite-code"></code><button id="copy-admin-code" type="button" aria-label="Copy admin invite code"><span id="copy-admin-code-label">Copy</span></button></div><div class="one-time-warning"><span aria-hidden="true">!</span><p><strong>This code is shown once.</strong> It cannot be retrieved again from this dashboard after you close this message.</p></div><button class="primary-action modal-close" id="close-admin-code" type="button">I have saved the code</button></div>
+    </div>
+
+    <div class="code-modal" id="secret-modal" role="dialog" aria-modal="true" aria-labelledby="secret-modal-title" hidden>
+        <div class="code-modal-backdrop" data-close-secret-modal></div><div class="code-card secret-card" role="document"><button class="modal-x" type="button" data-close-secret-modal aria-label="Close secret dialog">×</button><div class="code-icon" aria-hidden="true">◇</div><span class="section-index" id="secret-modal-kicker">Protected value</span><h2 id="secret-modal-title">Retrieve secret</h2><p id="secret-modal-message"></p><form id="secret-otp-form" hidden><div class="invite-field"><label for="secret-otp">OTP code</label><input class="otp-input" id="secret-otp" type="text" maxlength="6" inputmode="text" autocomplete="one-time-code" autocapitalize="characters" placeholder="ABC123"></div><p class="form-status modal-status" id="secret-modal-status" role="status" aria-live="polite"></p><button class="primary-action modal-close" id="secret-otp-submit" type="submit">Verify and decrypt</button></form><div id="secret-reveal" hidden><div class="password-input-wrap secret-reveal-wrap"><input id="revealed-team-secret" type="password" readonly autocomplete="off" aria-label="Retrieved team secret"><button class="password-text-toggle" id="reveal-team-secret" type="button">Show</button></div><div class="modal-actions"><button class="primary-action" id="copy-team-secret" type="button">Copy value</button><button class="secondary-action" type="button" data-close-secret-modal>Close</button></div><p class="form-status modal-status" id="secret-copy-status" role="status" aria-live="polite"></p></div></div>
+    </div>
+
+    <div class="code-modal" id="api-access-modal" role="dialog" aria-modal="true" aria-labelledby="api-access-title" hidden>
+        <div class="code-modal-backdrop" data-close-api-modal></div><div class="code-card" role="document"><button class="modal-x" type="button" data-close-api-modal aria-label="Close API access dialog">×</button><div class="code-icon" aria-hidden="true">+</div><span class="section-index">API allow-list</span><h2 id="api-access-title">Add API access</h2><p>Select team participants who should be able to retrieve this API value.</p><form id="api-access-form"><div class="member-check-grid modal-member-list" id="api-access-users"></div><p class="form-status modal-status" id="api-access-status" role="status" aria-live="polite"></p><div class="modal-actions"><button class="primary-action" id="api-access-submit" type="submit">Add selected users</button><button class="secondary-action" type="button" data-close-api-modal>Cancel</button></div></form></div>
+    </div>
+
+    <div class="code-modal" id="action-modal" role="dialog" aria-modal="true" aria-labelledby="action-modal-title" hidden>
+        <div class="code-modal-backdrop" data-close-action-modal></div><div class="code-card" role="document"><button class="modal-x" type="button" data-close-action-modal aria-label="Close confirmation dialog">×</button><div class="code-icon danger-icon" aria-hidden="true">!</div><span class="section-index">Protected action</span><h2 id="action-modal-title">Confirm action</h2><p id="action-modal-message"></p><div id="action-confirm-stage"><div class="modal-actions"><button class="danger-action" id="action-continue" type="button">Continue</button><button class="secondary-action" type="button" data-close-action-modal>Cancel</button></div></div><form id="action-otp-form" hidden><div class="one-time-warning"><span aria-hidden="true">◇</span><p>A fresh signed challenge is ready. Enter the OTP issued by the server to finish this exact action.</p></div><div class="invite-field"><label for="action-otp">OTP code</label><input class="otp-input" id="action-otp" type="text" maxlength="6" inputmode="text" autocomplete="one-time-code" autocapitalize="characters" placeholder="ABC123"></div><p class="form-status modal-status" id="action-modal-status" role="status" aria-live="polite"></p><button class="danger-action modal-submit" id="action-otp-submit" type="submit">Authorize action</button></form></div>
+    </div>
+
+    <div class="code-modal" id="permission-modal" role="dialog" aria-modal="true" aria-labelledby="permission-modal-title" hidden>
+        <div class="code-modal-backdrop" data-close-permission-modal></div><div class="code-card" role="document"><button class="modal-x" type="button" data-close-permission-modal aria-label="Close permission dialog">×</button><div class="code-icon" aria-hidden="true">◇</div><span class="section-index">Admin permission state</span><h2 id="permission-modal-title">Admin permissions</h2><p id="permission-modal-message"></p><form id="permission-form"><div class="secret-options permission-options"><label class="check-option"><input id="permission-delete-secrets" type="checkbox"><span><strong>Delete team secrets</strong><small>Allow signed deletion of team passwords and API keys.</small></span></label><label class="check-option"><input id="permission-remove-members" type="checkbox"><span><strong>Remove members</strong><small>Allow signed removal of team members and admins.</small></span></label></div><p class="form-status modal-status" id="permission-modal-status" role="status" aria-live="polite"></p><button class="primary-action modal-close" type="submit">Continue to OTP</button></form></div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/argon2-browser/dist/argon2-bundled.min.js"></script>
+    <script src="assets/js/config.js?v=api-config-20260820"></script>
+    <script src="assets/js/team_session.js?v=20260821a"></script>
+    <script src="assets/js/team_owner_dashboard.js?v=teams-20260821a"></script>
+    <script src="assets/js/team_login.js?v=teams-20260821a"></script>
+</body>
+</html>
