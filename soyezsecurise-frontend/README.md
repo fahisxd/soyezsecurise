@@ -74,6 +74,14 @@ supported; HTML is displayed as text. Visitors see updates on page reload,
 without rebuilding the frontend or restarting the backend. An empty file shows
 “No announcements right now.”
 
+## Writeup links
+
+The homepage's **Writeups & discoveries** section loads links from `GET /writeups`.
+Edit `../soyezsecurise-backend/writeups.json` on the VPS to add titles, URLs,
+and optional descriptions. See the backend README for the format and
+`WRITEUPS_FILE` configuration. Change the section's `data-endpoint` in
+`index.html` to use a different backend host.
+
 ## Related directories
 
 - `../soyezsecurise-backend/` — shared API and Neuris model

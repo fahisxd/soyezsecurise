@@ -3,13 +3,15 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Fahisxd's public workspace: cybersecurity projects, field notes, and experiments from SoyezSecurise.">
-    <meta name="theme-color" content="#ecefe7">
-    <title>fahisxd — SoyezSecurise</title>
+    <meta name="description" content="Soyez Sécurisé is the banner Fahis XD uses for independent security tools, experiments, and field notes.">
+    <meta name="theme-color" content="#d8ddc8">
+    <title>Soyez Sécurisé — security work by Fahis XD</title>
     <link rel="icon" href="favicon.svg" type="image/svg+xml">
     <link rel="stylesheet" href="styles.css">
     <script src="script.js" defer></script>
+    <script src="sqli-game.js" defer></script>
     <script src="announcements.js" defer></script>
+    <script src="writeups.js" defer></script>
   </head>
   <body>
     <a class="skip-link" href="#main">Skip to content</a>
@@ -21,10 +23,12 @@
       </a>
 
       <nav class="site-nav" aria-label="Primary navigation">
-        <a href="#work">Work</a>
-        <a href="#notes">Notes</a>
-        <a href="#about">About</a>
-        <a href="freelance.html">Freelance</a>
+        <a href="#work">Systems</a>
+        <a href="#announcements">Updates</a>
+        <a href="#writeups">Writeups</a>
+        <a href="#notes">Dispatches</a>
+        <a href="#about">Identity</a>
+        <a href="freelance.html">Work with Fahis</a>
         <a href="coming-soon.html">Roadmap</a>
         <a href="premium.html">Ultimate</a>
       </nav>
@@ -41,44 +45,20 @@
     </header>
 
     <main id="main">
-      <section class="hero wrap" aria-labelledby="hero-title">
+      <section class="hero hero-without-card wrap" aria-labelledby="hero-title">
         <div class="hero-copy">
-          <p class="kicker"><span class="kicker-line" aria-hidden="true"></span> personal workspace / public</p>
-          <h1 id="hero-title">fahisxd<span class="accent">.</span></h1>
-          <p class="hero-role">Cybersecurity learner, builder, and creator of SoyezSecurise.</p>
-          <p class="hero-statement">I build security tools, break things to understand them, and document what I learn.</p>
+          <p class="kicker"><span class="kicker-line" aria-hidden="true"></span> independent security banner / est. 2026</p>
+          <h1 id="hero-title" class="banner-title"><span>Soyez</span><span>Sécurisé<span class="accent">.</span></span></h1>
+          <p class="hero-role">Security tools, adversarial experiments, and field notes—released under one name.</p>
+          <p class="hero-statement">Soyez Sécurisé is not a company or a studio. It is the banner Fahis XD uses to give his security work a shared home.</p>
 
           <div class="hero-links" aria-label="Quick links">
-            <a class="text-link" href="#work">View projects <span aria-hidden="true">↘</span></a>
-            <a class="text-link" href="#notes">Read notes <span aria-hidden="true">↘</span></a>
-            <a class="text-link" href="freelance.html">Freelance <span aria-hidden="true">↗</span></a>
-            <a class="text-link" href="https://github.com/fahisxd" rel="me noopener" target="_blank">GitHub <span aria-hidden="true">↗</span></a>
+            <a class="text-link" href="#work">Explore the systems <span aria-hidden="true">↘</span></a>
+            <a class="text-link" href="#about">Read the identity <span aria-hidden="true">↘</span></a>
           </div>
         </div>
 
-        <aside class="now-card" id="now" aria-labelledby="now-title">
-          <div class="now-card-head">
-            <p class="mono-label" id="now-title">/now</p>
-            <span class="live-label"><span class="live-dot" aria-hidden="true"></span> active</span>
-          </div>
-          <dl class="now-list">
-            <div>
-              <dt>Learning</dt>
-              <dd>Linux privilege escalation</dd>
-            </div>
-            <div>
-              <dt>Building</dt>
-              <dd>SoyezSecurise infrastructure</dd>
-            </div>
-            <div>
-              <dt>Thinking about</dt>
-              <dd>AI systems that fail honestly</dd>
-            </div>
-          </dl>
-          <p class="now-updated">Updated <time datetime="2026-08-15">15 Aug 2026</time></p>
-          <a class="now-roadmap" href="coming-soon.html">See what is live and next <span aria-hidden="true">↗</span></a>
-          <a class="now-roadmap now-ultimate" href="premium.html">Unlock friendship for $999 <span aria-hidden="true">↗</span></a>
-        </aside>
+
       </section>
 
       <section class="announcements wrap" id="announcements" aria-labelledby="announcements-title">
@@ -95,10 +75,10 @@
       <section class="section wrap" id="work" aria-labelledby="work-title">
         <header class="section-head">
           <div>
-            <p class="section-index">01 / selected work</p>
-            <h2 id="work-title">Projects built to answer questions.</h2>
+            <p class="section-index">01 / under the banner</p>
+            <h2 id="work-title">Three systems. One security practice.</h2>
           </div>
-          <p>Not polished case studies. These are systems I am building, testing, getting wrong, and rebuilding.</p>
+          <p>Each name belongs to a distinct tool. Soyez Sécurisé is the connective tissue: build it, test its assumptions, publish what remains true.</p>
         </header>
 
         <div class="project-list">
@@ -183,8 +163,8 @@
       <section class="section notes-section wrap" id="notes" aria-labelledby="notes-title">
         <header class="section-head section-head-compact">
           <div>
-            <p class="section-index">02 / field notes</p>
-            <h2 id="notes-title">Things worth writing down.</h2>
+            <p class="section-index">02 / dispatches</p>
+            <h2 id="notes-title">Notes from inside the work.</h2>
           </div>
           <a class="text-link desktop-link" href="writing/index.html">All notes <span aria-hidden="true">↗</span></a>
         </header>
@@ -201,42 +181,111 @@
         <a class="text-link mobile-link" href="writing/index.html">All notes <span aria-hidden="true">↗</span></a>
       </section>
 
+      <section class="section wrap" id="writeups" aria-labelledby="writeups-title">
+        <header class="section-head section-head-compact">
+          <div>
+            <p class="section-index">/research archive</p>
+            <h2 id="writeups-title">Writeups &amp; discoveries.</h2>
+          </div>
+          <p>Research, experiments, and lessons from the work.</p>
+        </header>
+        <p data-writeups-status role="status">Loading writeups…</p>
+        <div data-writeups data-endpoint="https://api.soyezsecurise.com/writeups"></div>
+        <noscript><p>Enable JavaScript to browse the writeups.</p></noscript>
+      </section>
+
       <div class="rule wrap" aria-hidden="true"><span>03</span></div>
 
       <section class="section about-section wrap" id="about" aria-labelledby="about-title">
         <div class="about-heading">
-          <p class="section-index">03 / about</p>
-          <h2 id="about-title">I learn by making the problem concrete.</h2>
+          <p class="section-index">03 / the identity</p>
+          <h2 id="about-title">A banner, not a business.</h2>
         </div>
 
         <div class="about-copy">
-          <p>I’m <strong>Fahis Shehandi</strong>, known online as <strong>fahisxd</strong>. I’m a student learning cybersecurity through projects, CTFs, and a lot of experimentation.</p>
-          <p>I’m especially interested in web security, Linux, backend systems, cryptography, and the point where AI meets security. Most projects start because I ask “what if I built this myself?” and then discover five technologies I did not know existed.</p>
+          <p><strong>Soyez Sécurisé</strong>—“be secure”—is a shared label for independent security work. It gives tools like Coffre, Neuris, and Ayano a common context without presenting them as products from a company that does not exist.</p>
+          <p>The person behind it is <strong>Fahis Shehandi</strong>, or <strong>fahisxd</strong> online. He builds the systems, runs the experiments, writes the notes, and takes responsibility for the rough edges. The name is larger than a username, but never larger than the truth.</p>
 
-          <div class="process" aria-label="My working process">
-            <span>understand</span><span aria-hidden="true">→</span>
+          <div class="process" aria-label="Operating principles">
             <span>build</span><span aria-hidden="true">→</span>
-            <span>attack</span><span aria-hidden="true">→</span>
-            <span>refine</span>
+            <span>question</span><span aria-hidden="true">→</span>
+            <span>break</span><span aria-hidden="true">→</span>
+            <span>publish</span>
           </div>
 
-          <ul class="interest-list" aria-label="Core interests">
-            <li>Security engineering</li>
-            <li>Web security</li>
-            <li>Linux</li>
-            <li>AI security</li>
-            <li>Vulnerability research</li>
-            <li>Backend systems</li>
+          <ul class="interest-list" aria-label="Identity principles">
+            <li>Independent</li>
+            <li>Experimental</li>
+            <li>Security-minded</li>
+            <li>Open about limits</li>
           </ul>
 
           <div class="social-block">
-            <p class="mono-label">Find me elsewhere</p>
+            <p class="mono-label">The person behind the banner</p>
             <div class="social-links">
+              <a href="https://github.com/fahisxd" target="_blank" rel="me noopener"><span>GitHub</span><strong>fahisxd</strong><span aria-hidden="true">↗</span></a>
               <a href="https://instagram.com/fahisxd" target="_blank" rel="me noopener"><span>Instagram</span><strong>@fahisxd</strong><span aria-hidden="true">↗</span></a>
               <button type="button" data-copy="fahisxd" aria-label="Copy Discord username fahisxd"><span>Discord</span><strong>fahisxd</strong><span data-copy-state>copy</span></button>
             </div>
             <p class="copy-feedback" aria-live="polite"></p>
           </div>
+        </div>
+      </section>
+
+      <section class="sqli-lab wrap" id="sqli-lab" aria-labelledby="sqli-lab-title">
+        <header class="section-head">
+          <div>
+            <p class="section-index">04 / simulated lab</p>
+            <h2 id="sqli-lab-title">Bored? Want to practise SQLi without bothering a real database?</h2>
+          </div>
+          <p>Five small levels about input, queries, and observable behaviour. Entirely fictional. Mildly suspicious.</p>
+        </header>
+
+        <div class="sqli-game" data-sqli-game data-level="0">
+          <div class="game-system-bar">
+            <span>SQLi intuition / local simulation</span>
+            <span class="game-safety"><span aria-hidden="true"></span> no external target</span>
+            <button type="button" data-game-reset>reset progress</button>
+          </div>
+
+          <div class="game-intro" data-game-intro>
+            <p class="mono-label">Simulated environment</p>
+            <h3>The application has one secret. It will never print it.</h3>
+            <p>Your job is to notice what changes anyway. No real database, host, or account exists behind this interface.</p>
+            <button class="game-primary" type="button" data-game-start>Begin investigation <span aria-hidden="true">→</span></button>
+          </div>
+
+          <div class="game-stage" data-game-stage hidden>
+            <ol class="game-progress" aria-label="Investigation progress">
+              <li data-game-step="1"><span>01</span> input</li>
+              <li data-game-step="2"><span>02</span> query</li>
+              <li data-game-step="3"><span>03</span> blind</li>
+              <li data-game-step="4"><span>04</span> clock</li>
+              <li data-game-step="5"><span>05</span> characters</li>
+            </ol>
+            <div class="game-level-heading">
+              <p class="mono-label" data-game-level-label></p>
+              <h3 data-game-level-title></h3>
+              <p data-game-objective></p>
+            </div>
+            <div class="game-content" data-game-content></div>
+            <div class="game-hints" data-game-hints aria-label="Optional hints"></div>
+          </div>
+
+          <div class="game-final" data-game-final hidden>
+            <p class="mono-label">Access granted / reveal</p>
+            <h3>You were not guessing passwords.</h3>
+            <p>You were asking the database questions it could only answer with time.</p>
+            <div class="game-course-mark"><span>SQL injection</span><strong>// interactive walkthrough</strong><small>coming soon</small></div>
+            <p class="game-final-note">You just discovered the intuition behind time-based blind SQLi.</p>
+            <div class="game-final-actions">
+              <a class="text-link" href="#main">Return to Soyez Sécurisé <span aria-hidden="true">↑</span></a>
+              <button class="game-share" type="button" data-game-share>Share this experiment <span aria-hidden="true">↗</span></button>
+            </div>
+            <p class="game-share-feedback" role="status" aria-live="polite" data-game-share-status></p>
+          </div>
+
+          <noscript><p class="game-noscript">This local simulation needs JavaScript. The rest of the site does not.</p></noscript>
         </div>
       </section>
     </main>

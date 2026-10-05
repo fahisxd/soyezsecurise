@@ -161,6 +161,26 @@ Coffre update coming this weekend.
 More details will be posted here soon.
 ```
 
+## VPS writeup links
+
+`GET /writeups` returns links for the homepage. Edit `writeups.json` beside
+`main.py` on the VPS. Entries display in file order and open in a new tab.
+
+```json
+[
+  {
+    "title": "My first writeup",
+    "url": "https://example.com/my-writeup",
+    "description": "Optional short description"
+  }
+]
+```
+
+Titles and HTTP/HTTPS URLs are required; descriptions are optional. Use `[]`
+to clear the list. Edits need no restart. Invalid JSON or entries return 503.
+You can set `WRITEUPS_FILE` to an absolute path outside the Git checkout to
+keep the link list separate from deployments. Restart once after setting it.
+
 ## API groups
 
 The exact request and response schemas are documented by FastAPI at `/docs`. Important route groups include:

@@ -95,6 +95,7 @@ from coffreteam import (
 
 from neuris import neuris
 from announcements import router as announcements_router
+from writeups import router as writeups_router
 #---------------------------------------------------setup--------------------------------------------------#
 load_dotenv()
 
@@ -113,6 +114,7 @@ session = redis.Redis.from_url(REDIS_URL, **redis_options)
 gmail_otp = redis.Redis.from_url(REDIS_URL, **redis_options)
 app = FastAPI()
 app.include_router(announcements_router)
+app.include_router(writeups_router)
 
 def get_db():
     conn = psycopg2.connect(

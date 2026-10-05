@@ -13,7 +13,7 @@ function applyTheme(theme) {
   }
 
   if (themeMeta) {
-    themeMeta.setAttribute("content", theme === "dark" ? "#151a16" : "#ecefe7");
+    themeMeta.setAttribute("content", theme === "dark" ? "#18221b" : "#d8ddc8");
   }
 }
 
