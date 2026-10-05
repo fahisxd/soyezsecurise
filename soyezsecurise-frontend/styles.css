@@ -1,3 +1,28 @@
+.announcements {
+  margin-block: 1rem 3rem;
+}
+
+.announcements-heading {
+  border-top: 1px solid var(--line-strong);
+  padding-top: 1.5rem;
+}
+
+.announcements-heading h2 {
+  margin: 0.5rem 0 1rem;
+  font-size: clamp(1.5rem, 4vw, 2.2rem);
+  letter-spacing: -0.04em;
+}
+
+.announcements-copy {
+  margin: 0;
+  padding: clamp(1rem, 3vw, 1.75rem);
+  border-left: 3px solid var(--sage);
+  background: var(--paper-raised);
+  color: var(--ink-soft);
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
 :root {
   color-scheme: light;
   --paper: #ecefe7;

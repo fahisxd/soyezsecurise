@@ -138,6 +138,29 @@ uvicorn main:app --reload --host 127.0.0.1 --port 8000
 
 Interactive OpenAPI documentation is then available at `http://127.0.0.1:8000/docs`.
 
+## Public announcements
+
+`GET /announcements` returns `{"text": "..."}` for the main website's bulletin.
+It reads UTF-8 text from `announcements.txt` beside `main.py` on every request.
+Edit or upload this file on the VPS to publish news; no restart is needed.
+An empty or missing file returns an empty string. Unreadable files return HTTP 503.
+Responses use `Cache-Control: no-store`.
+
+To store content outside the deployed code directory, set `ANNOUNCEMENTS_FILE`
+to an absolute path in the backend's environment, for example
+`/var/lib/soyezsecurise/announcements.txt`. The backend user needs read access.
+Set this variable once and restart the service; subsequent text edits are read
+immediately. Keeping the file outside the deployment directory prevents later
+code deployments from replacing your announcements. All text in this file is public.
+
+Example content:
+
+```text
+Coffre update coming this weekend.
+
+More details will be posted here soon.
+```
+
 ## API groups
 
 The exact request and response schemas are documented by FastAPI at `/docs`. Important route groups include:

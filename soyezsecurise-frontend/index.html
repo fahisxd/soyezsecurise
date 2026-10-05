@@ -9,6 +9,7 @@
     <link rel="icon" href="favicon.svg" type="image/svg+xml">
     <link rel="stylesheet" href="styles.css">
     <script src="script.js" defer></script>
+    <script src="announcements.js" defer></script>
   </head>
   <body>
     <a class="skip-link" href="#main">Skip to content</a>
@@ -78,6 +79,15 @@
           <a class="now-roadmap" href="coming-soon.html">See what is live and next <span aria-hidden="true">↗</span></a>
           <a class="now-roadmap now-ultimate" href="premium.html">Unlock friendship for $999 <span aria-hidden="true">↗</span></a>
         </aside>
+      </section>
+
+      <section class="announcements wrap" id="announcements" aria-labelledby="announcements-title">
+        <header class="announcements-heading">
+          <p class="mono-label">/bulletin board</p>
+          <h2 id="announcements-title">Upcoming &amp; announcements</h2>
+        </header>
+        <p class="announcements-copy" data-announcements data-endpoint="https://api.soyezsecurise.com/announcements" aria-live="polite">No announcements right now. Check back for updates.</p>
+        <noscript><p>Enable JavaScript to load the latest announcements.</p></noscript>
       </section>
 
       <div class="rule wrap" aria-hidden="true"><span>01</span></div>

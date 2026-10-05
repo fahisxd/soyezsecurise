@@ -61,6 +61,19 @@ Opening the HTML files directly may work for basic browsing, but an HTTP server 
 - Do not describe Coffre or Neuris as audited production security controls.
 - The Coffre Android app is not finished and should be labeled as in development wherever it is mentioned.
 
+## VPS announcements
+
+The homepage's **Upcoming & announcements** section fetches public text from
+`GET https://api.soyezsecurise.com/announcements`. Change `data-endpoint` in
+`index.html` for a different API host, or use `http://127.0.0.1:8000/announcements`
+for local development.
+
+Deploy the updated frontend and backend once, then edit the backend's
+`announcements.txt` on the VPS to publish news. Plain text and line breaks are
+supported; HTML is displayed as text. Visitors see updates on page reload,
+without rebuilding the frontend or restarting the backend. An empty file shows
+“No announcements right now.”
+
 ## Related directories
 
 - `../soyezsecurise-backend/` — shared API and Neuris model
