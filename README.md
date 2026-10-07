@@ -11,9 +11,9 @@ Soyez Sécurisé is Fahis Shehandi's personal cybersecurity workspace: a collect
 
 The projects are public so their design, mistakes, and progress can be studied. They are not independently audited and should not be trusted with real credentials or used as security controls without a thorough review.
 
-## Who is behind it?
+## About the developer
 
-Soyez Sécurisé is designed and developed by **Fahis Shehandi**, also known as **fahisxd**. The main website describes it as a public workspace for learning cybersecurity through projects, CTFs, research, and experimentation—not as a staffed organization.
+Soyez Sécurisé is designed and developed by **Fahis Shehandi**, also known as **fahisxd**. It serves as his public workspace for learning cybersecurity through projects, CTFs, research, and experimentation.
 
 The word “team” elsewhere in this repository usually means **Coffre Teams**, a product feature for shared vaults. It does not mean that Soyez Sécurisé has a company team.
 
@@ -27,7 +27,7 @@ The word “team” elsewhere in this repository usually means **Coffre Teams**,
 | [Coffre Android](soyezsecurise-frontend-coffre/Android/) | Native Kotlin/Jetpack Compose client for Coffre | **Not finished; in development** |
 | [Neuris web](soyezsecurise-frontend-neuris/) | Terminal-style client for the Neuris input classifier | Experimental |
 
-The portfolio also describes **Ayano**, a CVE research CLI whose source is maintained in a separate repository.
+**Ayano** is a CVE research CLI within the Soyez Sécurisé project collection. Its source is maintained in a separate repository.
 
 ## How the repository fits together
 
@@ -117,4 +117,4 @@ Open `http://127.0.0.1:8080`. Coffre's API URL is configured in `assets/js/confi
 
 ## Author
 
-Built by [fahisxd](https://github.com/fahisxd) as a hands-on way to learn software engineering, cryptography, authentication, machine learning, and application security.
+[Fahis Shehandi](https://github.com/fahisxd) builds these projects to develop his understanding of software engineering, cryptography, authentication, machine learning, and application security.
