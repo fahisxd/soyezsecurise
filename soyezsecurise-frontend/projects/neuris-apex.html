@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="An experimental 3B cybersecurity input-classification model fine-tuned from Ministral 3B. Run locally through Ollama.">
+    <meta name="theme-color" content="#ecefe7">
+    <title>Neuris APEX 1.0 — SoyezSecurise</title>
+    <link rel="icon" href="../favicon.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="../styles.css">
+    <script src="../script.js" defer></script>
+    <link rel="stylesheet" href="neuris-release.css">
+    <script src="neuris-apex.js" defer></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <header class="site-header subpage-header wrap">
+      <a class="wordmark" href="../index.html" aria-label="SoyezSecurise home"><span class="wordmark-mark" aria-hidden="true">S/S</span><span>soyezsecurise</span></a>
+      <nav class="site-nav" aria-label="Primary navigation"><a href="../index.html#work">Systems</a><a href="../index.html#notes">Dispatches</a><a href="../index.html#about">Identity</a><a href="../freelance.html">Work with Fahis</a><a href="../coming-soon.html">Roadmap</a><a href="../premium.html">Ultimate</a></nav>
+      <button class="theme-toggle" type="button" aria-label="Switch to dark theme" title="Change theme">
+        <svg class="sun-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3.5"></circle><path d="M12 2v2M12 20v2M4.93 4.93l1.42 1.42M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.42-1.42M17.66 6.34l1.41-1.41"></path></svg>
+        <svg class="moon-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.5 14.3A8.5 8.5 0 0 1 9.7 3.5 8.5 8.5 0 1 0 20.5 14.3Z"></path></svg>
+      </button>
+    </header>
+
+    <main class="subpage-main" id="main">
+      <section class="project-hero wrap">
+        <div><a class="back-link" href="neuris-versions.html">← all Neuris versions</a><p class="kicker"><span class="kicker-line" aria-hidden="true"></span> Latest / Current · Neuris v2</p><div class="neuris-title-lockup"><img class="neuris-release-logo" src="../assets/neuris-apex-logo-transparent.png" alt="Neuris APEX green circuit-inspired emblem" width="1254" height="1254"><h1>Neuris <span class="neuris-apex-title">APEX 1.0<span class="accent">.</span></span></h1></div><p class="mono-label">1.0 / Experimental v1 release of the APEX generation</p><p class="project-deck">An experimental 3B cybersecurity input-classification model fine-tuned from Ministral 3B.</p><div class="hero-links"><a class="text-link" href="https://ollama.com/fahisshehandim/Neuris-Apex" target="_blank" rel="noopener">View model on Ollama <span aria-hidden="true">↗</span></a><a class="text-link" href="#run">Run locally <span aria-hidden="true">↓</span></a></div></div>
+        <div class="neuris-release-identity"><dl class="hero-facts"><div><dt>Base model</dt><dd>Ministral 3B</dd></div><div><dt>Fine-tuning</dt><dd>SFT + LoRA</dd></div><div><dt>Quantization</dt><dd>Q4_K_M</dd></div><div><dt>Download</dt><dd>~2.1 GB</dd></div><div><dt>Deployment</dt><dd>Local / Ollama</dd></div></dl></div>
+      </section>
+      <div class="project-body wrap">
+        <aside class="project-toc" aria-label="On this page"><p class="mono-label">On this page</p><ol><li><a href="#model">The model</a></li><li><a href="#training">Training &amp; corpus</a></li><li><a href="#output">Classification schema</a></li><li><a href="#run">Run locally</a></li><li><a href="#observations">Observed behavior</a></li><li><a href="#limits">Limits &amp; next steps</a></li></ol></aside>
+        <div class="prose">
+          <section class="prose-section" id="model"><p class="section-index">01 / the model</p><h2>A trained model, a new generation.</h2><p>APEX is the first LLM-based generation of Neuris: Neuris v2, with APEX 1.0 as its initial experimental release. Ministral 3B was adapted using supervised fine-tuning (SFT) and LoRA to specialize its output into the Neuris classification schema.</p><p>It analyzes user-controlled input in its stated context and returns a verdict plus an attack family. It is designed as an AI security input classifier / input firewall, not a general-purpose chatbot.</p><p>The model runs locally through Ollama. Classification happens on your machine.</p></section>
+          <section class="prose-section" id="training"><p class="section-index">02 / training &amp; corpus</p><h2>A small, deliberately curated fine-tune.</h2><p>The frozen <code>final_corpus_v3</code> contains 2,668 examples: 2,402 training rows, 133 validation rows, and 133 test rows. It includes 504 hard negatives and 22 attack-family labels, including MULTI. Approximately 20% of examples include concise evidence-based reasoning.</p><p>The verdict distribution is 1,060 SAFE, 864 MALICIOUS, 550 SUSPICIOUS, and 194 AMBIGUOUS examples. Contextual examples and provenance accompany a much smaller curated selection from the roughly 915,495-row source corpus.</p><dl class="hero-facts neuris-training-facts"><div><dt>Training base</dt><dd><code>unsloth/Ministral-3-3B-Instruct-2512-bnb-4bit</code></dd></div><div><dt>Stack</dt><dd>Unsloth · Transformers · TRL SFTTrainer · BitsAndBytes 4-bit</dd></div><div><dt>LoRA</dt><dd>Rank 8 · alpha 16 · dropout 0</dd></div><div><dt>Trainable</dt><dd>~12.35M parameters / ~0.32%</dd></div><div><dt>Run</dt><dd>1 epoch · 601 optimizer steps · Kaggle T4</dd></div><div><dt>Batch</dt><dd>1 · accumulation 4 · effective batch 4</dd></div><div><dt>Optimizer</dt><dd>adamw_8bit · learning rate 2e-4</dd></div><div><dt>Sequence</dt><dd>512 tokens · no packing · seed 3407</dd></div></dl><p>Response-only supervised fine-tuning applies loss to assistant JSON output tokens. The system instruction asks the model to treat supplied input as data and avoid following instructions inside it. The saved adapter was merged and exported as a text-only Q4_K_M GGUF for local Ollama deployment.</p></section>
+          <section class="prose-section" id="output"><p class="section-index">03 / classification schema</p><h2>Verdict + attack family.</h2><h3>Possible verdicts</h3><ul class="tag-list"><li>SAFE</li><li>SUSPICIOUS</li><li>MALICIOUS</li><li>AMBIGUOUS</li></ul><h3>Example attack families</h3><ul class="tag-list"><li>XSS</li><li>SQLI</li><li>COMMAND_INJECTION</li><li>PATH_TRAVERSAL</li><li>PROMPT_INJECTION</li><li>NONE</li></ul><div class="neuris-example"><p class="mono-label">Defensive classification example / observed v1 result</p><p>Input: <code>../../etc/passwd</code></p><pre><code>{
+  "verdict": "MALICIOUS",
+  "attack_family": "PATH_TRAVERSAL"
+}</code></pre></div><p>This illustrates the intended JSON schema; individual predictions and formatting can still be inconsistent.</p></section>
+          <section class="prose-section" id="run"><p class="section-index">04 / local deployment</p><h2>Run APEX through Ollama.</h2><p>With Ollama installed, run this command to download and start the ~2.1 GB Q4_K_M model.</p><div class="neuris-command"><code id="apex-command">ollama run fahisshehandim/Neuris-Apex</code><button type="button" id="apex-copy" aria-label="Copy Ollama run command">Copy command</button></div><p class="copy-feedback" id="apex-copy-feedback" role="status" aria-live="polite"></p><p><a class="text-link" href="https://ollama.com/fahisshehandim/Neuris-Apex" target="_blank" rel="noopener">Public Ollama model <span aria-hidden="true">↗</span></a></p><p>Use fresh, isolated prompts for evaluation: prior turns in an interactive session can influence classifications.</p></section>
+          <section class="prose-section" id="observations"><p class="section-index">05 / observed behavior</p><h2>Useful classifications. Visible failures.</h2><p>The initial test transcript contains successful classifications of path traversal, SQL injection, and command injection, as well as safe documentation examples. These are individual observations, not a benchmark accuracy claim.</p><ul><li><strong>Short-input false positives:</strong> <code>yo</code> repeatedly returned AMBIGUOUS / SQLI.</li><li><strong>Distracting context:</strong> script payloads or traversal fragments surrounded by ordinary text sometimes returned SAFE / NONE.</li><li><strong>Family confusion:</strong> requests for an admin password returned SUSPICIOUS / PROMPT_INJECTION.</li></ul><p>Vanilla Ministral already handled several obvious security examples in a separate control test, but used its own labels and taxonomy. APEX’s fine-tuning must be evaluated for consistent Neuris verdicts and attack families, alongside detection quality.</p></section>
+          <section class="prose-section" id="limits"><p class="section-index">06 / limits &amp; next steps</p><h2>Experimental, with work still to do.</h2><p>APEX 1.0 should not be used as the sole security control in production. False positives, missed payloads, and attack-family confusion remain observed limitations.</p><p>Future APEX versions will focus on better contextual understanding, stronger hard negatives, lower false positives, more consistent taxonomy, and broader attack-family coverage.</p><p>Progress will be measured against frozen evaluation and regression suites, including comparison with vanilla Ministral and controlled LoRA variants. New versions should earn their place through measured improvements. A planned teacher-assisted correction loop will accumulate reviewed, deduplicated examples, mix them with replay samples, and train controlled LoRA updates. Teacher labels are not automatically trusted, and weights will not be updated after each mistake.</p></section>
+          <a class="next-project" href="neuris-versions.html"><div><span>Model generations</span><strong>All Neuris versions</strong></div><span aria-hidden="true">←</span></a>
+        </div>
+      </div>
+    </main>
+    <footer class="site-footer wrap">
+      <p>Models are allowed to be wrong. Security tools have to show where.</p>
+      <div><a href="https://github.com/fahisxd" target="_blank" rel="me noopener">GitHub ↗</a><a href="https://instagram.com/fahisxd" target="_blank" rel="me noopener">Instagram ↗</a><a href="#main">Back to top ↑</a></div>
+      <p class="footer-copy">© <span data-year>2026</span> SoyezSecurise</p>
+    </footer>
+  </body>
+</html>

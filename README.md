@@ -29,6 +29,16 @@ The word “team” elsewhere in this repository usually means **Coffre Teams**,
 
 **Ayano** is a CVE research CLI within the Soyez Sécurisé project collection. Its source is maintained in a separate repository.
 
+## Neuris APEX
+
+[Neuris APEX 1.0](soyezsecurise-frontend/projects/neuris-apex.html) is the first experimental release of Neuris’s LLM-based generation (Neuris v2). It is a specialized 3B cybersecurity input classifier fine-tuned from Ministral 3B using SFT + LoRA, returning a verdict plus attack family. The ~2.1 GB Q4_K_M model runs locally through Ollama:
+
+```bash
+ollama run fahisshehandim/Neuris-Apex
+```
+
+[Public Ollama model](https://ollama.com/fahisshehandim/Neuris-Apex). APEX is not a general-purpose chatbot or a sole production security control. The website’s [version selector](soyezsecurise-frontend/projects/neuris-versions.html) links to current APEX information and the preserved legacy Neuris v1 page. The [Dispatches observation](soyezsecurise-frontend/writing/neuris-apex-context.html) documents session-context sensitivity and benign framing without claiming benchmark accuracy.
+
 ## How the repository fits together
 
 ```text

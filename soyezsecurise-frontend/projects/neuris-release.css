@@ -1,0 +1,33 @@
+.neuris-versions { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; padding-block: 3rem 5rem; }
+.neuris-version { border: 1px solid var(--line-strong); padding: clamp(1.25rem, 3vw, 2.5rem); }
+.neuris-current { border-top: 3px solid var(--sage); background: var(--paper-raised); }
+.neuris-version h2 { font-size: clamp(1.8rem, 3vw, 2.5rem); margin-block: 1rem; letter-spacing: -.04em; }
+.neuris-version p { color: var(--ink-soft); line-height: 1.7; margin-bottom: 1.5rem; }
+.neuris-current .mono-label { color: var(--sage-dark); }
+.neuris-version .hero-links { gap: 1.2rem; }
+.neuris-example { margin-block: 2rem; padding: 1.5rem; border-left: 2px solid var(--sage); background: var(--paper-raised); }
+.neuris-example pre { margin: 0; white-space: pre-wrap; overflow-wrap: anywhere; }
+.neuris-command { display: flex; align-items: center; gap: 1rem; padding: 1rem; border: 1px solid var(--line-strong); background: var(--paper-raised); }
+.neuris-command code { flex: 1; overflow-wrap: anywhere; min-width: 0; }
+.neuris-command button { flex-shrink: 0; padding: .7rem 1rem; border: 1px solid var(--sage); color: var(--ink); background: var(--paper); font-family: var(--mono); cursor: pointer; }
+.neuris-command button:hover { background: var(--sage-pale); }
+#apex-copy-feedback { min-height: 1.5em; }
+@media (max-width: 700px) {
+  .neuris-versions { grid-template-columns: 1fr; padding-block: 2rem 3rem; }
+  .neuris-command { align-items: stretch; flex-direction: column; }
+}
+a.neuris-version { display: block; color: var(--ink); text-decoration: none; cursor: pointer; transition: border-color .15s, background-color .15s; }
+a.neuris-version:hover { border-color: var(--sage); background: var(--sage-pale); }
+a.neuris-version:focus-visible { outline: 2px solid var(--sage); outline-offset: 4px; }
+.neuris-version-name { font-size: .6em; font-weight: 500; letter-spacing: -.02em; }
+.neuris-apex-title { display: block; font-size: .5em; letter-spacing: -.035em; }
+.neuris-training-facts { max-width: none; margin-block: 2rem; }
+.neuris-training-facts > div { grid-template-columns: minmax(100px, 1fr) minmax(0, 3fr); }
+.neuris-training-facts dd { overflow-wrap: anywhere; }
+
+.neuris-release-identity { min-width: 0; }
+.neuris-title-lockup { display: flex; align-items: center; gap: clamp(1rem, 3vw, 2rem); }
+.neuris-title-lockup h1 { margin-block: 0; }
+.neuris-release-logo { display: block; width: 86px; height: 150px; object-fit: contain; flex-shrink: 0; }
+.neuris-release-identity .hero-facts { width: 100%; }
+@media (max-width: 700px) { .neuris-release-logo { width: 52px; height: 104px; } }

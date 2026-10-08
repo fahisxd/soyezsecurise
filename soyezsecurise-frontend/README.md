@@ -9,7 +9,10 @@ This is the main Soyez Sécurisé website: Fahis Shehandi's personal portfolio, 
 
 - `index.html` introduces Fahis (`fahisxd`), current work, selected projects, and contact links.
 - `projects/coffre.html` explains the Coffre password-vault experiment, including Coffre Teams.
-- `projects/neuris.html` documents the Neuris classifier, its results, and its limitations.
+- `projects/neuris-versions.html` is the Neuris entry point, with full-card links to the current APEX generation and legacy project notes.
+- `projects/neuris-apex.html` documents APEX 1.0, its training, classification schema, local deployment, and observed limitations.
+- `projects/neuris.html` preserves the original Neuris project page; the legacy interface remains unchanged.
+- `writing/neuris-apex-context.html` records the session-context and benign-framing observation, linked from Dispatches and All Notes.
 - `projects/ayano.html` introduces the separately maintained Ayano CVE research CLI.
 - `writing/` contains development notes and longer-form writing.
 - `freelance.html` describes the kinds of small development work Fahis is interested in.
@@ -22,9 +25,19 @@ This is the main Soyez Sécurisé website: Fahis Shehandi's personal portfolio, 
 
 A web password-manager experiment focused on browser-side encryption, challenge-response authentication, OTP, sessions, and controlled team access. The main Coffre interface lives in `../soyezsecurise-frontend-coffre/`, while the API lives in `../soyezsecurise-backend/`.
 
-### Neuris / v0id
+### Neuris / APEX 1.0 and legacy v1
 
-An experimental character-level classifier for safe text, path traversal, SQL injection, command injection, and XSS. Its terminal interface lives in `../soyezsecurise-frontend-neuris/` and its model endpoint is part of the backend.
+Neuris APEX is the current generation (Neuris v2): an experimental 3B cybersecurity input-classification model fine-tuned from Ministral 3B using response-only SFT + LoRA. APEX 1.0 is the first experimental release of this generation. It returns a verdict (`SAFE`, `SUSPICIOUS`, `MALICIOUS`, or `AMBIGUOUS`) plus an attack family. It is not a general-purpose chatbot or the sole security control for production.
+
+The ~2.1 GB Q4_K_M model runs locally through Ollama. Public model: [fahisshehandim/Neuris-Apex](https://ollama.com/fahisshehandim/Neuris-Apex).
+
+```bash
+ollama run fahisshehandim/Neuris-Apex
+```
+
+The APEX page includes the curated corpus and training configuration, observed failures, evaluation direction, and a copy button with clipboard fallback and status feedback. Its transparent logo is bundled in `assets/neuris-apex-logo-transparent.png`; page-specific styling and copy behavior live in `projects/neuris-release.css` and `projects/neuris-apex.js`.
+
+Neuris v1 is the legacy/original classifier. Its existing project page and terminal interface in `../soyezsecurise-frontend-neuris/` are preserved; the interface still uses the shared backend. Main-site Neuris entry links open the version selector first.
 
 ### Ayano
 

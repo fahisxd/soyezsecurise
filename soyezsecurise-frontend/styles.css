@@ -4263,3 +4263,8 @@ body::before {
   .project-heading { flex-wrap: wrap; }
   .section-head { margin-bottom: 1.5rem; }
 }
+
+/* Neuris current generation label */
+.project-heading h3 .neuris-home-version { font-size: .55em; }
+
+.neuris-dispatch-code { padding: 1.25rem; background: var(--paper-raised); border-left: 2px solid var(--sage); white-space: pre-wrap; overflow-wrap: anywhere; font-size: .85rem; }
