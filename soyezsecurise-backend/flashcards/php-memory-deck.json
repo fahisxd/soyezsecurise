@@ -1,0 +1,61 @@
+{
+  "id": "php-memory-deck",
+  "title": "The request ran out of memory. What happens next?",
+  "description": "Six flash cards on the PHP OOM bug class. Think through each prompt, flip for the explanation, and follow the state to cleanup.",
+  "topic": "PHP / memory safety",
+  "eyebrow": "CVE-2026-109618 / STUDY DECK",
+  "front_label": "S/S / MEMORY NOTES",
+  "back_hint": "Reachable ≠ initialized.",
+  "completion": {
+    "title": "OOM is the trigger. Cleanup is the danger.",
+    "description": "A failure can interrupt initialization while state is reachable. If shutdown still handles that state as valid, cleanup can expose memory corruption. The PHP advisory documents RCE; these cards stay at the mechanism level.",
+    "highlight_label": "FIXED RELEASES",
+    "highlight": "8.2.35 · 8.3.36 · 8.4.27 · 8.5.12",
+    "link_label": "Read the full field note ↗",
+    "link_url": "https://soyezsecurise.com/writing/php-oom-cve-2026-109618.html"
+  },
+  "cards": [
+    {
+      "kicker": "01 / THE MEMORY BUDGET",
+      "prompt": "What does memory_limit actually limit?",
+      "context": "Before thinking about the bug, separate request memory from the machine’s total RAM.",
+      "title": "A per-request budget",
+      "answer": "PHP’s memory_limit caps memory used by one request. The server may still have free RAM when that request cannot get another allocation."
+    },
+    {
+      "kicker": "02 / THE DANGEROUS WINDOW",
+      "prompt": "How can state be both incomplete and dangerous?",
+      "context": "Picture initialization in progress when an allocation fails.",
+      "title": "Reachable does not mean ready",
+      "answer": "Some request state can become reachable before it is fully initialized. An out-of-memory exit at that moment can leave it invalid but still available to later code."
+    },
+    {
+      "kicker": "03 / FOLLOW THE EXIT",
+      "prompt": "After an early OOM exit, what part of the lifecycle matters?",
+      "context": "The failed allocation is only the trigger. Trace what happens after control leaves that context.",
+      "title": "Request shutdown",
+      "answer": "Shutdown may still process request state after initialization was interrupted. The allocation that fails does not have to be the allocation that created the unsafe state."
+    },
+    {
+      "kicker": "04 / CLEANUP’S ASSUMPTION",
+      "prompt": "What assumption can make cleanup unsafe?",
+      "context": "A structure is reachable, but initialization did not finish.",
+      "title": "Reachable is not valid",
+      "answer": "Cleanup can read or branch on state as though it were fully initialized. If that assumption is false, shutdown can consume invalid state and cause memory corruption."
+    },
+    {
+      "kicker": "05 / THE IMPACT",
+      "prompt": "What does “the advisory documents RCE” tell us—and what does it not tell us?",
+      "context": "Keep the confirmed impact separate from a general claim about memory corruption.",
+      "title": "Documented impact, careful explanation",
+      "answer": "The advisory documents remote code execution for this vulnerability. Memory corruption does not automatically mean RCE in every bug, and this card deck does not reconstruct the exploit chain."
+    },
+    {
+      "kicker": "06 / THE PATCH",
+      "prompt": "At a high level, how does the patched OOM handling change the exit?",
+      "context": "This summary follows the advisory. It is not an independent patch review.",
+      "title": "Avoid the unsafe early exit",
+      "answer": "The advisory describes delayed soft OOM at the next VM safe point, plus immediate hard OOM termination at a higher threshold. The goal is to keep shutdown from seeing invalid state."
+    }
+  ]
+}

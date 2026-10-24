@@ -153,12 +153,25 @@ Set this variable once and restart the service; subsequent text edits are read
 immediately. Keeping the file outside the deployment directory prevents later
 code deployments from replacing your announcements. All text in this file is public.
 
+The frontend renders a small Markdown subset: headings (`#` through `###`),
+`**bold**`, `*italic*`, inline code, bullet lists (`-` or `*`), HTTP/HTTPS links,
+and `---` dividers. Blank lines separate paragraphs. HTML stays literal text;
+links with other protocols are not made clickable. The API still returns text.
+
 Example content:
 
 ```text
-Coffre update coming this weekend.
+# Neuris APEX 1.0 is public
 
-More details will be posted here soon.
+**An experimental 3B security input classifier**, fine-tuned from Ministral 3B.
+
+- Runs locally through **Ollama**
+- SFT + LoRA · Q4_K_M · ~2.1 GB
+- *Experimental*: not a sole production security control
+
+Run: `ollama run fahisshehandim/Neuris-Apex`
+
+[View the model](https://ollama.com/fahisshehandim/Neuris-Apex)
 ```
 
 ## VPS writeup links
@@ -180,6 +193,56 @@ Titles and HTTP/HTTPS URLs are required; descriptions are optional. Use `[]`
 to clear the list. Edits need no restart. Invalid JSON or entries return 503.
 You can set `WRITEUPS_FILE` to an absolute path outside the Git checkout to
 keep the link list separate from deployments. Restart once after setting it.
+
+## VPS flash cards
+
+`GET /flashcards` returns `{"decks": [...]}` for the homepage. Add one JSON
+file per deck to `flashcards/` beside `main.py`. Files display in filename
+order; additions, edits, and removals appear on the next page reload with
+no backend restart or Netlify deployment after the initial integration deploy.
+
+For example, save this as `flashcards/http-basics-deck.json`:
+
+```json
+{
+  "title": "HTTP basics",
+  "topic": "Web security",
+  "description": "A quick review of HTTP.",
+  "cards": [
+    {
+      "prompt": "What does a 404 response mean?",
+      "title": "Not found",
+      "answer": "The server could not find the requested resource."
+    }
+  ]
+}
+```
+
+Only `title` and a nonempty `cards` array are required. Each card needs
+`prompt`, `title`, and `answer`; `kicker` and `context` are optional strings.
+All content is plain text. The deck ID defaults to the filename without
+`.json`, or you can set `id` explicitly. IDs must be unique, start with a
+lowercase letter, contain lowercase letters, numbers, and single hyphens,
+and end in `-deck`. Keep IDs stable so shared links continue to work:
+`https://soyezsecurise.com/#http-basics-deck`.
+
+Optional deck fields: `topic`, `description`, `eyebrow`, `front_label`, and
+`back_hint`. An optional `completion` object supports `title`, `description`,
+`highlight_label`, `highlight`, `link_label`, and `link_url` (an absolute
+HTTP/HTTPS URL). See `flashcards/php-memory-deck.json` for a complete example
+with the existing six PHP cards.
+
+Set `FLASHCARDS_DIR=/absolute/path/to/flashcards` to keep decks outside the
+Git checkout; restart the backend once after configuring it. Ensure the API
+process can read the directory and files. Deploy the new router and frontend
+once; subsequent content updates only require changing files on the VPS.
+Use a temporary file without a `.json` suffix and rename it into place to
+avoid serving a partially written file.
+
+An empty or missing directory returns an empty deck list. Invalid JSON,
+invalid fields, duplicate IDs, or unreadable files return 503 and log the
+validation error on the backend. The frontend offers a retry button. Both
+requests and responses disable caching so reloads pick up current content.
 
 ## API groups
 

@@ -96,6 +96,7 @@ from coffreteam import (
 from neuris import neuris
 from announcements import router as announcements_router
 from writeups import router as writeups_router
+from flashcards import router as flashcards_router
 #---------------------------------------------------setup--------------------------------------------------#
 load_dotenv()
 
@@ -115,6 +116,7 @@ gmail_otp = redis.Redis.from_url(REDIS_URL, **redis_options)
 app = FastAPI()
 app.include_router(announcements_router)
 app.include_router(writeups_router)
+app.include_router(flashcards_router)
 
 def get_db():
     conn = psycopg2.connect(
@@ -456,6 +458,25 @@ class DeletePasswordRequest2(BaseModel):
     session_id: SessionIdType
     password_name: PasswordNameType
     usernameS: PasswordNameType
+    request_id: Requets_ID
+
+class DisposablePasswordRequest(BaseModel):
+    signature: Hex64Type
+    username: UsernameType
+    session_id: SessionIdType
+
+    password_name: PasswordNameType
+    usernametbs: UsernameType
+    enc_data: Base64Type
+
+    hint: Optional[Base64Type] = None
+
+    expires_in: int = Field(
+        default=900,
+        ge=60,
+        le=86400,
+    )
+
     request_id: Requets_ID
 
 #----------------------------------------------functions--------------------------------------------------#
@@ -1031,3 +1052,29 @@ async def delete_team_challenge(data: TeamDeleteRequest, request: Request, backg
 @app.post("/coffre/team/delete_team2")
 async def delete_team(data: TeamDelete2Request, request: Request, conn=Depends(get_db)):
     return await coffre_delete_team(data, request, conn)
+
+
+@app.post("/coffre/store_disposable_password")
+async def store_disposable_password(
+    data: UsernameRequest,
+    request: Request,
+    conn=Depends(get_db),
+):
+    return await coffre_store_disposable_password(
+        data,
+        request,
+        conn,
+    )
+
+
+@app.post("/coffre/store_disposable_password2")
+async def store_disposable_password2(
+    Pdata: DisposablePasswordRequest,
+    request: Request,
+    conn=Depends(get_db),
+):
+    return await coffre_store_disposable_password2(
+        Pdata,
+        request,
+        conn,
+    )

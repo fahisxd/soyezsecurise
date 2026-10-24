@@ -4,12 +4,12 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="Soyez Sécurisé is the banner Fahis XD uses for independent security tools, experiments, and field notes.">
-    <meta name="theme-color" content="#d8ddc8">
+    <meta name="theme-color" content="#ecefe7">
     <title>Soyez Sécurisé — security work by Fahis XD</title>
     <link rel="icon" href="favicon.svg" type="image/svg+xml">
     <link rel="stylesheet" href="styles.css">
     <script src="script.js" defer></script>
-    <script src="sqli-game.js" defer></script>
+    <script src="php-oom-drill.js" defer></script>
     <script src="announcements.js" defer></script>
     <script src="writeups.js" defer></script>
   </head>
@@ -27,6 +27,7 @@
         <a href="#announcements">Updates</a>
         <a href="#writeups">Writeups</a>
         <a href="#notes">Dispatches</a>
+        <a href="#oom-drill">Memory drill</a>
         <a href="#about">Identity</a>
         <a href="freelance.html">Work with Fahis</a>
         <a href="coming-soon.html">Roadmap</a>
@@ -66,7 +67,7 @@
           <p class="mono-label">/bulletin board</p>
           <h2 id="announcements-title">Upcoming &amp; announcements</h2>
         </header>
-        <p class="announcements-copy" data-announcements data-endpoint="https://api.soyezsecurise.com/announcements" aria-live="polite">No announcements right now. Check back for updates.</p>
+        <div class="announcements-copy" data-announcements data-endpoint="https://api.soyezsecurise.com/announcements" aria-live="polite">No announcements right now. Check back for updates.</div>
         <noscript><p>Enable JavaScript to load the latest announcements.</p></noscript>
       </section>
 
@@ -170,6 +171,12 @@
         </header>
 
         <div class="note-list">
+          <a class="note-row" href="writing/php-oom-cve-2026-109618.html">
+            <time datetime="2026-10-23">23 Oct 2026</time>
+            <span class="note-title">PHP got cooked? CVE-2026-109618, explained through memory</span>
+            <span class="note-kind">Security / memory</span>
+            <span class="note-arrow" aria-hidden="true">↗</span>
+          </a>
           <a class="note-row" href="writing/neuris-apex-context.html">
             <time datetime="2026-10-08">08 Oct 2026</time>
             <span class="note-title">When “just a slang” changes a security verdict</span>
@@ -238,61 +245,98 @@
         </div>
       </section>
 
-      <section class="sqli-lab wrap" id="sqli-lab" aria-labelledby="sqli-lab-title">
-        <header class="section-head">
+      <div class="rule wrap" aria-hidden="true"><span>05</span></div>
+
+      <section class="section notes-section wrap oom-drill-section" id="oom-drill" aria-labelledby="oom-drill-title">
+        <header class="section-head section-head-compact">
           <div>
-            <p class="section-index">04 / simulated lab</p>
-            <h2 id="sqli-lab-title">Bored? Want to practise SQLi without bothering a real database?</h2>
+            <p class="section-index">05 / interactive field note</p>
+            <h2 id="oom-drill-title">Flash cards.</h2>
           </div>
-          <p>Five small levels about input, queries, and observable behaviour. Entirely fictional. Mildly suspicious.</p>
+          <p>Think through each prompt, flip for the explanation, and explore the published study decks.</p>
         </header>
 
-        <div class="sqli-game" data-sqli-game data-level="0">
-          <div class="game-system-bar">
-            <span>SQLi intuition / local simulation</span>
-            <span class="game-safety"><span aria-hidden="true"></span> no external target</span>
-            <button type="button" data-game-reset>reset progress</button>
-          </div>
-
-          <div class="game-intro" data-game-intro>
-            <p class="mono-label">Simulated environment</p>
-            <h3>The application has one secret. It will never print it.</h3>
-            <p>Your job is to notice what changes anyway. No real database, host, or account exists behind this interface.</p>
-            <button class="game-primary" type="button" data-game-start>Begin investigation <span aria-hidden="true">→</span></button>
-          </div>
-
-          <div class="game-stage" data-game-stage hidden>
-            <ol class="game-progress" aria-label="Investigation progress">
-              <li data-game-step="1"><span>01</span> input</li>
-              <li data-game-step="2"><span>02</span> query</li>
-              <li data-game-step="3"><span>03</span> blind</li>
-              <li data-game-step="4"><span>04</span> clock</li>
-              <li data-game-step="5"><span>05</span> characters</li>
-            </ol>
-            <div class="game-level-heading">
-              <p class="mono-label" data-game-level-label></p>
-              <h3 data-game-level-title></h3>
-              <p data-game-objective></p>
+        <p data-flashcards-status role="status">Loading flash cards…</p>
+        <button type="button" data-flashcards-retry hidden>Try again</button>
+        <div data-flashcards data-endpoint="https://api.soyezsecurise.com/flashcards"></div>
+        <template data-flashcards-template>
+          <div class="oom-drill" data-oom-drill>
+            <div class="note-list">
+              <a class="note-row oom-deck-entry" href="#" data-oom-open aria-haspopup="dialog">
+                <span class="oom-entry-meta" data-deck-count></span>
+                <span class="note-title" data-deck-title></span>
+                <span class="note-kind" data-deck-topic></span>
+                <span class="note-arrow" aria-hidden="true">↗</span>
+              </a>
             </div>
-            <div class="game-content" data-game-content></div>
-            <div class="game-hints" data-game-hints aria-label="Optional hints"></div>
+            <dialog class="oom-dialog" data-oom-dialog>
+              <div class="oom-dialog-header">
+                <h3 data-deck-dialog-title></h3>
+                <div class="oom-dialog-actions">
+                  <button type="button" class="oom-dialog-share" data-oom-share>Copy link</button>
+                  <button type="button" class="oom-dialog-close" data-oom-close autofocus aria-label="Close flash cards">Close <span aria-hidden="true">×</span></button>
+                </div>
+                <span class="oom-share-status" data-oom-share-status role="status" aria-live="polite"></span>
+              </div>
+              <div class="oom-dialog-body">
+                <p data-deck-description hidden></p>
+                <div class="oom-share-fallback" data-oom-share-fallback hidden>
+                  <label data-deck-share-label>Share this link</label>
+                  <input type="text" readonly data-oom-share-url>
+                </div>
+                <div class="oom-stage" data-oom-stage>
+                  <div class="oom-deck-heading">
+                    <span class="oom-eyebrow" data-deck-eyebrow></span>
+                    <button type="button" data-oom-reset>Reset deck <span aria-hidden="true">↺</span></button>
+                  </div>
+                  <div class="oom-card-stack">
+                    <button class="oom-flashcard" type="button" data-oom-card aria-pressed="false" aria-label="Flip card to reveal the explanation">
+                      <span class="oom-card-inner">
+                        <span class="oom-card-face oom-card-front" data-oom-front>
+                          <span class="oom-card-top"><span data-deck-front-label></span><span data-oom-card-number></span></span>
+                          <span class="oom-card-body">
+                            <span class="oom-eyebrow" data-oom-kicker></span>
+                            <span class="oom-card-title" data-oom-question></span>
+                            <span class="oom-card-copy" data-oom-context></span>
+                          </span>
+                          <span class="oom-card-foot"><span>Think it through.</span><span>Tap to reveal <span aria-hidden="true">↻</span></span></span>
+                        </span>
+                        <span class="oom-card-face oom-card-back" data-oom-back aria-hidden="true" inert>
+                          <span class="oom-card-top"><span>S/S / THE EXPLANATION</span><span data-oom-card-number></span></span>
+                          <span class="oom-card-body">
+                            <span class="oom-eyebrow" data-oom-kicker-back></span>
+                            <span class="oom-card-title" data-oom-answer-title></span>
+                            <span class="oom-card-copy" data-oom-answer></span>
+                          </span>
+                          <span class="oom-card-foot"><span data-deck-back-hint></span><span>Tap to turn back <span aria-hidden="true">↻</span></span></span>
+                        </span>
+                      </span>
+                    </button>
+                  </div>
+                  <div class="oom-card-controls">
+                    <button type="button" class="oom-nav-button" data-oom-prev disabled><span aria-hidden="true">←</span> Previous</button>
+                    <button type="button" class="oom-flip-button" data-oom-flip aria-pressed="false"><span aria-hidden="true">↻</span> <span data-oom-flip-label>Flip card</span></button>
+                    <button type="button" class="oom-nav-button" data-oom-next><span data-oom-next-label>Next card</span> <span aria-hidden="true">→</span></button>
+                  </div>
+                  <div class="oom-deck-footer">
+                    <div class="oom-card-markers" data-oom-markers role="group" aria-label="Choose a flash card"></div>
+                    <span class="oom-deck-count" data-oom-step role="status" aria-live="polite" aria-atomic="true"></span>
+                  </div>
+                  <p class="oom-deck-help"><span data-oom-revealed></span><span>Click card to flip <span aria-hidden="true">·</span> ← → to navigate</span></p>
+                </div>
+                <div class="oom-finish" data-oom-finish hidden>
+                  <p class="oom-eyebrow">DECK COMPLETE</p>
+                  <h3 data-deck-complete-title></h3>
+                  <p data-deck-complete-description></p>
+                  <div class="oom-release-line" data-deck-highlight hidden><span data-deck-highlight-label></span><strong data-deck-highlight-text></strong></div>
+                  <a data-deck-link hidden></a>
+                  <button class="oom-button" type="button" data-oom-replay>Study the cards again <span aria-hidden="true">↻</span></button>
+                </div>
+              </div>
+            </dialog>
           </div>
-
-          <div class="game-final" data-game-final hidden>
-            <p class="mono-label">Access granted / reveal</p>
-            <h3>You were not guessing passwords.</h3>
-            <p>You were asking the database questions it could only answer with time.</p>
-            <div class="game-course-mark"><span>SQL injection</span><strong>// interactive walkthrough</strong><small>coming soon</small></div>
-            <p class="game-final-note">You just discovered the intuition behind time-based blind SQLi.</p>
-            <div class="game-final-actions">
-              <a class="text-link" href="#main">Return to Soyez Sécurisé <span aria-hidden="true">↑</span></a>
-              <button class="game-share" type="button" data-game-share>Share this experiment <span aria-hidden="true">↗</span></button>
-            </div>
-            <p class="game-share-feedback" role="status" aria-live="polite" data-game-share-status></p>
-          </div>
-
-          <noscript><p class="game-noscript">This local simulation needs JavaScript. The rest of the site does not.</p></noscript>
-        </div>
+        </template>
+        <noscript><p class="oom-noscript">Flash cards need JavaScript. Read the <a href="writing/php-oom-cve-2026-109618.html">PHP memory field note</a> instead.</p></noscript>
       </section>
     </main>
 

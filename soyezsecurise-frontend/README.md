@@ -72,7 +72,6 @@ Opening the HTML files directly may work for basic browsing, but an HTTP server 
 - Keep claims about project status consistent across the homepage, project pages, and `coming-soon.html`.
 - Continue to describe Soyez Sécurisé as a personal workspace rather than a real company.
 - Do not describe Coffre or Neuris as audited production security controls.
-- The Coffre Android app is not finished and should be labeled as in development wherever it is mentioned.
 
 ## VPS announcements
 
@@ -82,8 +81,10 @@ The homepage's **Upcoming & announcements** section fetches public text from
 for local development.
 
 Deploy the updated frontend and backend once, then edit the backend's
-`announcements.txt` on the VPS to publish news. Plain text and line breaks are
-supported; HTML is displayed as text. Visitors see updates on page reload,
+`announcements.txt` on the VPS to publish news. A small Markdown subset supports headings (`#`, `##`, `###`), `**bold**`,
+`*italic*`, inline code, `-`/`*` bullet lists, HTTP/HTTPS links, and `---` dividers.
+Blank lines separate paragraphs; single line breaks are preserved. Raw HTML is
+displayed as text. Visitors see updates on page reload,
 without rebuilding the frontend or restarting the backend. An empty file shows
 “No announcements right now.”
 
@@ -95,8 +96,44 @@ and optional descriptions. See the backend README for the format and
 `WRITEUPS_FILE` configuration. Change the section's `data-endpoint` in
 `index.html` to use a different backend host.
 
+## VPS flash cards
+
+The homepage loads its flash card catalog from
+`GET https://api.soyezsecurise.com/flashcards`, using the same backend JSON
+approach as writeups. Each JSON file in `../soyezsecurise-backend/flashcards/`
+becomes a deck automatically, including its list entry, cards, completion
+screen, and shareable hash link. The existing PHP deck keeps `#php-memory-deck`.
+
+Deploy the updated frontend and backend once. After that, add, edit, or remove
+deck JSON files on the VPS; visitors see changes when they reload, without
+another Netlify deploy or backend restart. See the backend README's **VPS
+flash cards** section for a minimal JSON example and `FLASHCARDS_DIR` setup.
+
+The frontend uses `php-oom-drill.js` and the reusable HTML template in
+`index.html`. Change `data-endpoint` on `[data-flashcards]` to
+`http://127.0.0.1:8000/flashcards` for local API development. Card text is
+inserted as text, and unavailable/empty catalogs have explicit status messages.
+
 ## Related directories
 
 - `../soyezsecurise-backend/` — shared API and Neuris model
 - `../soyezsecurise-frontend-coffre/` — Coffre web application
 - `../soyezsecurise-frontend-neuris/` — Neuris web application
+
+### Announcement formatting example
+
+Put this in the VPS `announcements.txt`:
+
+```text
+# Neuris APEX 1.0 is public
+
+**An experimental 3B security input classifier**, fine-tuned from Ministral 3B.
+
+- Runs locally through **Ollama**
+- SFT + LoRA · Q4_K_M · ~2.1 GB
+- *Experimental*: not a sole production security control
+
+Run: `ollama run fahisshehandim/Neuris-Apex`
+
+[View the model](https://ollama.com/fahisshehandim/Neuris-Apex)
+```
