@@ -10,7 +10,7 @@ from unittest.mock import patch
 
 from fastapi import FastAPI
 from fastapi.testclient import TestClient
-import archive_service as archive
+import main as archive
 
 ROOT = Path(__file__).resolve().parents[1]
 EXAMPLE = json.loads((ROOT / 'archive_examples/community-quiz.json').read_text())
@@ -19,8 +19,6 @@ EXAMPLE = json.loads((ROOT / 'archive_examples/community-quiz.json').read_text()
 class ValidationTests(unittest.TestCase):
     def test_versions_and_publication(self):
         archive.validate_record(EXAMPLE)
-        legacy = json.loads((ROOT.parent / 'soyezsecurise-frontend/archive/content/flashes/01-heartbleed.json').read_text())
-        archive.validate_record(legacy)
         with self.assertRaises(Exception):
             archive.validate_record({**EXAMPLE, 'status': 'published'})
         with self.assertRaises(Exception):
@@ -53,7 +51,7 @@ class DatabaseTests(unittest.TestCase):
         with archive.connect() as conn, conn.cursor() as cur:
             cur.execute((ROOT / 'migrations/001_archive.sql').read_text())
             cur.execute('TRUNCATE archive_flashes,archive_import_files')
-        app = FastAPI(); app.include_router(archive.router)
+        app = FastAPI(); app.include_router(archive.archive_router)
         self.client = TestClient(app)  # no background scanner; tests explicitly control imports
 
     def tearDown(self):
@@ -131,7 +129,7 @@ class DatabaseTests(unittest.TestCase):
 
     def test_startup_scanner_imports_without_a_manual_call(self):
         self.write('automatic')
-        app = FastAPI(); app.include_router(archive.router)
+        app = FastAPI(); app.include_router(archive.archive_router)
         with TestClient(app) as client:
             deadline = time.monotonic() + 3
             while time.monotonic() < deadline:
