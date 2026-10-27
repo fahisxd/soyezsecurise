@@ -1,0 +1,2 @@
+-- Superseded: use soyezsecurise-backend/migrations/001_archive.sql.
+-- This frontend does not apply migrations. See soyezsecurise-backend/ARCHIVE.md.

@@ -1,7 +1,8 @@
 const root = document.documentElement;
 const themeButton = document.querySelector(".theme-toggle");
 const themeMeta = document.querySelector('meta[name="theme-color"]');
-const savedTheme = localStorage.getItem("ss-theme");
+let savedTheme = null;
+try { savedTheme = localStorage.getItem("ss-theme"); } catch { /* Use the system theme when storage is unavailable. */ }
 const systemPrefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
 
 function applyTheme(theme) {
@@ -13,7 +14,7 @@ function applyTheme(theme) {
   }
 
   if (themeMeta) {
-    themeMeta.setAttribute("content", theme === "dark" ? "#18221b" : "#d8ddc8");
+    themeMeta.setAttribute("content", theme === "dark" ? "#151a16" : "#ecefe7");
   }
 }
 
@@ -22,7 +23,7 @@ applyTheme(savedTheme || (systemPrefersDark ? "dark" : "light"));
 themeButton?.addEventListener("click", () => {
   const nextTheme = root.dataset.theme === "dark" ? "light" : "dark";
   applyTheme(nextTheme);
-  localStorage.setItem("ss-theme", nextTheme);
+  try { localStorage.setItem("ss-theme", nextTheme); } catch { /* Theme changes still work for this visit. */ }
 });
 
 document.querySelectorAll("[data-year]").forEach((year) => {
@@ -55,5 +56,27 @@ document.querySelectorAll("[data-copy]").forEach((button) => {
       if (state) state.textContent = "copy";
       if (feedback) feedback.textContent = "";
     }, 2200);
+  });
+});
+
+// Native details keeps secondary navigation available without JavaScript.
+const navigationMenus = document.querySelectorAll('.nav-more');
+function closeNavigationMenus() {
+  navigationMenus.forEach(menu => { menu.open = false; });
+}
+document.addEventListener('pointerdown', event => {
+  navigationMenus.forEach(menu => {
+    if (!menu.contains(event.target)) menu.open = false;
+  });
+});
+navigationMenus.forEach(menu => {
+  menu.addEventListener('keydown', event => {
+    if (event.key === 'Escape') {
+      menu.open = false;
+      menu.querySelector('summary').focus();
+    }
+  });
+  menu.addEventListener('click', event => {
+    if (event.target.closest('a')) closeNavigationMenus();
   });
 });

@@ -1,0 +1,208 @@
+/* Stable phone composition: metadata, text, visual, then controls. */
+@media (max-width: 760px), (max-height: 500px) and (pointer: coarse) {
+  .flash {
+    --story-header-space: 76px;
+    display: grid;
+    grid-template-rows: minmax(0, 1fr) auto;
+    gap: 12px;
+    padding: calc(var(--story-header-space) + env(safe-area-inset-top, 0px))
+      max(20px, env(safe-area-inset-right, 0px))
+      max(10px, env(safe-area-inset-bottom, 0px))
+      max(20px, env(safe-area-inset-left, 0px));
+  }
+  .card-stack { height: auto; }
+  .card-face {
+    grid-template-rows: auto minmax(0, 1fr);
+    gap: 0;
+    padding: 0;
+    transform: none;
+    backface-visibility: visible;
+    -webkit-backface-visibility: visible;
+  }
+  .face-top { position: static; min-height: 26px; align-items: flex-start; }
+  .face-topic { max-width: calc(100% - 82px); column-gap: 7px; row-gap: 4px; font-size: 10px; }
+  .face-date, .face-kind { padding-left: 7px; font-size: 9px; }
+  .sample-label { font-size: 8px; padding: 4px 6px; }
+  .face-layout, .card-back .face-layout {
+    height: auto;
+    margin: 0;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: minmax(0, .85fr) minmax(0, 1.15fr);
+    align-items: stretch;
+    gap: 14px;
+    padding: 16px 0 0;
+  }
+  .story-copy { align-self: stretch; justify-content: flex-start; }
+  .card-title, .card-back .card-title {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+    overflow: hidden;
+    max-width: 22ch;
+    font-size: clamp(34px, 9vw, 44px);
+    line-height: 1.06;
+    white-space: normal;
+    text-wrap: balance;
+    word-break: normal;
+  }
+  .card-title-long { font-size: clamp(30px, 8.6vw, 40px); }
+  .card-copy {
+    font-size: 14px;
+    line-height: 1.5;
+    margin-top: 12px;
+    -webkit-line-clamp: 3;
+    white-space: normal;
+    overflow-wrap: anywhere;
+    text-wrap: pretty;
+  }
+  .card-kicker, .card-inline-hint, .face-bottom, .flip-control,
+  .debrief-mark, .debrief-heading, .terminal-art-cursor, .visual-label { display: none; }
+  .story-controls {
+    position: static;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 8px;
+    min-height: 62px;
+    padding: 10px 0 0;
+  }
+  .slide-controls { min-width: 0; gap: 3px; }
+  .slide-count { margin-inline: 2px; font-size: 9px; }
+  .slide-dots { flex-wrap: wrap; }
+  .slide-dots button { width: 19px; min-height: 44px; }
+  .flash-actions { gap: 2px; }
+  .flash-actions > button, .sources > summary {
+    flex-direction: column;
+    min-width: 40px;
+    min-height: 48px;
+    padding: 4px 0;
+    gap: 5px;
+    font-size: 10px;
+  }
+  .flash-actions .transcript-button { margin: 0; font-size: 10px; }
+  .flash-actions > button svg, .sources > summary svg { width: 20px; height: 20px; }
+  .read-long { display: none; }
+  .read-short { display: inline; }
+  .source-popover { max-width: calc(100vw - 40px); }
+
+  /* Size artwork from its own reserved area, rather than the entire screen. */
+  .story-visual {
+    container-type: size;
+    width: 100%;
+    height: 100%;
+    max-height: none;
+    min-height: 0;
+    padding: 0;
+    justify-content: center;
+  }
+  .story-visual > * { min-width: 0; max-width: 100%; }
+  .story-visual > svg { object-fit: contain; }
+  .story-memory-leak .heart-art {
+    width: 100%;
+    height: min(76%, 240px);
+    max-height: calc(100% - 54px);
+    max-width: 340px;
+    margin: 0;
+  }
+  .visual-stat { font-size: clamp(34px, 20cqh, 58px); line-height: 1; margin: 6px 0 0; }
+  .network-art { width: 100%; height: calc(100% - 40px); max-height: 245px; margin: 0; }
+  .network-year { top: 4px; right: 4px; font-size: clamp(50px, 32cqh, 88px); }
+  .visual-caption {
+    flex-shrink: 0;
+    font-size: 10px;
+    line-height: 1.5;
+    margin-top: 8px;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
+  }
+  .visual-memory-leak .visual-caption, .visual-typography .visual-caption,
+  .visual-bit-flip .visual-caption, .visual-entropy .visual-caption,
+  .visual-disclosure .visual-caption, .visual-terminal .visual-caption,
+  .visual-timeline .visual-caption { display: none; }
+  .timeline-year { font-size: clamp(48px, 32cqh, 92px); line-height: 1; }
+  .timeline-code { padding: 10px 0; gap: 15px; }
+  .timeline-code code { font-size: 11px; line-height: 1.5; overflow-wrap: anywhere; }
+  .bit-grid { width: min(100%, 240px, 90cqh); gap: 4px; margin: 0; }
+  .bit-grid > span { font-size: 14px; }
+  .bit-grid .changed-bit { transform: none; }
+  .bit-verdict { font-size: clamp(26px, 16cqh, 40px); margin-top: 10px; }
+  .meme-type { font-size: clamp(29px, 15cqh, 44px); line-height: 1.02; }
+  .meme-sticker { transform: none; font-size: 9px; padding: 6px 9px; margin: 0 0 10px; }
+  .meme-stamp { transform: none; font-size: 11px; padding: 7px 10px; margin: 12px 0 0; }
+  .entropy-grid { width: min(100%, 180px, 70cqh); gap: 4px; }
+  .entropy-type { font-size: 14px; margin-top: 12px; }
+  .terminal-art {
+    transform: none;
+    max-width: 340px;
+    padding: 0 14px 12px;
+    box-shadow: 0 6px 18px #10171430;
+  }
+  .terminal-art-bar { min-height: 28px; margin-bottom: 8px; }
+  .terminal-art-title { font-size: clamp(19px, 10cqh, 27px); margin: 10px 0; }
+  .terminal-art code { font-size: 11px; line-height: 1.4; overflow-wrap: anywhere; }
+  .visual-disclosure .disclosure-type { font-size: clamp(24px, 15cqh, 36px); margin: 0 0 12px; }
+  .visual-disclosure .story-images {
+    width: 100%;
+    height: calc(100% - 52px);
+    max-height: 220px;
+    min-height: 0;
+    flex-wrap: nowrap;
+    align-items: center;
+  }
+  .visual-disclosure .story-images img {
+    min-width: 0;
+    min-height: 0;
+    width: 100%;
+    height: 100%;
+    max-height: 100%;
+    object-fit: contain;
+  }
+  .card-back .face-layout { grid-template-rows: minmax(0, 1.45fr) minmax(0, .65fr); }
+  .card-back .card-title { font-size: clamp(28px, 8.2vw, 36px); }
+  .card-back .card-copy { font-size: 14px; -webkit-line-clamp: 6; }
+  .debrief-visual { align-self: start; padding: 12px 0 0; border: 0; border-top: 1px solid #61764f; }
+  .debrief-visual code { font-size: 11px; line-height: 1.5; overflow-wrap: anywhere; }
+  .debrief-visual .visual-caption { max-width: 100%; margin-top: 0; text-align: left; }
+
+  /* Keep the content upright and stationary when revealing the reverse face. */
+  .card-rotator, .card-stage.is-flipped .card-rotator { transform: none; transition: none; }
+  .card-face[aria-hidden='true'] { visibility: hidden; pointer-events: none; }
+  .feed-slot:not([inert]) .story-copy, .feed-slot:not([inert]) .story-visual,
+  .feed-slot:not([inert]) .heart-art > g:last-of-type { animation: none; }
+}
+
+@media (max-width: 760px) and (max-height: 740px) {
+  .flash { --story-header-space: 68px; gap: 10px; }
+  .face-layout, .card-back .face-layout { gap: 10px; padding-top: 12px; }
+  .card-title { font-size: clamp(31px, 8.6vw, 36px); }
+  .card-title-long, .card-back .card-title { font-size: clamp(28px, 8vw, 32px); }
+  .card-copy, .card-back .card-copy { font-size: 13px; margin-top: 10px; }
+  .card-copy { -webkit-line-clamp: 2; }
+  .story-controls { min-height: 58px; padding-top: 8px; }
+}
+
+/* Rotated phones use two upright columns to preserve a useful visual area. */
+@media (max-height: 500px) and (pointer: coarse) and (orientation: landscape) {
+  .archive-header { height: calc(52px + env(safe-area-inset-top, 0px)); padding-inline: max(20px, env(safe-area-inset-left, 0px)); }
+  .archive-logo { font-size: 12px; gap: 8px; }
+  .logo-byline { font-size: 8px; }
+  .logo-symbol { width: 28px; height: 28px; }
+  .view-switch { position: static; transform: none; margin-left: auto; }
+  .view-switch button { font-size: 11px; padding: 6px 12px; }
+  .header-tools { gap: 14px; margin-left: 0; }
+  .header-tools summary > span { display: none; }
+  .flash { --story-header-space: 58px; gap: 6px; }
+  .face-top { min-height: 22px; }
+  .face-layout, .card-back .face-layout {
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+    grid-template-rows: minmax(0, 1fr);
+    column-gap: 24px;
+    padding-top: 8px;
+  }
+  .card-title, .card-title-long, .card-back .card-title { font-size: clamp(26px, 4vw, 34px); }
+  .card-copy, .card-back .card-copy { font-size: 13px; -webkit-line-clamp: 3; margin-top: 10px; }
+  .story-controls { min-height: 50px; padding-top: 4px; }
+  .debrief-visual { align-self: center; }
+}

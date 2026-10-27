@@ -65,6 +65,24 @@ Then open `http://127.0.0.1:8080`.
 
 Opening the HTML files directly may work for basic browsing, but an HTTP server gives behavior closer to deployment.
 
+## Archive
+
+The shared header links to `archive/index.html`, a static flash feed that also
+works when the homepage is opened directly from disk. Its generated JavaScript,
+CSS and local media live beside that entry. Develop Archive with Vite and rebuild
+its static assets after editing it:
+
+```sh
+cd archive
+npm ci
+npm run build
+npm run test:static
+```
+
+Deploy Archive's `dist/` output at `/archive/`; keep the rest of this website's
+HTML/CSS/JavaScript deployment as before. See [Archive setup](archive/README.md)
+and the [backend guide](../soyezsecurise-backend/ARCHIVE.md).
+
 ## Editing the site
 
 - Update shared visual rules in `styles.css`.

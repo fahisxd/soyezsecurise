@@ -1,0 +1,22 @@
+{
+  "schemaVersion": 2,
+  "id": "community-quiz",
+  "type": "security-fact",
+  "title": "Spot the suspicious link",
+  "description": "A tiny interactive example.",
+  "category": "facts",
+  "author": {
+    "name": "Contributor",
+    "handle": "@yourhandle",
+    "url": "https://www.instagram.com/yourhandle/"
+  },
+  "status": "draft",
+  "provenance": {
+    "kind": "editorial",
+    "origin": "manual"
+  },
+  "html": "<main><h1>Which address belongs to example.com?</h1><button data-answer=\"yes\">login.example.com</button><button data-answer=\"no\">example.com.attacker.test</button><p id=\"result\" aria-live=\"polite\"></p></main>",
+  "css": "body{margin:0;background:#20382a;color:#e6eedc;font:20px system-ui}main{padding:8%;}button{padding:1rem;margin:.5rem;}",
+  "javascript": "document.querySelectorAll(\"button\").forEach(button => button.onclick = () => { document.querySelector(\"#result\").textContent = button.dataset.answer === \"yes\" ? \"Correct!\" : \"Check the actual domain at the end.\"; });",
+  "externalHosts": {}
+}

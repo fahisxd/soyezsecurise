@@ -10,3 +10,5 @@ qrcode==8.2
 resend==2.32.2
 python-dotenv==1.0.0
 numpy>=1.26
+
+jsonschema[format]==4.26.0

@@ -291,3 +291,7 @@ Brackets above are shorthand for paired challenge/completion routes, not literal
 - `../soyezsecurise-frontend-coffre/Android/` — unfinished Android client
 - `../soyezsecurise-frontend-neuris/` — Neuris web client
 - `../soyezsecurise-frontend/` — portfolio and project notes
+
+## Archive feed
+
+Automatic VPS JSON imports, PostgreSQL migration, public paginated feed, custom HTML flashes, and deployment instructions are documented in [ARCHIVE.md](ARCHIVE.md).

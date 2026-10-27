@@ -97,6 +97,7 @@ from neuris import neuris
 from announcements import router as announcements_router
 from writeups import router as writeups_router
 from flashcards import router as flashcards_router
+from archive_service import router as archive_router
 #---------------------------------------------------setup--------------------------------------------------#
 load_dotenv()
 
@@ -117,6 +118,7 @@ app = FastAPI()
 app.include_router(announcements_router)
 app.include_router(writeups_router)
 app.include_router(flashcards_router)
+app.include_router(archive_router)
 
 def get_db():
     conn = psycopg2.connect(
