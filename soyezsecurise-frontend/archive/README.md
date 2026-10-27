@@ -11,7 +11,9 @@ The current connected implementation and VPS setup are documented in
 That guide supersedes the historical “future backend” notes below. The backend
 migration is `soyezsecurise-backend/migrations/001_archive.sql`, not the old SQL proposal.
 
-Set `VITE_ARCHIVE_API_URL` to the full `/archive/flashes` endpoint before building.
+Production builds read `VITE_ARCHIVE_API_URL` from the tracked `.env.production`.
+For local development, copy `.env.example` to `.env.local` and adjust the URL if
+you are using a different API host.
 Connected feeds load batches of 10, prefetch near the end, preserve the active
 card on append, and finish with a reshuffle action. If the API URL is missing,
 the archive displays a backend configuration error and no stories.
@@ -56,7 +58,8 @@ npm ci
 npm run dev
 ```
 
-Open `http://127.0.0.1:5173/archive/`. Configure `VITE_ARCHIVE_API_URL` to load stories.
+Open `http://127.0.0.1:5173/archive/`. The checked-in `.env.production` configures
+the production build; Vite dev reads `.env.local` when present.
 
 ```sh
 npm test                 # schema, backend feed contract, virtualization, local state
@@ -199,7 +202,7 @@ Local visual previews are in `docs/previews/`. With the app running at port 4173
 
 ## Connect the existing backend
 
-Copy `.env.example` to `.env.local` and set `VITE_ARCHIVE_API_URL` to the existing backend's archive endpoint. Restart Vite, or rebuild for a production configuration. No endpoint is assumed to exist, and backend/database changes have not been made.
+Copy `.env.example` to `.env.local` and set `VITE_ARCHIVE_API_URL` to your backend's archive endpoint for local development. Production builds use `.env.production`.
 
 Request contract:
 
