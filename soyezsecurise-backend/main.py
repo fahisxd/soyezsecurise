@@ -1,13 +1,9 @@
 import hmac
-import hashlib
 import os
-import asyncio
 import base64
 import json
 import logging
-from contextlib import asynccontextmanager, contextmanager, suppress
-from pathlib import Path
-from urllib.parse import urlsplit
+from contextlib import contextmanager
 from fastapi import FastAPI, APIRouter, Depends, BackgroundTasks, HTTPException, Query
 import redis
 from pydantic import BaseModel, StringConstraints, Field
@@ -29,8 +25,7 @@ import traceback
 import secrets
 import string
 import ipaddress
-from psycopg2.extras import Json, RealDictCursor
-from jsonschema import Draft7Validator, FormatChecker
+from psycopg2.extras import RealDictCursor
 from datetime import datetime, timezone
 from otp_security import consume_otp_hash, verify_totp_once
 from check_block import(
@@ -1087,11 +1082,8 @@ async def store_disposable_password2(
     )
 
 
-# Archive importer and public read-only API. No migration runs on startup.
+# Archive public read-only API. Content is managed directly in PostgreSQL.
 logger = logging.getLogger('archive')
-SCHEMA = json.loads(Path(__file__).with_name('archive_schema').joinpath('flash.schema.json').read_text())
-validator = Draft7Validator(SCHEMA, format_checker=FormatChecker())
-MAX_BYTES = 512_000
 
 
 @contextmanager
@@ -1104,130 +1096,7 @@ def connect():
         conn.close()
 
 
-def validate_record(value):
-    validator.validate(value)
-    protected = ['soyezsecurise.com'] + [host.strip().lower() for host in os.getenv('ARCHIVE_PROTECTED_HOSTS', '').split(',') if host.strip()]
-    for origins in value.get('externalHosts', {}).values():
-        for origin in origins:
-            parsed_origin = urlsplit(origin)
-            _ = parsed_origin.port  # Reject out-of-range ports, as the browser URL parser does.
-            host = parsed_origin.hostname.lower().rstrip('.')
-            if any(host == root or host.endswith('.' + root) for root in protected):
-                raise ValueError('Flash external hosts cannot include application or authentication hosts')
-    if any('..' in media['url'].split('/') for media in value.get('media', [])):
-        raise ValueError('Media paths cannot contain parent traversal')
-    if value.get('review') and value.get('publishedAt'):
-        parse = lambda text: datetime.fromisoformat(text.replace('Z', '+00:00'))
-        if parse(value['review']['reviewedAt']) > parse(value['publishedAt']):
-            raise ValueError('Publication must be on or after review')
-    return value
-
-
-def read_folder(root):
-    """Read the entire directory before any mutation; failures must not imply deletion."""
-    if not root.is_dir():
-        raise OSError('Archive content directory is unavailable')
-    result = {}
-    def walk(folder):
-        for path in folder.iterdir():
-            if path.is_symlink():
-                continue
-            if path.is_dir():
-                walk(path)
-            elif path.suffix == '.json':
-                with path.open('rb') as stream:
-                    raw = stream.read(MAX_BYTES + 1)
-                result[path.relative_to(root).as_posix()] = raw
-    walk(root)
-    return result
-
-
-def import_once():
-    root = Path(os.getenv('ARCHIVE_CONTENT_DIR', Path(__file__).with_name('archive_content')))
-    with connect() as conn:
-        with conn.cursor() as cur:
-            cur.execute('SELECT pg_try_advisory_xact_lock(846192735) AS locked')
-            if not cur.fetchone()['locked']:
-                return
-            files = read_folder(root)
-            parsed, errors, ids = {}, {}, {}
-            for path, raw in files.items():
-                try:
-                    if len(raw) > MAX_BYTES:
-                        raise ValueError('File exceeds 512000 bytes')
-                    record = validate_record(json.loads(raw))
-                    parsed[path] = record
-                    ids.setdefault(record['id'], []).append(path)
-                except Exception as exc:
-                    errors[path] = str(exc)[:2000]
-            for paths in ids.values():
-                if len(paths) > 1:
-                    for path in paths:
-                        errors[path] = 'Duplicate flash ID; all copies rejected'
-            cur.execute('SELECT * FROM archive_import_files')
-            previous = {row['source_path']: row for row in cur.fetchall()}
-            for path, raw in files.items():
-                digest = hashlib.sha256(raw).hexdigest()
-                old = previous.get(path)
-                # Recheck duplicate errors even when a previously valid file is unchanged.
-                if path not in errors and old and old['content_hash'] == digest and old['state'] == 'imported':
-                    continue
-                record = parsed.get(path)
-                error = errors.get(path)
-                if not error:
-                    cur.execute('SELECT id,source_path FROM archive_flashes WHERE id=%s OR source_path=%s', (record['id'], path))
-                    owners = cur.fetchall()
-                    if any(row['id'] != record['id'] or row['source_path'] != path for row in owners):
-                        error = 'ID is permanent and belongs to its original source path'
-                if not error:
-                    published = record.get('publishedAt')
-                    cur.execute('''INSERT INTO archive_flashes
-                        (id,schema_version,title,description,category,tags,author,sources,content,status,published_at,first_published_at,event_date,source_path)
-                        VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,CASE WHEN %s='published' THEN clock_timestamp() END,%s,%s)
-                        ON CONFLICT(id) DO UPDATE SET schema_version=excluded.schema_version,title=excluded.title,
-                        description=excluded.description,category=excluded.category,tags=excluded.tags,author=excluded.author,
-                        sources=excluded.sources,content=excluded.content,status=excluded.status,published_at=excluded.published_at,
-                        first_published_at=coalesce(archive_flashes.first_published_at,excluded.first_published_at),
-                        event_date=excluded.event_date,source_present=true,updated_at=now()''',
-                        (record['id'],record['schemaVersion'],record['title'],record['description'],record['category'],
-                         record.get('tags',[]),Json(record['author']),Json(record.get('sources',[])),Json(record),
-                         record['status'],published,record['status'],record.get('eventDate'),path))
-                else:
-                    logger.warning('Archive import rejected %s: %s', path, error)
-                cur.execute('''INSERT INTO archive_import_files(source_path,content_hash,flash_id,state,error,last_success_at)
-                    VALUES (%s,%s,%s,%s,%s,CASE WHEN %s THEN now() END)
-                    ON CONFLICT(source_path) DO UPDATE SET content_hash=excluded.content_hash,
-                    flash_id=coalesce(archive_import_files.flash_id,excluded.flash_id),state=excluded.state,error=excluded.error,
-                    last_checked_at=now(),last_success_at=coalesce(excluded.last_success_at,archive_import_files.last_success_at)''',
-                    (path,digest,record['id'] if record else None,'invalid' if error else 'imported',error,not error))
-            missing = list(set(previous) - set(files))
-            if missing:
-                cur.execute('UPDATE archive_flashes SET source_present=false,updated_at=now() WHERE source_present AND source_path=ANY(%s)', (missing,))
-                cur.execute("UPDATE archive_import_files SET state='missing',last_checked_at=now() WHERE source_path=ANY(%s)", (missing,))
-
-
-async def import_loop():
-    while True:
-        try:
-            await asyncio.to_thread(import_once)
-        except Exception:
-            logger.exception('Archive scan failed; retaining existing catalog')
-        await asyncio.sleep(5)
-
-
-@asynccontextmanager
-async def lifespan(app):
-    task = asyncio.create_task(import_loop()) if os.getenv('ARCHIVE_CONTENT_DIR') else None
-    try:
-        yield
-    finally:
-        if task:
-            task.cancel()
-            with suppress(asyncio.CancelledError):
-                await task
-
-
-archive_router = APIRouter(prefix='/archive', tags=['archive'], lifespan=lifespan)
+archive_router = APIRouter(prefix='/archive', tags=['archive'])
 
 
 def encode_cursor(value):
@@ -1236,13 +1105,28 @@ def encode_cursor(value):
 
 def decode_cursor(value):
     try:
-        if len(value) > 4096:
+        if not isinstance(value, str) or not value or len(value) > 4096:
             raise ValueError()
-        result = json.loads(base64.urlsafe_b64decode(value + '=' * (-len(value) % 4)))
+        encoded = value.encode('ascii')
+        raw = base64.b64decode(encoded + b'=' * (-len(encoded) % 4), altchars=b'-_', validate=True)
+        result = json.loads(raw)
         if not isinstance(result, dict) or set(result) != {'options','cutoff','position','id'}:
             raise ValueError()
-        datetime.fromisoformat(result['cutoff'])
-        if not isinstance(result['position'], str) or not isinstance(result['id'], str):
+        options = result['options']
+        if (not isinstance(options, list) or len(options) != 4
+                or options[0] not in ('latest', 'random', 'chronological', 'category', 'recommended')
+                or (options[1] is not None and not isinstance(options[1], str))
+                or not isinstance(options[2], str)
+                or isinstance(options[3], bool) or not isinstance(options[3], int)):
+            raise ValueError()
+        cutoff = result['cutoff']
+        if not isinstance(cutoff, str):
+            raise ValueError()
+        parsed_cutoff = datetime.fromisoformat(cutoff.replace('Z', '+00:00'))
+        if parsed_cutoff.tzinfo is None:
+            raise ValueError()
+        if (not isinstance(result['position'], str) or len(result['position']) > 128
+                or not isinstance(result['id'], str) or len(result['id']) > 80):
             raise ValueError()
         return result
     except Exception:

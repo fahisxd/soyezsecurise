@@ -1,9 +1,8 @@
 # Archive VPS setup
 
-The existing FastAPI service imports one JSON file per flash from a backend-only
-folder into the existing PostgreSQL database. The browser reads the database
-through the API; JSON files are never served directly. No additional service,
-account system, or visitor-history table is required.
+Archive content is managed directly in PostgreSQL. The backend exposes a
+read-only API; it does not scan folders or import JSON files. No additional
+service, account system, or visitor-history table is required.
 
 ## Deploy once
 
@@ -12,16 +11,10 @@ From the backend directory, with your normal deployment environment active:
 ```sh
 pip install -r requirements.txt
 psql "$DATABASE_URL" -v ON_ERROR_STOP=1 -f migrations/001_archive.sql
-mkdir -p archive_content
 ```
 
-Set `ARCHIVE_CONTENT_DIR` to the **absolute path** of that folder in the backend
-service environment (or its existing `.env`). Keep `DATABASE_URL` pointing to the
-existing database. Give the backend process read access to the folder. Restart
-the backend normally. The scanner starts immediately and repeats every five
-seconds. PostgreSQL advisory locking coordinates workers. Without
-`ARCHIVE_CONTENT_DIR`, automatic imports are disabled; API reads still work.
-The migration is explicit; application startup never creates or changes tables.
+Keep `DATABASE_URL` pointing to the existing database. Apply the migration once;
+application startup never creates or changes tables.
 
 Set the Archive frontend build environment:
 
@@ -35,37 +28,41 @@ The existing backend CORS configuration permits public reads. Verify
 `GET /archive/flashes` before deploying the connected frontend. Without the
 frontend variable, Archive continues to use the local demonstration catalog.
 
-## Upload, edit, publish, remove
+## Add and edit flashes
 
-Start with `archive_examples/community-quiz.json`. Copy it to your upload folder
-with a stable ID and filename. Version 2 includes `html`, `css`, and `javascript`
-strings, plus the searchable metadata shown in that example. Plain HTML
-fragments or complete documents are accepted; author scripts run only inside the
-iframe. Use the separate CSS and JavaScript fields for predictable loading.
+Use `archive_examples/community-quiz.json` as a content example. Insert the
+complete flash JSON into `archive_flashes.content` and copy its searchable fields
+to the matching table columns. For a published record, set `status` to
+`published`, provide `published_at` and `first_published_at`, set
+`source_present=true`, and give `source_path` a unique value such as
+`manual:<flash-id>`. For a draft, leave both publication timestamps null.
 
-Files can be nested under the configured folder. Upload as `.tmp` and rename to
-`.json` when complete. Each file must be at most 512000 bytes. Symlinks are ignored.
-Use UTF-8 JSON and keep the flash ID and relative filename stable after import.
-Duplicate IDs are rejected across every candidate file, including drafts.
+Example for a version 2 published flash (replace the sample JSON and metadata
+with the values for your flash):
 
-- `status: "draft"` imports the record privately into the database.
-- Set `status: "published"` and an ISO `publishedAt` timestamp to publish version 2.
-  That status is your explicit editorial approval; no extra review object is needed.
-- Version 1 stories retain their existing schema and review requirements.
-- An invalid edit keeps the last valid version, including its publication state.
-- Removing a JSON file hides its flash without deleting its database record.
-- Restoring a valid file restores its declared state. Missing or unreadable folders
-  abort the entire scan, retaining all existing records.
+```sql
+INSERT INTO archive_flashes
+  (id, schema_version, title, description, category, tags, author, sources,
+   content, status, published_at, first_published_at, event_date,
+   source_path, source_present)
+VALUES
+  ('example-flash', 2, 'Example title', 'Example description', 'facts', '{}',
+   '{"name":"Editorial team"}'::jsonb, '[]'::jsonb,
+   '{"schemaVersion":2,"id":"example-flash","type":"security-fact","title":"Example title","description":"Example description","category":"facts","author":{"name":"Editorial team"},"status":"published","publishedAt":"2026-10-28T00:00:00Z","provenance":{"kind":"editorial","origin":"manual"},"html":"<main><h1>Example</h1></main>","css":"","javascript":"","externalHosts":{}}'::jsonb,
+   'published', '2026-10-28T00:00:00Z', now(), NULL,
+   'manual:example-flash', true);
+```
 
-`publishedAt` is editorial ordering metadata, not scheduled publication. New
-publications enter fresh browsing sessions; an existing paginated shuffle keeps
-its original publication cutoff. Editing a flash updates subsequent API reads;
-currently loaded browser cards refresh on a new feed/reload.
+To edit a flash, update the row's `content` and matching metadata columns in one
+transaction. To unpublish it, set `status='draft'` and clear `published_at`;
+to remove it from the public API, set `source_present=false` or delete the row.
+There is no public write endpoint. `published_at` is editorial ordering metadata,
+not scheduled publication. New publications enter fresh browsing sessions; an
+existing paginated shuffle keeps its original publication cutoff.
 
-Credit contributors with `author.name`, optional `author.handle`, and optional
-HTTPS `author.url`, for example an Instagram profile. You receive submissions
-outside the app, review their content/code and external hosts, then upload them.
-There is no public upload endpoint.
+Review content, contributor code, and external hosts before inserting it. Credit
+contributors with `author.name`, optional `author.handle`, and optional HTTPS
+`author.url`.
 
 ## External requests and isolation
 
@@ -129,21 +126,17 @@ Security evidence and remaining deployment boundaries are in the frontend
 - `archive_flashes`: stable ID; schema version; title, description, category and
   tags; author and sources; complete JSON content; publication status and dates;
   original source path and presence; created/updated timestamps.
-- `archive_import_files`: source path, attempted content hash, flash ID, import
-  state/error, last check and last successful import timestamp.
+- `archive_import_files`: legacy importer diagnostics; no longer read or written
+  by the backend.
 
 ```sql
-SELECT source_path, state, error, last_success_at
-FROM archive_import_files ORDER BY source_path;
 SELECT id, status, source_present, updated_at
 FROM archive_flashes ORDER BY updated_at DESC;
 ```
 
-Backend logs name failed files and scans. Monitor repeated scan failures and API
-503s. Database errors return a retryable 503 instead of switching visitors to demo
-content. Take your normal PostgreSQL backup before applying the migration.
-For rollback, serve the previous frontend and unset `ARCHIVE_CONTENT_DIR`; retain
-the Archive tables so content and diagnostics remain recoverable.
+Database errors return a retryable 503 instead of switching visitors to demo
+content. Take your normal PostgreSQL backup before applying the migration. The
+legacy importer diagnostics table is retained by the migration for compatibility.
 
 The authoritative frontend schema is `archive/schema/flash.schema.json`; its
 backend copy is `archive_schema/flash.schema.json`. Update both together; the
