@@ -2,6 +2,7 @@ import { useEffect, useLayoutEffect, useRef, useState, type KeyboardEvent } from
 import type { Flash } from '../types';
 import { flashAt, visibleWindow } from '../lib/feed';
 import { engagement } from '../lib/engagement';
+import { useArchiveView } from '../lib/views';
 import { FlashCard } from './FlashCard';
 import { Icon } from './Icon';
 
@@ -24,6 +25,7 @@ export function Feed({ records, saved, initialId, onBookmark, onShare, onActive,
   const resizing = useRef(false);
   activeRef.current = active;
   const flash = finite ? records[active] : flashAt(records, active);
+  useArchiveView(flash?.id);
   useEffect(() => { if (finite && hasMore && !loading && active >= records.length - 4) onLoadMore?.(); }, [finite, hasMore, loading, active, records.length, onLoadMore]);
 
   useLayoutEffect(() => {

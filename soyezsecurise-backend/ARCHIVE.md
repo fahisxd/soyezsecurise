@@ -188,3 +188,29 @@ npm run build
 npm run test:browser
 npm run test:api-browser
 ```
+
+## View counter
+
+`POST /archive/flashes/{id}/view` records one view for a published flash and
+returns 204. The frontend sends it after two seconds on the active flash in a
+visible tab, once per flash per browser tab session. These are approximate view
+counts, not unique people; direct requests can inflate them. No visitor identity,
+IP address, or reading history is saved in the counter.
+
+Counters live in a SQLite file, by default `data/archive-views.sqlite3` beside
+`main.py`. For production, set `ARCHIVE_VIEWS_FILE` to an absolute persistent
+path such as `/var/lib/soyezsecurise/archive-views.sqlite3` and restart the backend.
+The backend service user needs write access to the parent directory. Keep it
+outside release directories; Docker deployments need a persistent volume.
+Multiple workers on the same host may share this file; separate hosts need a
+shared database instead. Counter failures do not interrupt the frontend.
+
+Inspect totals over SSH on the backend host:
+
+```sh
+sqlite3 /var/lib/soyezsecurise/archive-views.sqlite3 \
+  'SELECT flash_id, views, last_viewed_at FROM flash_views ORDER BY views DESC;'
+```
+
+The file/table is created on the first recorded view. Include the file in backups.
+Content endpoints remain read-only; the new endpoint writes only aggregate counts.

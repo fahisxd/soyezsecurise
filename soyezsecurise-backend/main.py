@@ -1191,4 +1191,16 @@ def flash(flash_id: str):
     return row['content']
 
 
+@archive_router.post('/flashes/{flash_id}/view', status_code=204)
+def archive_view(flash_id: str):
+    # Only published records may create counter entries.
+    flash(flash_id)
+    from archive_views import record_view
+    try:
+        record_view(flash_id)
+    except Exception:
+        logger.exception('Archive view counter failed')
+        raise HTTPException(503, 'View counter is temporarily unavailable') from None
+
+
 app.include_router(archive_router)
